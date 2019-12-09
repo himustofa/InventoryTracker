@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">InventoryTracker</string>
+
+    <array name="districts">
+        <item>Chittagong</item>
+        <item>Dhaka</item>
+        <item>Khulna</item>
+    </array>
+</resources>
