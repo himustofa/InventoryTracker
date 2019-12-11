@@ -10,7 +10,7 @@ import com.appsit.inventorytracker.models.Customer;
 import com.appsit.inventorytracker.models.User;
 import com.appsit.inventorytracker.utils.ConstantKey;
 
-@Database(entities = {User.class, Customer.class}, version = ConstantKey.DATABASE_VERSION)
+@Database(entities = {User.class}, version = ConstantKey.DATABASE_VERSION)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract AppDaoAccess getDaoAccess();

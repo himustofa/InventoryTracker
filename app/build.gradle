@@ -38,6 +38,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     //implementation 'com.squareup.retrofit2:retrofit:2.6.2'
     //implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
+    //===============================================| Android Image Cropper Library
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
     //===============================================| Image Circle
     implementation 'de.hdodenhof:circleimageview:3.0.1'
     //===============================================| Gson

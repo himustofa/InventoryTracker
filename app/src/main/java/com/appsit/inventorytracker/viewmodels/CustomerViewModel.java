@@ -8,21 +8,24 @@ import android.util.Log;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.appsit.inventorytracker.models.Customer;
+import com.appsit.inventorytracker.repositories.AppDaoAccess;
+import com.appsit.inventorytracker.repositories.AppDatabase;
+
 import java.util.List;
 
 public class CustomerViewModel extends AndroidViewModel {
 
     private String TAG = this.getClass().getSimpleName();
-    private IDaoAccess mDaoAccess;
+    private AppDaoAccess mDaoAccess;
 
     public CustomerViewModel(Application application) {
         super(application);
 
-        AppDatabase mAppDatabase = AppDatabase.getDatabase(application);
-        mDaoAccess = mAppDatabase.daoAccess();
+        mDaoAccess = AppDatabase.getDatabase(application).getDaoAccess();
     }
 
-    public LiveData<Customer> getById(String mId) {
+    /*public LiveData<Customer> getById(String mId) {
         return mDaoAccess.get(mId);
     }
 
@@ -47,7 +50,7 @@ public class CustomerViewModel extends AndroidViewModel {
             @Override
             protected Integer doInBackground(Void... voids) {
                 int result = mDaoAccess.update(customer);
-                Log.d(TAG, ""+result);
+                Log.d(TAG, "" + result);
                 return result;
             }
         }.execute();
@@ -60,9 +63,10 @@ public class CustomerViewModel extends AndroidViewModel {
             @Override
             protected Integer doInBackground(Void... voids) {
                 int result = mDaoAccess.delete(customer);
-                Log.d(TAG, ""+result);
+                Log.d(TAG, "" + result);
                 return result;
             }
         }.execute();
         return 1;
-    }
+    }*/
+}
