@@ -16,12 +16,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:background="@drawable/shape_image_border"
-            android:src="@drawable/ic_log_mk"
+            android:background="@drawable/app_logo"
+            android:layout_gravity="center"
             android:layout_marginBottom="35dp"
             android:layout_width="140dp"
-            android:layout_height="140dp"
-            tools:ignore="ContentDescription" />
+            android:layout_height="140dp" />
         <EditText
             android:id="@+id/user_name"
             android:hint="Username"

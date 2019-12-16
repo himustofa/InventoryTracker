@@ -20,6 +20,9 @@ public interface AppDaoAccess {
     @Query("SELECT * FROM users WHERE id=:userId")
     LiveData<User> getUser(String userId);
 
+    @Query("SELECT * FROM users WHERE username like :username and password like :password")
+    LiveData<User> getUserByUserAndPass(String username, String password);
+
     @Insert
     long insertUser(User user);
 
