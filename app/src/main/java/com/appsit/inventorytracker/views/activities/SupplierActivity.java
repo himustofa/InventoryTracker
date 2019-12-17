@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +18,9 @@ import com.appsit.inventorytracker.R;
 import com.appsit.inventorytracker.models.Supplier;
 import com.appsit.inventorytracker.viewmodels.SupplierViewModel;
 import com.appsit.inventorytracker.views.adapters.SupplierAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +33,7 @@ public class SupplierActivity extends AppCompatActivity implements SupplierAdapt
     private SupplierAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private SupplierViewModel mViewModel;
+    private boolean isValue = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,31 +45,51 @@ public class SupplierActivity extends AppCompatActivity implements SupplierAdapt
         mViewModel.getAll().observe(this, new Observer<List<Supplier>>() {
             @Override
             public void onChanged(List<Supplier> suppliers) {
-                mArrayList.addAll(suppliers);
-                mAdapter = new SupplierAdapter(SupplierActivity.this, mArrayList);
-                mRecyclerView.setAdapter(mAdapter);
-                mRecyclerView.setLayoutManager(new LinearLayoutManager(SupplierActivity.this));
-                mAdapter.notifyDataSetChanged();
+                if (isValue) {
+                    mArrayList.addAll(suppliers);
+                    isValue = false;
+                }
             }
         });
+
+        ((FloatingActionButton) findViewById(R.id.supplier_add_fab)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addItem();
+            }
+        });
+
+        initRecyclerView();
     }
 
+    private void initRecyclerView() {
+        mAdapter = new SupplierAdapter(SupplierActivity.this, mArrayList);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(SupplierActivity.this));
+        //mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        mAdapter.notifyDataSetChanged();
+    }
+
+    //https://stackoverflow.com/questions/31367599/how-to-update-recyclerview-adapter-data
     @Override
     public void removeItem(int position, Supplier model) {
-        mArrayList.remove(position);
-        mRecyclerView.removeViewAt(position);
-        mAdapter.notifyItemRemoved(position);
-        mAdapter.notifyItemRangeChanged(position, mArrayList.size());
+        long result = mViewModel.delete(model);
+        if (result > 0) {
+            mArrayList.remove(position);
+            mRecyclerView.removeViewAt(position);
+            mAdapter.notifyItemRemoved(position);
+            mAdapter.notifyItemRangeChanged(position, mArrayList.size());
+        }
     }
 
     @Override
-    public void addItem(Supplier model) {
+    public void addItem() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View view = LayoutInflater.from(this).inflate(R.layout.recycler_item_supplier, null, false);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_supplier, null, false);
         builder.setView(view);
         builder.setIcon(R.mipmap.ic_launcher);
         builder.setTitle("Add Supplier");
-        builder.setCancelable(false);
+        builder.setCancelable(true);
         builder.create();
 
         AlertDialog dialog = builder.show();
@@ -79,11 +103,11 @@ public class SupplierActivity extends AppCompatActivity implements SupplierAdapt
         EditText E7 = (EditText) view.findViewById(R.id.supplierBankAccount);
         EditText E8 = (EditText) view.findViewById(R.id.supplierEmail);
         EditText E9 = (EditText) view.findViewById(R.id.supplierWebsite);
-        ((Button) view.findViewById(R.id.supplier_save_button)).setOnClickListener(new View.OnClickListener() {
+        ((Button) view.findViewById(R.id.supplier_save)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!E1.getText().toString().trim().isEmpty() && !E4.getText().toString().trim().isEmpty()) {
-                    long result = mViewModel.save(new Supplier(
+                    Supplier model = new Supplier(
                             UUID.randomUUID().toString(),
                             E1.getText().toString(),
                             E2.getText().toString(),
@@ -94,10 +118,13 @@ public class SupplierActivity extends AppCompatActivity implements SupplierAdapt
                             E7.getText().toString(),
                             E8.getText().toString(),
                             E9.getText().toString()
-                    ));
-                    mArrayList.add(model);
-                    mAdapter.notifyItemInserted(mArrayList.size());
-                    dialog.dismiss();
+                    );
+                    long result = mViewModel.save(model);
+                    if (result > 0) {
+                        mArrayList.add(model);
+                        mAdapter.notifyItemInserted(mArrayList.size());
+                        dialog.dismiss();
+                    }
                 } else {
                     Snackbar.make(findViewById(android.R.id.content), "Please insert the values in your mandatory fields.", Snackbar.LENGTH_INDEFINITE).show();
                 }
@@ -107,9 +134,64 @@ public class SupplierActivity extends AppCompatActivity implements SupplierAdapt
 
     @Override
     public void updateItem(int position, Supplier model) {
-        /*mArrayList.clear();
-        mArrayList.addAll(viewModels);
-        mAdapter.notifyItemChanged(position, model);
-        mAdapter.notifyDataSetChanged();*/
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_supplier, null, false);
+        builder.setView(view);
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setTitle("Edit Supplier");
+        builder.setCancelable(true);
+        builder.create();
+
+        AlertDialog dialog = builder.show();
+
+        EditText E1 = (EditText) view.findViewById(R.id.supplierName);
+        EditText E2 = (EditText) view.findViewById(R.id.supplierCompanyName);
+        EditText E3 = (EditText) view.findViewById(R.id.supplierContactPerson);
+        EditText E4 = (EditText) view.findViewById(R.id.supplierPhoneNumber);
+        EditText E5 = (EditText) view.findViewById(R.id.supplierAddress);
+        EditText E6 = (EditText) view.findViewById(R.id.supplierBankName);
+        EditText E7 = (EditText) view.findViewById(R.id.supplierBankAccount);
+        EditText E8 = (EditText) view.findViewById(R.id.supplierEmail);
+        EditText E9 = (EditText) view.findViewById(R.id.supplierWebsite);
+        E1.setText(model.getSupplierName());
+        E2.setText(model.getSupplierCompanyName());
+        E3.setText(model.getSupplierContactPerson());
+        E4.setText(model.getSupplierPhoneNumber());
+        E5.setText(model.getSupplierAddress());
+        E6.setText(model.getSupplierBankName());
+        E7.setText(model.getSupplierBankAccount());
+        E8.setText(model.getSupplierEmail());
+        E9.setText(model.getSupplierWebsite());
+
+        ((Button) view.findViewById(R.id.supplier_save)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!E1.getText().toString().trim().isEmpty() && !E4.getText().toString().trim().isEmpty()) {
+                    Supplier supplier = new Supplier(
+                            UUID.randomUUID().toString(),
+                            E1.getText().toString(),
+                            E2.getText().toString(),
+                            E3.getText().toString(),
+                            E4.getText().toString(),
+                            E5.getText().toString(),
+                            E6.getText().toString(),
+                            E7.getText().toString(),
+                            E8.getText().toString(),
+                            E9.getText().toString()
+                    );
+                    long result = mViewModel.update(supplier);
+                    if (result > 0) {
+                        //mArrayList.clear();
+                        //mArrayList.addAll(viewModels);
+                        mArrayList.set(position, supplier);
+                        mAdapter.notifyItemChanged(position, supplier);
+                        //mAdapter.notifyDataSetChanged(); //recyclerView.invalidate();
+                        dialog.dismiss();
+                    }
+                } else {
+                    Snackbar.make(findViewById(android.R.id.content), "Please insert the values in your mandatory fields.", Snackbar.LENGTH_INDEFINITE).show();
+                }
+            }
+        });
     }
 }

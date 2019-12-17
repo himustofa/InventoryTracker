@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:padding="15dp"
+        android:padding="@dimen/space_15dp"
         android:gravity="center"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -16,14 +16,14 @@
             android:id="@+id/supplierName"
             android:hint="Supplier Name"
             android:inputType="textPersonName"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/space_15dp"
             android:background="@drawable/shape_edit_text_border"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/supplierCompanyName"
             android:hint="Supplier's Company Name"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/space_15dp"
             android:background="@drawable/shape_edit_text_border"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -31,14 +31,14 @@
             android:id="@+id/supplierContactPerson"
             android:hint="Supplier's Contact Person"
             android:inputType="textPersonName"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/space_15dp"
             android:background="@drawable/shape_edit_text_border"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/supplierPhoneNumber"
             android:hint="Supplier's Phone Number"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/space_15dp"
             android:inputType="phone"
             android:background="@drawable/shape_edit_text_border"
             android:layout_width="match_parent"
@@ -46,21 +46,21 @@
         <EditText
             android:id="@+id/supplierAddress"
             android:hint="Supplier's Address"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/space_15dp"
             android:background="@drawable/shape_edit_text_border"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/supplierBankName"
             android:hint="Supplier's Bank Name"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/space_15dp"
             android:background="@drawable/shape_edit_text_border"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/supplierBankAccount"
             android:hint="Supplier's Bank Account"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/space_15dp"
             android:background="@drawable/shape_edit_text_border"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -68,22 +68,22 @@
             android:id="@+id/supplierEmail"
             android:hint="Supplier's Email"
             android:inputType="textEmailAddress"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/space_15dp"
             android:background="@drawable/shape_edit_text_border"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/supplierWebsite"
             android:hint="Supplier's Website"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/space_15dp"
             android:background="@drawable/shape_edit_text_border"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <Button
-            android:id="@+id/supplier_save_button"
-            android:layout_marginBottom="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:id="@+id/supplier_save"
+            android:layout_marginBottom="@dimen/space_15dp"
+            android:paddingLeft="@dimen/size_10sp"
+            android:paddingRight="@dimen/space_10dp"
             android:text="Save"
             android:textColor="@color/colorWhite"
             android:background="@color/colorDarkGrey"

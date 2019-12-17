@@ -47,6 +47,9 @@ public interface AppDaoAccess {
     @Insert
     long insertSupplier(Supplier supplier);
 
+    @Update
+    int updateSupplier(Supplier supplier);
+
     @Delete
     int deleteSupplier(Supplier supplier);
 }

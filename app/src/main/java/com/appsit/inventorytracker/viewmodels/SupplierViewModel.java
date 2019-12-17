@@ -25,11 +25,22 @@ public class SupplierViewModel extends AndroidViewModel {
     }
 
     @SuppressLint("StaticFieldLeak")
-    public long save(Supplier supplier) {
+    public long save(Supplier model) {
         new AsyncTask<Void, Void, Long>() {
             @Override
             protected Long doInBackground(Void... voids) {
-                return mDaoAccess.insertSupplier(supplier);
+                return mDaoAccess.insertSupplier(model);
+            }
+        }.execute();
+        return 1;
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    public int update(Supplier model) {
+        new AsyncTask<Void, Void, Integer>() {
+            @Override
+            protected Integer doInBackground(Void... voids) {
+                return mDaoAccess.updateSupplier(model);
             }
         }.execute();
         return 1;

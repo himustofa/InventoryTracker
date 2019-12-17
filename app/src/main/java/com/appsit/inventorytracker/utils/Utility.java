@@ -176,6 +176,15 @@ public class Utility {
                 }).show();
     }
 
+    public static AlertDialog.Builder deleteDialog(final Context context) {
+        return new AlertDialog.Builder(context).setTitle("Are your sure?").setMessage("Do you want to delete it?").setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+    }
+
     //===============================================| ProgressDialog
     public static ProgressDialog showProgressDialog(Context mActivity, final String message, boolean isCancelable) {
         ProgressDialog mProgress = new ProgressDialog(mActivity);
