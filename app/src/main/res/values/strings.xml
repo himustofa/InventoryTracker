@@ -39,10 +39,9 @@
         \nmustofa2008@gmail.com
     </string>
 
-    <array name="districts">
-        <item>Chittagong</item>
-        <item>Dhaka</item>
-        <item>Khulna</item>
+    <array name="roles">
+        <item>ADMIN</item>
+        <item>USER</item>
     </array>
 
     <!-- Settings -->

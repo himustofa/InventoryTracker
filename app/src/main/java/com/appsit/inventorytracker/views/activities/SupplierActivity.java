@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.appsit.inventorytracker.R;
+import com.appsit.inventorytracker.models.ObjectDialog;
 import com.appsit.inventorytracker.models.Supplier;
 import com.appsit.inventorytracker.viewmodels.SupplierViewModel;
 import com.appsit.inventorytracker.views.adapters.SupplierAdapter;
@@ -84,26 +85,18 @@ public class SupplierActivity extends AppCompatActivity implements SupplierAdapt
 
     @Override
     public void addItem() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_supplier, null, false);
-        builder.setView(view);
-        builder.setIcon(R.mipmap.ic_launcher);
-        builder.setTitle("Add Supplier");
-        builder.setCancelable(true);
-        builder.create();
+        ObjectDialog obj = showObjectDialog("Add Supplier");
 
-        AlertDialog dialog = builder.show();
-
-        EditText E1 = (EditText) view.findViewById(R.id.supplierName);
-        EditText E2 = (EditText) view.findViewById(R.id.supplierCompanyName);
-        EditText E3 = (EditText) view.findViewById(R.id.supplierContactPerson);
-        EditText E4 = (EditText) view.findViewById(R.id.supplierPhoneNumber);
-        EditText E5 = (EditText) view.findViewById(R.id.supplierAddress);
-        EditText E6 = (EditText) view.findViewById(R.id.supplierBankName);
-        EditText E7 = (EditText) view.findViewById(R.id.supplierBankAccount);
-        EditText E8 = (EditText) view.findViewById(R.id.supplierEmail);
-        EditText E9 = (EditText) view.findViewById(R.id.supplierWebsite);
-        ((Button) view.findViewById(R.id.supplier_save)).setOnClickListener(new View.OnClickListener() {
+        EditText E1 = (EditText) obj.getView().findViewById(R.id.supplierName);
+        EditText E2 = (EditText) obj.getView().findViewById(R.id.supplierCompanyName);
+        EditText E3 = (EditText) obj.getView().findViewById(R.id.supplierContactPerson);
+        EditText E4 = (EditText) obj.getView().findViewById(R.id.supplierPhoneNumber);
+        EditText E5 = (EditText) obj.getView().findViewById(R.id.supplierAddress);
+        EditText E6 = (EditText) obj.getView().findViewById(R.id.supplierBankName);
+        EditText E7 = (EditText) obj.getView().findViewById(R.id.supplierBankAccount);
+        EditText E8 = (EditText) obj.getView().findViewById(R.id.supplierEmail);
+        EditText E9 = (EditText) obj.getView().findViewById(R.id.supplierWebsite);
+        ((Button) obj.getView().findViewById(R.id.supplier_save)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!E1.getText().toString().trim().isEmpty() && !E4.getText().toString().trim().isEmpty()) {
@@ -123,7 +116,7 @@ public class SupplierActivity extends AppCompatActivity implements SupplierAdapt
                     if (result > 0) {
                         mArrayList.add(model);
                         mAdapter.notifyItemInserted(mArrayList.size());
-                        dialog.dismiss();
+                        obj.getDialog().dismiss();
                     }
                 } else {
                     Snackbar.make(findViewById(android.R.id.content), "Please insert the values in your mandatory fields.", Snackbar.LENGTH_INDEFINITE).show();
@@ -134,25 +127,17 @@ public class SupplierActivity extends AppCompatActivity implements SupplierAdapt
 
     @Override
     public void updateItem(int position, Supplier model) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_supplier, null, false);
-        builder.setView(view);
-        builder.setIcon(R.mipmap.ic_launcher);
-        builder.setTitle("Edit Supplier");
-        builder.setCancelable(true);
-        builder.create();
+        ObjectDialog obj = showObjectDialog("Edit Supplier");
 
-        AlertDialog dialog = builder.show();
-
-        EditText E1 = (EditText) view.findViewById(R.id.supplierName);
-        EditText E2 = (EditText) view.findViewById(R.id.supplierCompanyName);
-        EditText E3 = (EditText) view.findViewById(R.id.supplierContactPerson);
-        EditText E4 = (EditText) view.findViewById(R.id.supplierPhoneNumber);
-        EditText E5 = (EditText) view.findViewById(R.id.supplierAddress);
-        EditText E6 = (EditText) view.findViewById(R.id.supplierBankName);
-        EditText E7 = (EditText) view.findViewById(R.id.supplierBankAccount);
-        EditText E8 = (EditText) view.findViewById(R.id.supplierEmail);
-        EditText E9 = (EditText) view.findViewById(R.id.supplierWebsite);
+        EditText E1 = (EditText) obj.getView().findViewById(R.id.supplierName);
+        EditText E2 = (EditText) obj.getView().findViewById(R.id.supplierCompanyName);
+        EditText E3 = (EditText) obj.getView().findViewById(R.id.supplierContactPerson);
+        EditText E4 = (EditText) obj.getView().findViewById(R.id.supplierPhoneNumber);
+        EditText E5 = (EditText) obj.getView().findViewById(R.id.supplierAddress);
+        EditText E6 = (EditText) obj.getView().findViewById(R.id.supplierBankName);
+        EditText E7 = (EditText) obj.getView().findViewById(R.id.supplierBankAccount);
+        EditText E8 = (EditText) obj.getView().findViewById(R.id.supplierEmail);
+        EditText E9 = (EditText) obj.getView().findViewById(R.id.supplierWebsite);
         E1.setText(model.getSupplierName());
         E2.setText(model.getSupplierCompanyName());
         E3.setText(model.getSupplierContactPerson());
@@ -163,7 +148,7 @@ public class SupplierActivity extends AppCompatActivity implements SupplierAdapt
         E8.setText(model.getSupplierEmail());
         E9.setText(model.getSupplierWebsite());
 
-        ((Button) view.findViewById(R.id.supplier_save)).setOnClickListener(new View.OnClickListener() {
+        ((Button) obj.getView().findViewById(R.id.supplier_save)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!E1.getText().toString().trim().isEmpty() && !E4.getText().toString().trim().isEmpty()) {
@@ -186,12 +171,24 @@ public class SupplierActivity extends AppCompatActivity implements SupplierAdapt
                         mArrayList.set(position, supplier);
                         mAdapter.notifyItemChanged(position, supplier);
                         //mAdapter.notifyDataSetChanged(); //recyclerView.invalidate();
-                        dialog.dismiss();
+                        obj.getDialog().dismiss();
                     }
                 } else {
                     Snackbar.make(findViewById(android.R.id.content), "Please insert the values in your mandatory fields.", Snackbar.LENGTH_INDEFINITE).show();
                 }
             }
         });
+    }
+
+    private ObjectDialog showObjectDialog(String title) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_supplier, null, false);
+        builder.setView(view);
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setTitle(title);
+        builder.setCancelable(true);
+        builder.create();
+        AlertDialog dialog = builder.show();
+        return new ObjectDialog(view, dialog);
     }
 }
