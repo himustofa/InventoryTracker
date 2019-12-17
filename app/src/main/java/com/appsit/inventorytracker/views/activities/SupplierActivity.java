@@ -168,7 +168,7 @@ public class SupplierActivity extends AppCompatActivity implements SupplierAdapt
             public void onClick(View v) {
                 if(!E1.getText().toString().trim().isEmpty() && !E4.getText().toString().trim().isEmpty()) {
                     Supplier supplier = new Supplier(
-                            UUID.randomUUID().toString(),
+                            model.getSupplierId(),
                             E1.getText().toString(),
                             E2.getText().toString(),
                             E3.getText().toString(),
