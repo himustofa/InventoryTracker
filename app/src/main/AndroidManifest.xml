@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.appsit.inventorytracker">
-
     <!-- Request the Camera feature -->
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
 
-    <!-- save to phone or sd card directory -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" /> <!-- save to phone or sd card directory -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -17,49 +17,49 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".views.activities.UserListActivity"></activity>
         <activity
-            android:windowSoftInputMode="stateHidden"
+            android:name=".views.activities.HomeActivity"
             android:screenOrientation="portrait"
-            android:name=".views.activities.HomeActivity" />
+            android:windowSoftInputMode="stateHidden" />
         <activity
-            android:screenOrientation="portrait"
-            android:name=".views.activities.SettingsActivity" />
+            android:name=".views.activities.SettingsActivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:screenOrientation="portrait"
-            android:name=".views.activities.ProductActivity" />
+            android:name=".views.activities.ProductActivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:screenOrientation="portrait"
-            android:name=".views.activities.SaleActivity" />
+            android:name=".views.activities.SaleActivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:screenOrientation="portrait"
-            android:name=".views.activities.PurchaseActivity" />
+            android:name=".views.activities.PurchaseActivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:screenOrientation="portrait"
-            android:name=".views.activities.SupplierActivity" />
+            android:name=".views.activities.SupplierActivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:screenOrientation="portrait"
-            android:name=".views.activities.SignInActivity" />
+            android:name=".views.activities.SignInActivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:screenOrientation="portrait"
-            android:name=".views.activities.SignUpActivity" />
+            android:name=".views.activities.SignUpActivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:screenOrientation="portrait"
-            android:name=".views.activities.CustomerActivity" />
+            android:name=".views.activities.CustomerActivity"
+            android:screenOrientation="portrait" />
         <activity
+            android:name=".views.activities.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Fullscreen"
-            android:name=".views.activities.MainActivity">
+            android:theme="@style/AppTheme.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Start: Android Image Cropper: optional (needed if default theme has no action bar) -->
+        </activity> <!-- Start: Android Image Cropper: optional (needed if default theme has no action bar) -->
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"

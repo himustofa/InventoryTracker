@@ -102,7 +102,7 @@ public class Utility {
         return directory.getAbsolutePath();
     }
 
-    public static Bitmap loadImage(String imagePath, String imageName){
+    public static Bitmap loadFromInternalStorage(String imagePath, String imageName){
         Bitmap bitmap = null;
         try {
             File file = new File(imagePath, imageName);

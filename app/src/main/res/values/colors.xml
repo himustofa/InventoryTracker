@@ -8,8 +8,10 @@
     <color name="colorDeepGrey">#a3a3a3</color>
     <color name="colorMediumGrey">#e5e5e5</color>
     <color name="colorLightGrey">#f2f2f2</color>
+
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
+
     <color name="colorRed">#b84442</color>
     <color name="colorLightRed">#f2dede</color>
     <color name="colorGreen">#3c763d</color>

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.appsit.inventorytracker.R;
 import com.appsit.inventorytracker.models.User;
+import com.appsit.inventorytracker.session.SharedPrefManager;
 import com.appsit.inventorytracker.utils.Utility;
 import com.appsit.inventorytracker.viewmodels.UserViewModel;
 import com.google.gson.Gson;
@@ -36,12 +37,6 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
 
         mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-        /*mUserViewModel.getAllUser().observe(this, new Observer<List<User>>() {
-            @Override
-            public void onChanged(List<User> users) {
-                Log.d(TAG, new Gson().toJson(users));
-            }
-        });*/
 
         userName = (EditText) findViewById(R.id.login_username);
         userPass = (EditText) findViewById(R.id.login_password);
@@ -71,6 +66,8 @@ public class SignInActivity extends AppCompatActivity {
                 startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
             }
         });
+
+        isLoggedIn();
     }
 
     //===============================================| Get Data
@@ -81,14 +78,23 @@ public class SignInActivity extends AppCompatActivity {
             public void onChanged(User user) {
                 Log.d(TAG, new Gson().toJson(user));
                 if (user != null) {
+                    SharedPrefManager.getInstance(SignInActivity.this).saveLogInStatus(true);
                     Toast.makeText(SignInActivity.this, "Login successfully, " + user.getFullName(), Toast.LENGTH_SHORT).show();
                     Utility.dismissProgressDialog(mProgress);
-                    startActivity(new Intent(SignInActivity.this, HomeActivity.class));
+                    startActivity(new Intent(SignInActivity.this, UserListActivity.class));
                 } else {
                     Utility.alertDialog(SignInActivity.this, "Please enter your valid username and password");
                     Utility.dismissProgressDialog(mProgress);
                 }
             }
         });
+    }
+
+    //===============================================| Check the login session
+    private void isLoggedIn() {
+        boolean isLoggedIn = SharedPrefManager.getInstance(SignInActivity.this).getLogInStatus();
+        if (isLoggedIn) {
+            startActivity(new Intent(SignInActivity.this, UserListActivity.class));
+        }
     }
 }
