@@ -32,6 +32,7 @@ import com.appsit.inventorytracker.R;
 import com.appsit.inventorytracker.models.User;
 import com.appsit.inventorytracker.utils.Utility;
 import com.appsit.inventorytracker.viewmodels.UserViewModel;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -260,8 +261,9 @@ public class SignUpActivity extends AppCompatActivity {
         long result = mUserViewModel.saveData(user);
         if (result > 0) {
             Toast.makeText(this, "Saved successfully", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(SignUpActivity.this, HomeActivity.class));
+            startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
+        } else {
+            Snackbar.make(findViewById(android.R.id.content), "Error....", Snackbar.LENGTH_INDEFINITE).show();
         }
-        //Snackbar.make(findViewById(android.R.id.content), ""+new Gson().toJson(user), Snackbar.LENGTH_INDEFINITE).show();
     }
 }

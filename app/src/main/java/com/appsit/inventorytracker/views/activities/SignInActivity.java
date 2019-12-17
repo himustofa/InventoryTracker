@@ -20,6 +20,7 @@ import com.appsit.inventorytracker.models.User;
 import com.appsit.inventorytracker.session.SharedPrefManager;
 import com.appsit.inventorytracker.utils.Utility;
 import com.appsit.inventorytracker.viewmodels.UserViewModel;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 import java.io.UnsupportedEncodingException;
@@ -81,9 +82,9 @@ public class SignInActivity extends AppCompatActivity {
                     SharedPrefManager.getInstance(SignInActivity.this).saveLogInStatus(true);
                     Toast.makeText(SignInActivity.this, "Login successfully, " + user.getFullName(), Toast.LENGTH_SHORT).show();
                     Utility.dismissProgressDialog(mProgress);
-                    startActivity(new Intent(SignInActivity.this, UserListActivity.class));
+                    startActivity(new Intent(SignInActivity.this, HomeActivity.class));
                 } else {
-                    Utility.alertDialog(SignInActivity.this, "Please enter your valid username and password");
+                    Snackbar.make(findViewById(android.R.id.content), "Please enter your valid username and password", Snackbar.LENGTH_INDEFINITE).show();
                     Utility.dismissProgressDialog(mProgress);
                 }
             }
@@ -94,7 +95,7 @@ public class SignInActivity extends AppCompatActivity {
     private void isLoggedIn() {
         boolean isLoggedIn = SharedPrefManager.getInstance(SignInActivity.this).getLogInStatus();
         if (isLoggedIn) {
-            startActivity(new Intent(SignInActivity.this, UserListActivity.class));
+            startActivity(new Intent(SignInActivity.this, HomeActivity.class));
         }
     }
 }
