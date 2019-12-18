@@ -53,7 +53,7 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.MyView
         holder.productName.setText(model.getProductName());
         holder.supplierName.setText(model.getSupplierName());
         holder.date.setText(model.getPurchaseDate());
-        holder.quantity.setText(model.getPurchaseProductQuantity());
+        holder.quantity.setText("" + model.getPurchaseProductQuantity());
         holder.amount.setText("" + model.getPurchaseAmount());
         holder.payment.setText("" + model.getPurchasePayment());
         holder.balance.setText("" + model.getPurchaseBalance());

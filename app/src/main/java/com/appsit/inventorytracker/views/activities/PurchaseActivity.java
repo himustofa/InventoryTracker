@@ -21,6 +21,7 @@ import com.appsit.inventorytracker.R;
 import com.appsit.inventorytracker.models.ObjectDialog;
 import com.appsit.inventorytracker.models.Purchase;
 import com.appsit.inventorytracker.models.Supplier;
+import com.appsit.inventorytracker.utils.MyTextWatcher;
 import com.appsit.inventorytracker.utils.Utility;
 import com.appsit.inventorytracker.viewmodels.PurchaseViewModel;
 import com.appsit.inventorytracker.viewmodels.SupplierViewModel;
@@ -35,15 +36,19 @@ import java.util.UUID;
 public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapter.RecyclerItemListener {
 
     private String TAG = this.getClass().getSimpleName();
+
     private List<Supplier> mSupplierList;
     private ArrayList<Purchase> mArrayList = new ArrayList<>();
     private PurchaseAdapter mAdapter;
-    private RecyclerView mRecyclerView;
-    private SupplierViewModel mSupplierViewModel;
     private PurchaseViewModel mViewModel;
     private boolean isValue = true;
 
     List<String> sList = new ArrayList<>();
+
+    private RecyclerView mRecyclerView;
+    private Spinner S1, S2;
+    private TextView T1, T2;
+    private EditText E3, E4, E5, E6, E7, E8, E9;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +57,16 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
 
         mRecyclerView = (RecyclerView) findViewById(R.id.supplier_recycler_view);
 
-        mSupplierViewModel = ViewModelProviders.of(this).get(SupplierViewModel.class);
+        SupplierViewModel mSupplierViewModel = ViewModelProviders.of(this).get(SupplierViewModel.class);
         mSupplierViewModel.getAll().observe(this, new Observer<List<Supplier>>() {
             @Override
             public void onChanged(List<Supplier> suppliers) {
-                mSupplierList = suppliers;
-                sList.add(suppliers.get(0).getSupplierName());
+                if (suppliers != null) {
+                    mSupplierList = suppliers;
+                    if (suppliers.size() > 0) {
+                        sList.add(suppliers.get(0).getSupplierName());
+                    }
+                }
             }
         });
 
@@ -106,38 +115,35 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
     public void addItem() {
         ObjectDialog obj = showObjectDialog("Add Supplier");
 
-        Spinner S1 = (Spinner) obj.getView().findViewById(R.id.product_name);
-        TextView T1 = (TextView) obj.getView().findViewById(R.id.product_id);
-        Spinner S2 = (Spinner) obj.getView().findViewById(R.id.supplier_name);
-        TextView T2 = (TextView) obj.getView().findViewById(R.id.supplier_id);
-        EditText E3 = (EditText) obj.getView().findViewById(R.id.purchase_date);
-        EditText E4 = (EditText) obj.getView().findViewById(R.id.purchase_product_quantity);
-        EditText E5 = (EditText) obj.getView().findViewById(R.id.purchase_product_price);
-        EditText E6 = (EditText) obj.getView().findViewById(R.id.purchase_amount);
-        EditText E7 = (EditText) obj.getView().findViewById(R.id.purchase_payment);
-        EditText E8 = (EditText) obj.getView().findViewById(R.id.purchase_balance);
-        EditText E9 = (EditText) obj.getView().findViewById(R.id.purchase_description);
-
-        Utility.getSpinnerData(new Utility.AdapterPosition() {
+        E3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utility.getDate(PurchaseActivity.this, E3);
+            }
+        });
+        /*Utility.getSpinnerData(new Utility.AdapterPosition() {
             @Override
             public void onPosition(int position) {
                 T1.setText(mSupplierList.get(position).getSupplierId());
             }
-        }, this, S2, sList);
+        }, this, S2, sList);*/
+        E4.addTextChangedListener(new MyTextWatcher(E6, E4, E5, false));
+        E5.addTextChangedListener(new MyTextWatcher(E6, E4, E5, false));
+        E7.addTextChangedListener(new MyTextWatcher(E8, E6, E7, true));
 
         ((Button) obj.getView().findViewById(R.id.purchase_save_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!S1.getSelectedItem().toString().trim().isEmpty() && !E4.getText().toString().trim().isEmpty()) {
+                if(!S1.getSelectedItem().toString().trim().isEmpty() && !S2.getSelectedItem().toString().trim().isEmpty() && !E3.getText().toString().trim().isEmpty() && !E4.getText().toString().trim().isEmpty() && !E5.getText().toString().trim().isEmpty() && !E7.getText().toString().trim().isEmpty()) {
                     Purchase model = new Purchase(
                             UUID.randomUUID().toString(),
                             S1.getSelectedItem().toString(),
                             T1.getText().toString(),
                             S2.getSelectedItem().toString(),
                             T2.getText().toString(),
-                            Integer.parseInt(E3.getText().toString()),
-                            Double.parseDouble(E4.getText().toString()),
-                            E5.getText().toString(),
+                            Integer.parseInt(E4.getText().toString()),
+                            Double.parseDouble(E5.getText().toString()),
+                            E3.getText().toString(),
                             Double.parseDouble(E6.getText().toString()),
                             Double.parseDouble(E7.getText().toString()),
                             Double.parseDouble(E8.getText().toString()),
@@ -160,17 +166,12 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
     public void updateItem(int position, Purchase model) {
         ObjectDialog obj = showObjectDialog("Edit Supplier");
 
-        Spinner E1 = (Spinner) obj.getView().findViewById(R.id.product_name);
-        Spinner E2 = (Spinner) obj.getView().findViewById(R.id.supplier_name);
-        EditText E3 = (EditText) obj.getView().findViewById(R.id.purchase_date);
-        EditText E4 = (EditText) obj.getView().findViewById(R.id.purchase_product_quantity);
-        EditText E5 = (EditText) obj.getView().findViewById(R.id.purchase_product_price);
-        EditText E6 = (EditText) obj.getView().findViewById(R.id.purchase_amount);
-        EditText E7 = (EditText) obj.getView().findViewById(R.id.purchase_payment);
-        EditText E8 = (EditText) obj.getView().findViewById(R.id.purchase_balance);
-        EditText E9 = (EditText) obj.getView().findViewById(R.id.purchase_description);
-        //E1.setText(model.getSupplierName());
-        //E2.setText(model.getSupplierCompanyName());
+        E3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utility.getDate(PurchaseActivity.this, E3);
+            }
+        });
         E3.setText(model.getPurchaseDate());
         E4.setText("" + model.getPurchaseProductQuantity());
         E5.setText("" + model.getPurchaseProductPrice());
@@ -179,30 +180,30 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
         E8.setText("" + model.getPurchaseBalance());
         E9.setText(model.getPurchaseDescription());
 
-        ((Button) obj.getView().findViewById(R.id.supplier_save)).setOnClickListener(new View.OnClickListener() {
+        ((Button) obj.getView().findViewById(R.id.purchase_save_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!E1.getSelectedItem().toString().trim().isEmpty() && !E4.getText().toString().trim().isEmpty()) {
-                    Purchase model = new Purchase(
-                            UUID.randomUUID().toString(),
-                            E1.getSelectedItem().toString(),
-                            "",
-                            E2.getSelectedItem().toString(),
-                            "",
-                            Integer.parseInt(E3.getText().toString()),
-                            Double.parseDouble(E4.getText().toString()),
-                            E5.getText().toString(),
+                if(!S1.getSelectedItem().toString().trim().isEmpty() && !S2.getSelectedItem().toString().trim().isEmpty() && !E3.getText().toString().trim().isEmpty() && !E4.getText().toString().trim().isEmpty() && !E5.getText().toString().trim().isEmpty() && !E7.getText().toString().trim().isEmpty()) {
+                    Purchase mModel = new Purchase(
+                            model.getPurchaseId(),
+                            S1.getSelectedItem().toString(),
+                            T1.getText().toString(),
+                            S2.getSelectedItem().toString(),
+                            T2.getText().toString(),
+                            Integer.parseInt(E4.getText().toString()),
+                            Double.parseDouble(E5.getText().toString()),
+                            E3.getText().toString(),
                             Double.parseDouble(E6.getText().toString()),
                             Double.parseDouble(E7.getText().toString()),
                             Double.parseDouble(E8.getText().toString()),
                             E9.getText().toString()
                     );
-                    long result = mViewModel.update(model);
+                    long result = mViewModel.update(mModel);
                     if (result > 0) {
                         //mArrayList.clear();
                         //mArrayList.addAll(viewModels);
-                        mArrayList.set(position, model);
-                        mAdapter.notifyItemChanged(position, model);
+                        mArrayList.set(position, mModel);
+                        mAdapter.notifyItemChanged(position, mModel);
                         //mAdapter.notifyDataSetChanged(); //recyclerView.invalidate();
                         obj.getDialog().dismiss();
                     }
@@ -222,6 +223,17 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
         builder.setCancelable(true);
         builder.create();
         AlertDialog dialog = builder.show();
+        S1 = (Spinner) view.findViewById(R.id.product_name);
+        T1 = (TextView) view.findViewById(R.id.product_id);
+        S2 = (Spinner) view.findViewById(R.id.supplier_name);
+        T2 = (TextView) view.findViewById(R.id.supplier_id);
+        E3 = (EditText) view.findViewById(R.id.purchase_date);
+        E4 = (EditText) view.findViewById(R.id.purchase_product_quantity);
+        E5 = (EditText) view.findViewById(R.id.purchase_product_price);
+        E6 = (EditText) view.findViewById(R.id.purchase_amount);
+        E7 = (EditText) view.findViewById(R.id.purchase_payment);
+        E8 = (EditText) view.findViewById(R.id.purchase_balance);
+        E9 = (EditText) view.findViewById(R.id.purchase_description);
         return new ObjectDialog(view, dialog);
     }
 }

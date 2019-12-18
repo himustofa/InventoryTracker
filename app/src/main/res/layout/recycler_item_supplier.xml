@@ -21,14 +21,12 @@
                 android:text="Supplier's Name : "
                 android:textColor="@color/colorDarkGrey"
                 android:textStyle="bold"
-                android:textSize="@dimen/size_15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/supplier_item_name"
                 android:textColor="@color/colorDarkGrey"
                 android:textStyle="bold"
-                android:textSize="@dimen/size_15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -40,14 +38,12 @@
             <TextView
                 android:text="Company : "
                 android:textColor="@color/colorDarkGrey"
-                android:textSize="@dimen/size_12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/supplier_item_company"
                 android:text="Company"
                 android:textColor="@color/colorDarkGrey"
-                android:textSize="@dimen/size_12sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -59,14 +55,12 @@
             <TextView
                 android:text="Phone Number : "
                 android:textColor="@color/colorDarkGrey"
-                android:textSize="@dimen/size_12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/supplier_item_phone"
                 android:text="Phone"
                 android:textColor="@color/colorDarkGrey"
-                android:textSize="@dimen/size_12sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -78,14 +72,12 @@
             <TextView
                 android:text="Email : "
                 android:textColor="@color/colorDarkGrey"
-                android:textSize="@dimen/size_12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/supplier_item_email"
                 android:text="E-mail"
                 android:textColor="@color/colorDarkGrey"
-                android:textSize="@dimen/size_12sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -97,14 +89,12 @@
             <TextView
                 android:text="Address : "
                 android:textColor="@color/colorDarkGrey"
-                android:textSize="@dimen/size_12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/supplier_item_address"
                 android:text="Address"
                 android:textColor="@color/colorDarkGrey"
-                android:textSize="@dimen/size_12sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>

@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@color/colorWhite"
+    android:layout_marginBottom="@dimen/space_15dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -21,7 +22,6 @@
                 android:text="Product Name : "
                 android:textColor="@color/colorDarkGrey"
                 android:textStyle="bold"
-                android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
@@ -29,7 +29,6 @@
                 android:text="Product Name"
                 android:textColor="@color/colorDarkGrey"
                 android:textStyle="bold"
-                android:textSize="15sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -41,14 +40,12 @@
             <TextView
                 android:text="Supplier Name : "
                 android:textColor="@color/colorDarkGrey"
-                android:textSize="11sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/supplier_name_pur"
                 android:text="Supplier Name"
                 android:textColor="@color/colorDarkGrey"
-                android:textSize="11sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -60,14 +57,12 @@
             <TextView
                 android:text="Purchase Date : "
                 android:textColor="@color/colorDarkGrey"
-                android:textSize="11sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/purchase_date_pur"
                 android:text="Purchase Date"
                 android:textColor="@color/colorDarkGrey"
-                android:textSize="11sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -79,14 +74,12 @@
             <TextView
                 android:text="Purchase Product Quantity : "
                 android:textColor="@color/colorDarkGrey"
-                android:textSize="11sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/purchase_product_quantity_pur"
                 android:text="Purchase Product Quantity"
                 android:textColor="@color/colorDarkGrey"
-                android:textSize="11sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -98,14 +91,12 @@
             <TextView
                 android:text="Purchase Amount : "
                 android:textColor="@color/colorDarkGrey"
-                android:textSize="11sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/purchase_amount_pur"
                 android:text="Purchase Amount"
                 android:textColor="@color/colorDarkGrey"
-                android:textSize="11sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -117,14 +108,12 @@
             <TextView
                 android:text="Purchase Payment : "
                 android:textColor="@color/colorDarkGrey"
-                android:textSize="11sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/purchase_payment_pur"
                 android:text="Purchase Payment"
                 android:textColor="@color/colorDarkGrey"
-                android:textSize="11sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -136,14 +125,12 @@
             <TextView
                 android:text="Purchase Balance : "
                 android:textColor="@color/colorDarkGrey"
-                android:textSize="11sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/purchase_balance_pur"
                 android:text="Purchase Balance"
                 android:textColor="@color/colorDarkGrey"
-                android:textSize="11sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -153,7 +140,6 @@
             android:text="Purchase Id"
             android:visibility="gone"
             android:textColor="@color/colorDarkGrey"
-            android:textSize="11sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>

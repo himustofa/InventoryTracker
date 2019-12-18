@@ -24,14 +24,16 @@ public class Purchase {
     private int purchaseProductQuantity;
     @NonNull
     private double purchaseProductPrice;
+    @NonNull
     private String purchaseDate;
     private double purchaseAmount;
+    @NonNull
     private double purchasePayment;
     private double purchaseBalance;
     private String purchaseDescription;
     private String createdAt = String.valueOf(new Timestamp(System.currentTimeMillis()));
 
-    public Purchase(@NonNull String purchaseId, @NonNull String productName, String productId, @NonNull String supplierName, String supplierId, int purchaseProductQuantity, double purchaseProductPrice, String purchaseDate, double purchaseAmount, double purchasePayment, double purchaseBalance, String purchaseDescription) {
+    public Purchase(@NonNull String purchaseId, @NonNull String productName, String productId, @NonNull String supplierName, String supplierId, int purchaseProductQuantity, double purchaseProductPrice, @NonNull String purchaseDate, double purchaseAmount, double purchasePayment, double purchaseBalance, String purchaseDescription) {
         this.purchaseId = purchaseId;
         this.productName = productName;
         this.productId = productId;
@@ -105,11 +107,12 @@ public class Purchase {
         this.purchaseProductPrice = purchaseProductPrice;
     }
 
+    @NonNull
     public String getPurchaseDate() {
         return purchaseDate;
     }
 
-    public void setPurchaseDate(String purchaseDate) {
+    public void setPurchaseDate(@NonNull String purchaseDate) {
         this.purchaseDate = purchaseDate;
     }
 
