@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/purchase_alert_dialog_id"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:padding="15dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <!--add product_id | android:entries="@array/product_name_array" -->
+        <Spinner
+            android:id="@+id/product_name"
+            android:entries="@array/product_name_array"
+            android:background="@drawable/shape_edit_text_border"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"/>
+        <TextView
+            android:id="@+id/product_id"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!--add customer_id | android:entries="@array/supplier_name_array" -->
+        <Spinner
+            android:id="@+id/supplier_name"
+            android:hint="Supplier Name"
+            android:entries="@array/supplier_name_array"
+            android:background="@drawable/shape_edit_text_border"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"/>
+        <TextView
+            android:id="@+id/supplier_id"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/purchase_date"
+            android:hint="Purchase Date"
+            android:inputType="datetime"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/shape_edit_text_border"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/purchase_product_quantity"
+            android:hint="Purchase Product Quantity"
+            android:inputType="number"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/shape_edit_text_border"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/purchase_product_price"
+            android:hint="Purchase Product Price"
+            android:inputType="numberDecimal"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/shape_edit_text_border"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/purchase_amount"
+            android:hint="Total Amount"
+            android:inputType="numberDecimal"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/shape_edit_text_border"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/purchase_payment"
+            android:hint="Total Payment"
+            android:inputType="numberDecimal"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/shape_edit_text_border"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/purchase_balance"
+            android:hint="Total Balance"
+            android:inputType="numberDecimal"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/shape_edit_text_border"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/purchase_description"
+            android:gravity="top"
+            android:hint="Description"
+            android:layout_marginBottom="10dp"
+            android:inputType="text|textMultiLine"
+            android:background="@drawable/shape_edit_text_border"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"/>
+
+        <Button
+            android:id="@+id/purchase_save_button"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:text="Save"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorBlack"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</ScrollView>

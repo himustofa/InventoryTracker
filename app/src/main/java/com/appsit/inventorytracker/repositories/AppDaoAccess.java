@@ -7,6 +7,8 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.appsit.inventorytracker.models.Product;
+import com.appsit.inventorytracker.models.Purchase;
 import com.appsit.inventorytracker.models.Supplier;
 import com.appsit.inventorytracker.models.User;
 
@@ -52,4 +54,36 @@ public interface AppDaoAccess {
 
     @Delete
     int deleteSupplier(Supplier supplier);
+
+    //===============================================| Purchase
+    @Query("SELECT * FROM purchases")
+    LiveData<List<Purchase>> getAllPurchase();
+
+    @Query("SELECT * FROM purchases WHERE id=:id")
+    LiveData<Purchase> getPurchaseById(String id);
+
+    @Insert
+    long insertPurchase(Purchase model);
+
+    @Update
+    int updatePurchase(Purchase model);
+
+    @Delete
+    int deletePurchase(Purchase model);
+
+    //===============================================| Product
+    @Query("SELECT * FROM products")
+    LiveData<List<Product>> getAllProduct();
+
+    @Query("SELECT * FROM products WHERE id=:id")
+    LiveData<Product> getProductById(String id);
+
+    @Insert
+    long insertProduct(Product model);
+
+    @Update
+    int updateProduct(Product model);
+
+    @Delete
+    int deleteProduct(Product model);
 }

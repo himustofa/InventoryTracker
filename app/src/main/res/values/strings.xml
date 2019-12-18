@@ -48,4 +48,38 @@
     <string name="settings_english">English</string>
     <string name="settings_bangla">Bangla</string>
     <string name="settings_language_change">Language Change</string>
+
+    <!--dummy data-->
+    <string-array name="product_name_array">
+        <item>Select Product Name</item>
+        <item>Soap</item>
+        <item>Detergent</item>
+        <item>Toothpaste</item>
+        <item>Brush</item>
+        <item>Mouthwash</item>
+        <item>Shampoo</item>
+        <item>Face Wash</item>
+        <item>Hand Wash</item>
+    </string-array>
+
+    <string-array name="customer_name_array">
+        <item>Select Customer</item>
+        <item>Mr. Munir</item>
+        <item>Mr. Mamun</item>
+        <item>Mr. Mustofa</item>
+        <item>Mr. Musharoof</item>
+        <item>Mr. Masud</item>
+        <item>Mr. Manik</item>
+        <item>Mr. Munna</item>
+    </string-array>
+
+    <string-array name="supplier_name_array">
+        <item>Select Supplier</item>
+        <item>Abdul Haque</item>
+        <item>Abdul Rab</item>
+        <item>Abdul Karim</item>
+        <item>Abdul Razzak</item>
+        <item>Abdul Jabbar</item>
+        <item>Abdul Latif</item>
+    </string-array>
 </resources>

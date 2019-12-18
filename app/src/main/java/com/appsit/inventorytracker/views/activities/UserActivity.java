@@ -16,7 +16,7 @@ import com.appsit.inventorytracker.views.adapters.UserAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserListActivity extends AppCompatActivity {
+public class UserActivity extends AppCompatActivity {
 
     private UserViewModel mViewModel;
     private ArrayList<User> mArrayList = new ArrayList<>();
@@ -26,7 +26,7 @@ public class UserListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_list);
+        setContentView(R.layout.activity_user);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.user_recycler_view);
 
@@ -35,8 +35,8 @@ public class UserListActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<User> users) {
                 mArrayList.addAll(users);
-                mAdapter = new UserAdapter(UserListActivity.this, mArrayList);
-                mRecyclerView.setLayoutManager(new LinearLayoutManager(UserListActivity.this));
+                mAdapter = new UserAdapter(UserActivity.this, mArrayList);
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(UserActivity.this));
                 mRecyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
             }

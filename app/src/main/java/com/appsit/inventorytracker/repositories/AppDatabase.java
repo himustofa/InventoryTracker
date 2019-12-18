@@ -7,11 +7,13 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.appsit.inventorytracker.models.Customer;
+import com.appsit.inventorytracker.models.Product;
+import com.appsit.inventorytracker.models.Purchase;
 import com.appsit.inventorytracker.models.Supplier;
 import com.appsit.inventorytracker.models.User;
 import com.appsit.inventorytracker.utils.ConstantKey;
 
-@Database(entities = {User.class, Supplier.class}, version = ConstantKey.DATABASE_VERSION)
+@Database(entities = {User.class, Supplier.class, Purchase.class, Product.class}, version = ConstantKey.DATABASE_VERSION)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract AppDaoAccess getDaoAccess();

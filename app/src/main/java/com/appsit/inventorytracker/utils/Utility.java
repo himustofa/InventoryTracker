@@ -9,15 +9,19 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AlertDialog;
 
 import com.appsit.inventorytracker.R;
+import com.appsit.inventorytracker.views.activities.PurchaseActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -28,6 +32,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.util.Base64;
+import java.util.List;
 
 public class Utility {
 
@@ -163,7 +168,6 @@ public class Utility {
                 }).show();
     }
 
-    //====================================================| Alert Dialog About
     public static void aboutMe(Context context) {
         new AlertDialog.Builder(context)
                 .setTitle(R.string.about_title)
@@ -183,6 +187,22 @@ public class Utility {
                 dialog.cancel();
             }
         });
+    }
+
+    public static void getSpinnerData(final AdapterPosition mPosition, Context context, Spinner spinner, List<String> list) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, list);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mPosition.onPosition(position);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+    }
+    public interface AdapterPosition {
+        void onPosition(int position);
     }
 
     //===============================================| ProgressDialog

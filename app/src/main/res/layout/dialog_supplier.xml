@@ -86,7 +86,7 @@
             android:paddingRight="@dimen/space_10dp"
             android:text="Save"
             android:textColor="@color/colorWhite"
-            android:background="@color/colorDarkGrey"
+            android:background="@color/colorBlack"
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
