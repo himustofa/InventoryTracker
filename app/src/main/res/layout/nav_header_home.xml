@@ -58,7 +58,7 @@
         <TextView
             android:layout_marginBottom="@dimen/space_5dp"
             android:textSize="@dimen/size_14sp"
-            android:text="To-Let Visa Card"
+            android:text="Visa Card"
             android:textColor="@color/colorWhite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
