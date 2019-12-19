@@ -87,6 +87,7 @@ public class SignInActivity extends AppCompatActivity {
                     Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //For login to clear this screen for that did not back this screen
                     startActivity(intent);
+                    finish();
                 } else {
                     Snackbar.make(findViewById(android.R.id.content), "Please enter your valid username and password", Snackbar.LENGTH_INDEFINITE).show();
                     Utility.dismissProgressDialog(mProgress);
