@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import com.appsit.inventorytracker.viewmodels.CustomerViewModel;
 import com.appsit.inventorytracker.views.adapters.CustomerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,6 +103,7 @@ public class CustomerActivity extends AppCompatActivity implements CustomerAdapt
                             E6.getText().toString(),
                             E7.getText().toString()
                     );
+                    Log.d(TAG, new Gson().toJson(model));
                     long result = mViewModel.save(model);
                     if (result > 0) {
                         mArrayList.add(model);
@@ -165,13 +168,13 @@ public class CustomerActivity extends AppCompatActivity implements CustomerAdapt
         builder.setCancelable(true);
         builder.create();
         AlertDialog dialog = builder.show();
-        EditText E1 = (EditText) view.findViewById(R.id.customer_name);
-        EditText E2 = (EditText) view.findViewById(R.id.customer_phone_number);
-        EditText E3 = (EditText) view.findViewById(R.id.customer_email);
-        EditText E4 = (EditText) view.findViewById(R.id.customer_contact_person);
-        EditText E5 = (EditText) view.findViewById(R.id.customer_discount);
-        EditText E6 = (EditText) view.findViewById(R.id.customer_address);
-        EditText E7 = (EditText) view.findViewById(R.id.customer_description);
+        E1 = (EditText) view.findViewById(R.id.customer_name);
+        E2 = (EditText) view.findViewById(R.id.customer_phone_number);
+        E3 = (EditText) view.findViewById(R.id.customer_email);
+        E4 = (EditText) view.findViewById(R.id.customer_contact_person);
+        E5 = (EditText) view.findViewById(R.id.customer_discount);
+        E6 = (EditText) view.findViewById(R.id.customer_address);
+        E7 = (EditText) view.findViewById(R.id.customer_description);
         return new ObjectDialog(view, dialog);
     }
 }

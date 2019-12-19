@@ -33,22 +33,22 @@ public class CustomerViewModel extends AndroidViewModel {
     }
 
     @SuppressLint("StaticFieldLeak")
-    public long save(Customer customer) {
+    public long save(Customer model) {
         new AsyncTask<Void, Void, Long>() {
             @Override
             protected Long doInBackground(Void... voids) {
-                return mDaoAccess.insertCustomer(customer);
+                return mDaoAccess.insertCustomer(model);
             }
         }.execute();
         return 1;
     }
 
     @SuppressLint("StaticFieldLeak")
-    public int update(Customer customer) {
+    public int update(Customer model) {
         new AsyncTask<Void, Void, Integer>() {
             @Override
             protected Integer doInBackground(Void... voids) {
-                int result = mDaoAccess.updateCustomer(customer);
+                int result = mDaoAccess.updateCustomer(model);
                 Log.d(TAG, "" + result);
                 return result;
             }
@@ -57,11 +57,11 @@ public class CustomerViewModel extends AndroidViewModel {
     }
 
     @SuppressLint("StaticFieldLeak")
-    public int delete(Customer customer) {
+    public int delete(Customer model) {
         new AsyncTask<Void, Void, Integer>() {
             @Override
             protected Integer doInBackground(Void... voids) {
-                int result = mDaoAccess.deleteCustomer(customer);
+                int result = mDaoAccess.deleteCustomer(model);
                 Log.d(TAG, "" + result);
                 return result;
             }
