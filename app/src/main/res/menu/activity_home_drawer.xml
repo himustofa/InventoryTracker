@@ -5,17 +5,20 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/post_ad_id"
-            android:title="Post Ad" />
+            android:id="@+id/suppliers_id"
+            android:title="Suppliers" />
         <item
-            android:id="@+id/notice_id"
-            android:title="Notification" />
+            android:id="@+id/products_id"
+            android:title="Products" />
         <item
-            android:id="@+id/favorite_id"
-            android:title="Favorite" />
+            android:id="@+id/purchases_id"
+            android:title="Purchases" />
         <item
-            android:id="@+id/profile_id"
-            android:title="My Profile" />
+            android:id="@+id/customers_id"
+            android:title="Customers" />
+        <item
+            android:id="@+id/sales_id"
+            android:title="Sales" />
         <item
             android:id="@+id/settings_id"
             android:title="Settings" />

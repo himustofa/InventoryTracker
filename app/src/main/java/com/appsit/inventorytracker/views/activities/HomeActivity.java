@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -76,7 +77,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(mToggle.onOptionsItemSelected(item)){
             return true;
         }
@@ -106,16 +107,23 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.post_ad_id:
-                //startActivity(new Intent(HomeActivity.this, PostAdActivity.class));
+            case R.id.suppliers_id:
+                startActivity(new Intent(HomeActivity.this, SupplierActivity.class));
                 break;
-            case R.id.notice_id:
+            case R.id.products_id:
+                startActivity(new Intent(HomeActivity.this, ProductActivity.class));
                 break;
-            case R.id.favorite_id:
+            case R.id.purchases_id:
+                startActivity(new Intent(HomeActivity.this, PurchaseActivity.class));
                 break;
-            case R.id.profile_id:
+            case R.id.customers_id:
+                startActivity(new Intent(HomeActivity.this, CustomerActivity.class));
+                break;
+            case R.id.sales_id:
+                startActivity(new Intent(HomeActivity.this, SaleActivity.class));
                 break;
             case R.id.settings_id:
+                startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
                 break;
             case R.id.about_id:
                 break;

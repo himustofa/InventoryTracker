@@ -136,6 +136,8 @@ public class SignUpActivity extends AppCompatActivity {
                         saveData(mUser);
                         Utility.dismissProgressDialog(mProgress);
                     }
+                } else {
+                    Snackbar.make(findViewById(android.R.id.content), "Please upload your photo", Snackbar.LENGTH_INDEFINITE).show();
                 }
             }
         }

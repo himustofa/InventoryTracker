@@ -80,6 +80,7 @@ public class SignInActivity extends AppCompatActivity {
                 Log.d(TAG, new Gson().toJson(user));
                 if (user != null) {
                     SharedPrefManager.getInstance(SignInActivity.this).saveLogInStatus(true);
+                    SharedPrefManager.getInstance(SignInActivity.this).saveUser(user);
                     Toast.makeText(SignInActivity.this, "Login successfully, " + user.getFullName(), Toast.LENGTH_SHORT).show();
                     Utility.dismissProgressDialog(mProgress);
                     startActivity(new Intent(SignInActivity.this, HomeActivity.class));

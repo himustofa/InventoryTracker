@@ -1,165 +1,177 @@
 package com.appsit.inventorytracker.views.activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.appsit.inventorytracker.R;
+import com.appsit.inventorytracker.models.Customer;
+import com.appsit.inventorytracker.models.ObjectDialog;
+import com.appsit.inventorytracker.viewmodels.CustomerViewModel;
+import com.appsit.inventorytracker.views.adapters.CustomerAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
-public class CustomerActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+public class CustomerActivity extends AppCompatActivity implements CustomerAdapter.RecyclerItemListener {
+
+    private String TAG = this.getClass().getSimpleName();
+    private ArrayList<Customer> mArrayList = new ArrayList<>();
+    private CustomerAdapter mAdapter;
+    private CustomerViewModel mViewModel;
+    private boolean isValue = true;
+
+    private RecyclerView mRecyclerView;
+    private EditText E1, E2, E3, E4, E5, E6, E7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer);
 
-        /*
-        ((Spinner) findViewById(R.id.customer_id)).setOnItemSelectedListener(new ActionHandler());
-        ((Button) findViewById(R.id.submit_button)).setOnClickListener(new ActionHandler());
-        ((Button) findViewById(R.id.display_button)).setOnClickListener(new ActionHandler());
-        ((Button) findViewById(R.id.update_button)).setOnClickListener(new ActionHandler());
-        ((Button) findViewById(R.id.delete_button)).setOnClickListener(new ActionHandler());
-        */
-    }
-
-    /*
-    //===============================================| Click Events
-    private class ActionHandler implements View.OnClickListener, AdapterView.OnItemSelectedListener {
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.submit_button:
-                    String name = customerName.getText().toString().trim();
-                    String phone = customerPhoneNumber.getText().toString().trim();
-                    String desc = customerDescription.getText().toString().trim();
-                    if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(phone) && !TextUtils.isEmpty(desc)) {
-                        saveData(name, phone, desc);
-                    }
-                    break;
-                case R.id.display_button:
-                    String mId = customerId.getSelectedItem().toString();
-                    if (!TextUtils.isEmpty(mId)) {
-                        getData(mId);
-                    }
-                    break;
-                case R.id.update_button:
-                    String id = customerId.getSelectedItem().toString();
-                    String nameD = customerNameDisplay.getText().toString().trim();
-                    String phoneD = customerPhoneNumberDisplay.getText().toString().trim();
-                    String descD = customerDescriptionDisplay.getText().toString().trim();
-                    if (!TextUtils.isEmpty(id) && !TextUtils.isEmpty(nameD) && !TextUtils.isEmpty(phoneD) && !TextUtils.isEmpty(descD)) {
-                        updateData(id, nameD, phoneD, descD);
-                    }
-                    break;
-                case R.id.delete_button:
-                    String i = customerId.getSelectedItem().toString();
-                    String n = customerNameDisplay.getText().toString().trim();
-                    String p = customerPhoneNumberDisplay.getText().toString().trim();
-                    String d = customerDescriptionDisplay.getText().toString().trim();
-                    if (!TextUtils.isEmpty(i) && !TextUtils.isEmpty(n) && !TextUtils.isEmpty(p) && !TextUtils.isEmpty(d)) {
-                        deleteData(i, n, p, d);
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        @Override
-        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            Object item = adapterView.getItemAtPosition(i);
-            if (item != null) {
-                getData(item.toString());
-                //Toast.makeText(CustomerActivity.this, item.toString(), Toast.LENGTH_SHORT).show();
-            }
-        }
-        @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {}
-    }
-
-    //===============================================| Save Data
-    private void saveData(String name, String phone, String desc) {
-        final String id = UUID.randomUUID().toString();
-        Customer model = new Customer();
-        model.setCustomerId(id);
-        model.setCustomerName(name);
-        model.setCustomerPhoneNumber(phone);
-        model.setCustomerDescription(desc);
-        long data = mViewModel.saveData(model);
-        if (data > 0){
-            clearInputFields();
-            Toast.makeText(this,"Inserted successfully", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    //===============================================| Get Data
-    private void getData(String mId) {
-        LiveData<Customer> model = mViewModel.getById(mId);
-        model.observe(this, new Observer<Customer>() {
-            @Override
-            public void onChanged(Customer customer) {
-                if (customer != null) {
-                    Log.d(TAG, customer.getCustomerName() + " got the object successfully");
-                    customerNameDisplay.setText(customer.getCustomerName());
-                    customerPhoneNumberDisplay.setText(customer.getCustomerPhoneNumber());
-                    customerDescriptionDisplay.setText(customer.getCustomerDescription());
-                }
-            }
-        });
-    }
-
-    //===============================================| Get Data
-    private void getAllData() {
-        ArrayList<String> arrayList = new ArrayList<>();
-        LiveData<List<Customer>> model = mViewModel.getAllData();
-        model.observe(this, new Observer<List<Customer>>() {
+        mRecyclerView = (RecyclerView) findViewById(R.id.customer_recycler_view);
+        mViewModel = ViewModelProviders.of(this).get(CustomerViewModel.class);
+        mViewModel.getAllData().observe(this, new Observer<List<Customer>>() {
             @Override
             public void onChanged(List<Customer> customers) {
-                arrayList.clear();
-                for(Customer obj : customers){
-                    arrayList.add(obj.getCustomerId());
-                    adapter.notifyDataSetChanged();
+                if (isValue) {
+                    mArrayList.addAll(customers);
+                    isValue = false;
                 }
-                Log.d(TAG, new Gson().toJson(customers));
             }
         });
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayList);
-        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        customerId.setAdapter(adapter);
+        ((FloatingActionButton) findViewById(R.id.customer_add_fab)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addItem();
+            }
+        });
+
+        initRecyclerView();
     }
 
-    //===============================================| Update Data
-    private void updateData(String id, String name, String phone, String desc) {
-        Customer model = new Customer();
-        model.setCustomerId(id);
-        model.setCustomerName(name);
-        model.setCustomerPhoneNumber(phone);
-        model.setCustomerDescription(desc);
-        int data = mViewModel.updateData(model);
-        if (data > 0){
-            Toast.makeText(this, "Updated successfully", Toast.LENGTH_SHORT).show();
+    private void initRecyclerView() {
+        mAdapter = new CustomerAdapter(CustomerActivity.this, mArrayList);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(CustomerActivity.this));
+        //mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        mAdapter.notifyDataSetChanged();
+    }
+
+    //https://stackoverflow.com/questions/31367599/how-to-update-recyclerview-adapter-data
+    @Override
+    public void removeItem(int position, Customer model) {
+        long result = mViewModel.delete(model);
+        if (result > 0) {
+            mArrayList.remove(position);
+            mRecyclerView.removeViewAt(position);
+            mAdapter.notifyItemRemoved(position);
+            mAdapter.notifyItemRangeChanged(position, mArrayList.size());
         }
     }
 
-    //===============================================| Delete Data
-    private void deleteData(String id, String name, String phone, String desc) {
-        Customer model = new Customer();
-        model.setCustomerId(id);
-        model.setCustomerName(name);
-        model.setCustomerPhoneNumber(phone);
-        model.setCustomerDescription(desc);
-        int data = mViewModel.deleteData(model); //delete row
-        Log.d(TAG, ""+data);
-        if(data > 0){
-            Toast.makeText(this, "Delete row successfully", Toast.LENGTH_SHORT).show();
-        }
+    @Override
+    public void addItem() {
+        ObjectDialog obj = showObjectDialog("Add Customer");
+
+        ((Button) obj.getView().findViewById(R.id.customer_save_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!E1.getText().toString().trim().isEmpty() && !E4.getText().toString().trim().isEmpty()) {
+                    Customer model = new Customer(
+                            UUID.randomUUID().toString(),
+                            E1.getText().toString(),
+                            E2.getText().toString(),
+                            E3.getText().toString(),
+                            E4.getText().toString(),
+                            Double.parseDouble(E5.getText().toString()),
+                            E6.getText().toString(),
+                            E7.getText().toString()
+                    );
+                    long result = mViewModel.save(model);
+                    if (result > 0) {
+                        mArrayList.add(model);
+                        mAdapter.notifyItemInserted(mArrayList.size());
+                        obj.getDialog().dismiss();
+                    }
+                } else {
+                    Snackbar.make(findViewById(android.R.id.content), "Please insert the values in your mandatory fields.", Snackbar.LENGTH_INDEFINITE).show();
+                }
+            }
+        });
     }
 
-    private void clearInputFields() {
-        customerName.getText().clear();
-        customerPhoneNumber.getText().clear();
-        customerDescription.getText().clear();
+    @Override
+    public void updateItem(int position, Customer model) {
+        ObjectDialog obj = showObjectDialog("Edit Customer");
+
+        E1.setText(model.getCustomerName());
+        E2.setText(model.getCustomerPhoneNumber());
+        E3.setText(model.getCustomerEmail());
+        E4.setText(model.getCustomerContactPerson());
+        E5.setText("" + model.getCustomerDiscount());
+        E6.setText(model.getCustomerAddress());
+        E7.setText(model.getCustomerDescription());
+
+        ((Button) obj.getView().findViewById(R.id.customer_save_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!E1.getText().toString().trim().isEmpty() && !E4.getText().toString().trim().isEmpty()) {
+                    Customer customer = new Customer(
+                            model.getCustomerId(),
+                            E1.getText().toString(),
+                            E2.getText().toString(),
+                            E3.getText().toString(),
+                            E4.getText().toString(),
+                            Double.parseDouble(E5.getText().toString()),
+                            E6.getText().toString(),
+                            E7.getText().toString()
+                    );
+                    long result = mViewModel.update(customer);
+                    if (result > 0) {
+                        //mArrayList.clear();
+                        //mArrayList.addAll(viewModels);
+                        mArrayList.set(position, customer);
+                        mAdapter.notifyItemChanged(position, customer);
+                        //mAdapter.notifyDataSetChanged(); //recyclerView.invalidate();
+                        obj.getDialog().dismiss();
+                    }
+                } else {
+                    Snackbar.make(findViewById(android.R.id.content), "Please insert the values in your mandatory fields.", Snackbar.LENGTH_INDEFINITE).show();
+                }
+            }
+        });
     }
-    */
+
+    private ObjectDialog showObjectDialog(String title) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_customer, null, false);
+        builder.setView(view);
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setTitle(title);
+        builder.setCancelable(true);
+        builder.create();
+        AlertDialog dialog = builder.show();
+        EditText E1 = (EditText) view.findViewById(R.id.customer_name);
+        EditText E2 = (EditText) view.findViewById(R.id.customer_phone_number);
+        EditText E3 = (EditText) view.findViewById(R.id.customer_email);
+        EditText E4 = (EditText) view.findViewById(R.id.customer_contact_person);
+        EditText E5 = (EditText) view.findViewById(R.id.customer_discount);
+        EditText E6 = (EditText) view.findViewById(R.id.customer_address);
+        EditText E7 = (EditText) view.findViewById(R.id.customer_description);
+        return new ObjectDialog(view, dialog);
+    }
 }

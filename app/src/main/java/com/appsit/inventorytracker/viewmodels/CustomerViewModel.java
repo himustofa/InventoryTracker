@@ -21,35 +21,34 @@ public class CustomerViewModel extends AndroidViewModel {
 
     public CustomerViewModel(Application application) {
         super(application);
-
         mDaoAccess = AppDatabase.getDatabase(application).getDaoAccess();
     }
 
-    /*public LiveData<Customer> getById(String mId) {
-        return mDaoAccess.get(mId);
+    public LiveData<Customer> getById(String mId) {
+        return mDaoAccess.getCustomerById(mId);
     }
 
     public LiveData<List<Customer>> getAllData() {
-        return mDaoAccess.getAll();
+        return mDaoAccess.getAllCustomer();
     }
 
     @SuppressLint("StaticFieldLeak")
-    public long saveData(Customer customer) {
+    public long save(Customer customer) {
         new AsyncTask<Void, Void, Long>() {
             @Override
             protected Long doInBackground(Void... voids) {
-                return mDaoAccess.insert(customer);
+                return mDaoAccess.insertCustomer(customer);
             }
         }.execute();
         return 1;
     }
 
     @SuppressLint("StaticFieldLeak")
-    public int updateData(Customer customer) {
+    public int update(Customer customer) {
         new AsyncTask<Void, Void, Integer>() {
             @Override
             protected Integer doInBackground(Void... voids) {
-                int result = mDaoAccess.update(customer);
+                int result = mDaoAccess.updateCustomer(customer);
                 Log.d(TAG, "" + result);
                 return result;
             }
@@ -58,15 +57,15 @@ public class CustomerViewModel extends AndroidViewModel {
     }
 
     @SuppressLint("StaticFieldLeak")
-    public int deleteData(Customer customer) {
+    public int delete(Customer customer) {
         new AsyncTask<Void, Void, Integer>() {
             @Override
             protected Integer doInBackground(Void... voids) {
-                int result = mDaoAccess.delete(customer);
+                int result = mDaoAccess.deleteCustomer(customer);
                 Log.d(TAG, "" + result);
                 return result;
             }
         }.execute();
         return 1;
-    }*/
+    }
 }

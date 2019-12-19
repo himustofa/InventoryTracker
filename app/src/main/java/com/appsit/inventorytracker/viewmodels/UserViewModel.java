@@ -43,4 +43,8 @@ public class UserViewModel extends AndroidViewModel {
     public LiveData<List<User>> getAllUser() {
         return mDaoAccess.getAllUser();
     }
+
+    public LiveData<User> getUser(String id) {
+        return mDaoAccess.getUser(id);
+    }
 }
