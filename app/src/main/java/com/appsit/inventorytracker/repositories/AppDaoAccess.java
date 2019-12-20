@@ -105,7 +105,7 @@ public interface AppDaoAccess {
     @Delete
     int deleteCustomer(Customer model);
 
-    //===============================================| Customer
+    //===============================================| Sale
     @Query("SELECT * FROM sales")
     LiveData<List<Sale>> getAllSale();
 

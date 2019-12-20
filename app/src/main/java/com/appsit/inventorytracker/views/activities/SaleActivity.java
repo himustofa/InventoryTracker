@@ -48,7 +48,8 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sale);
-        mRecyclerView = (RecyclerView) findViewById(R.id.customer_recycler_view);
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.sale_recycler_view);
         mViewModel = ViewModelProviders.of(this).get(SaleViewModel.class);
         mViewModel.getAll().observe(this, new Observer<List<Sale>>() {
             @Override
@@ -60,7 +61,7 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
             }
         });
 
-        ((FloatingActionButton) findViewById(R.id.customer_add_fab)).setOnClickListener(new View.OnClickListener() {
+        ((FloatingActionButton) findViewById(R.id.sale_add_fab)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addItem();
@@ -92,7 +93,7 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
 
     @Override
     public void addItem() {
-        ObjectDialog obj = showObjectDialog("Add Customer");
+        ObjectDialog obj = showObjectDialog("Add");
 
         E3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +138,7 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
 
     @Override
     public void updateItem(int position, Sale model) {
-        ObjectDialog obj = showObjectDialog("Edit Customer");
+        ObjectDialog obj = showObjectDialog("Edit");
 
         E1.setText("" + model.getProductQuantity());
         E2.setText("" + model.getPurchaseProductQuantity());

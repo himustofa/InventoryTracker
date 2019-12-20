@@ -51,7 +51,7 @@ public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.MyViewModel> {
         Sale model = mArrayList.get(position);
 
         holder.name.setText(model.getCustomerName());
-        holder.quantity.setText(model.getProductQuantity());
+        holder.quantity.setText("" + model.getProductQuantity());
         holder.date.setText(model.getSalesDate());
         holder.amount.setText("" + model.getSalesAmount());
 
@@ -83,7 +83,7 @@ public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.MyViewModel> {
         return mArrayList.size();
     }
 
-    class MyViewModel extends RecyclerView.ViewHolder {
+    public class MyViewModel extends RecyclerView.ViewHolder {
 
         private LinearLayout layout;
         private TextView name, quantity, date, amount;
