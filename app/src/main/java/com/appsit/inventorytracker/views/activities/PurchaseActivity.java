@@ -19,10 +19,12 @@ import android.widget.TextView;
 
 import com.appsit.inventorytracker.R;
 import com.appsit.inventorytracker.models.ObjectDialog;
+import com.appsit.inventorytracker.models.Product;
 import com.appsit.inventorytracker.models.Purchase;
 import com.appsit.inventorytracker.models.Supplier;
 import com.appsit.inventorytracker.utils.MyTextWatcher;
 import com.appsit.inventorytracker.utils.Utility;
+import com.appsit.inventorytracker.viewmodels.ProductViewModel;
 import com.appsit.inventorytracker.viewmodels.PurchaseViewModel;
 import com.appsit.inventorytracker.viewmodels.SupplierViewModel;
 import com.appsit.inventorytracker.views.adapters.PurchaseAdapter;
@@ -38,12 +40,14 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
     private String TAG = this.getClass().getSimpleName();
 
     private List<Supplier> mSupplierList;
+    private List<Product> mProductList;
     private ArrayList<Purchase> mArrayList = new ArrayList<>();
     private PurchaseAdapter mAdapter;
     private PurchaseViewModel mViewModel;
     private boolean isValue = true;
 
     List<String> sList = new ArrayList<>();
+    List<String> pList = new ArrayList<>();
 
     private RecyclerView mRecyclerView;
     private Spinner S1, S2;
@@ -55,7 +59,7 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_purchase);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.supplier_recycler_view);
+        mRecyclerView = (RecyclerView) findViewById(R.id.purchase_recycler_view);
 
         SupplierViewModel mSupplierViewModel = ViewModelProviders.of(this).get(SupplierViewModel.class);
         mSupplierViewModel.getAll().observe(this, new Observer<List<Supplier>>() {
@@ -65,6 +69,19 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
                     mSupplierList = suppliers;
                     if (suppliers.size() > 0) {
                         sList.add(suppliers.get(0).getSupplierName());
+                    }
+                }
+            }
+        });
+
+        ProductViewModel mProductViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
+        mProductViewModel.getAll().observe(this, new Observer<List<Product>>() {
+            @Override
+            public void onChanged(List<Product> products) {
+                if (products != null) {
+                    mProductList = products;
+                    if (products.size() > 0) {
+                        pList.add(products.get(0).getProductName());
                     }
                 }
             }
@@ -81,10 +98,14 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
             }
         });
 
-        ((FloatingActionButton) findViewById(R.id.supplier_add_fab)).setOnClickListener(new View.OnClickListener() {
+        ((FloatingActionButton) findViewById(R.id.purchase_add_fab)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addItem();
+                if (mProductList != null) {
+                    addItem();
+                } else {
+                    Snackbar.make(findViewById(android.R.id.content), "Products are not available", Snackbar.LENGTH_INDEFINITE).show();
+                }
             }
         });
 
@@ -113,7 +134,7 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
 
     @Override
     public void addItem() {
-        ObjectDialog obj = showObjectDialog("Add Supplier");
+        ObjectDialog obj = showObjectDialog("Add");
 
         E3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,12 +142,18 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
                 Utility.getDate(PurchaseActivity.this, E3);
             }
         });
-        /*Utility.getSpinnerData(new Utility.AdapterPosition() {
+        Utility.getSpinnerData(new Utility.AdapterPosition() {
             @Override
             public void onPosition(int position) {
-                T1.setText(mSupplierList.get(position).getSupplierId());
+                T1.setText(mProductList.get(position).getProductId());
             }
-        }, this, S2, sList);*/
+        }, this, S1, pList);
+        Utility.getSpinnerData(new Utility.AdapterPosition() {
+            @Override
+            public void onPosition(int position) {
+                T2.setText(mSupplierList.get(position).getSupplierId());
+            }
+        }, this, S2, sList);
         E4.addTextChangedListener(new MyTextWatcher(E6, E4, E5, false));
         E5.addTextChangedListener(new MyTextWatcher(E6, E4, E5, false));
         E7.addTextChangedListener(new MyTextWatcher(E8, E6, E7, true));
@@ -164,7 +191,7 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
 
     @Override
     public void updateItem(int position, Purchase model) {
-        ObjectDialog obj = showObjectDialog("Edit Supplier");
+        ObjectDialog obj = showObjectDialog("Edit");
 
         E3.setOnClickListener(new View.OnClickListener() {
             @Override

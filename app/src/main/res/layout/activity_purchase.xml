@@ -8,13 +8,13 @@
     tools:context=".views.activities.PurchaseActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/supplier_recycler_view"
+        android:id="@+id/purchase_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </androidx.recyclerview.widget.RecyclerView>
 
     <EditText
-        android:id="@+id/supplier_search"
+        android:id="@+id/purchase_search"
         android:layout_gravity="bottom"
         android:background="@drawable/shape_white_corner_round_grey"
         android:hint=" Search item..."
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/supplier_add_fab"
+        android:id="@+id/purchase_add_fab"
         android:layout_gravity="bottom|right"
         android:clickable="true"
         android:focusable="true"
