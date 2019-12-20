@@ -45,6 +45,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class SignUpActivity extends AppCompatActivity {
 
     private String TAG = this.getClass().getSimpleName();

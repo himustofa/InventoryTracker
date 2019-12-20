@@ -61,13 +61,23 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <!--<de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_image"
+            android:layout_gravity="center"
+            android:contentDescription="@string/nav_header_desc"
+            android:layout_width="@dimen/space_140dp"
+            android:layout_height="@dimen/space_140dp"
+            android:layout_marginBottom="35dp"
+            android:src="@drawable/ic_log_mk"
+            app:civ_border_width="4dp"
+            app:civ_border_color="@color/colorLightGrey"/>-->
         <ImageView
             android:id="@+id/user_image"
             android:clickable="true"
             android:focusable="true"
-            android:layout_gravity="left"
+            android:layout_gravity="center"
             android:background="@drawable/shape_image_border"
-            android:src="@drawable/ic_log_mk"
+            android:src="@drawable/ic_photo_upload"
             android:layout_marginBottom="35dp"
             android:layout_width="140dp"
             android:layout_height="140dp"

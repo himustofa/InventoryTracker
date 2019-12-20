@@ -10,6 +10,7 @@ import androidx.room.Update;
 import com.appsit.inventorytracker.models.Customer;
 import com.appsit.inventorytracker.models.Product;
 import com.appsit.inventorytracker.models.Purchase;
+import com.appsit.inventorytracker.models.Sale;
 import com.appsit.inventorytracker.models.Supplier;
 import com.appsit.inventorytracker.models.User;
 
@@ -103,4 +104,20 @@ public interface AppDaoAccess {
 
     @Delete
     int deleteCustomer(Customer model);
+
+    //===============================================| Customer
+    @Query("SELECT * FROM sales")
+    LiveData<List<Sale>> getAllSale();
+
+    @Query("SELECT * FROM sales WHERE id=:id")
+    LiveData<Sale> getSaleById(String id);
+
+    @Insert
+    long insertSale(Sale model);
+
+    @Update
+    int updateSale(Sale model);
+
+    @Delete
+    int deleteSale(Sale model);
 }

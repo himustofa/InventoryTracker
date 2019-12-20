@@ -4,7 +4,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="nav_header_title">Mustofa Kamal</string>
+    <string name="nav_header_title">Inventory Tracker</string>
     <string name="nav_header_subtitle">mustofa2008@gmail.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
@@ -30,12 +30,12 @@
     <string name="sign_out">Sign Out</string>
 
     <string name="about_title">About</string>
-    <string name="developed_by">Developed by Kamal</string>
+    <string name="developed_by">Developed by Inventory Tracker</string>
     <string name="apps_details">
-        TO-LET
+        Inventory Tracker
         \nApps Version: 1.0.0
         \nDeveloped by
-        \nMustofa Kamal
+        \nInventoryTracker
         \nmustofa2008@gmail.com
     </string>
 
