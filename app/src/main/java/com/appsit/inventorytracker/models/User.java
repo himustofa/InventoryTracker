@@ -23,6 +23,7 @@ public class User {
     private String username;
     @NonNull
     private String password;
+    private String role = String.valueOf(Role.NORMAL_USER);
     private String photoName;
     private String photoPath;
     private String createdAt = String.valueOf(new Timestamp(System.currentTimeMillis()));
@@ -89,6 +90,14 @@ public class User {
 
     public void setPassword(@NonNull String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getPhotoName() {
