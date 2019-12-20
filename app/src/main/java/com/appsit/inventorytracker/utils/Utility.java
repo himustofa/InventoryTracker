@@ -189,7 +189,7 @@ public class Utility {
         });
     }
 
-    public static void getSpinnerData(final AdapterPosition mPosition, Context context, Spinner spinner, List<String> list) {
+    public static ArrayAdapter<String> getSpinnerData(final AdapterPosition mPosition, Context context, Spinner spinner, List<String> list) {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, list);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -200,6 +200,7 @@ public class Utility {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
+        return adapter;
     }
     public interface AdapterPosition {
         void onPosition(int position);

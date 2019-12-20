@@ -199,6 +199,22 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
                 Utility.getDate(PurchaseActivity.this, E3);
             }
         });
+        ArrayAdapter<String> productAdapter = Utility.getSpinnerData(new Utility.AdapterPosition() {
+            @Override
+            public void onPosition(int position) {
+                T1.setText(mProductList.get(position).getProductId());
+            }
+        }, this, S1, pList);
+        ArrayAdapter<String> supplierAdapter = Utility.getSpinnerData(new Utility.AdapterPosition() {
+            @Override
+            public void onPosition(int position) {
+                T2.setText(mSupplierList.get(position).getSupplierId());
+            }
+        }, this, S2, sList);
+        S1.setSelection(productAdapter.getPosition(model.getProductName()));
+        S2.setSelection(supplierAdapter.getPosition(model.getSupplierName()));
+        T1.setText(model.getProductId());
+        T2.setText(model.getSupplierId());
         E3.setText(model.getPurchaseDate());
         E4.setText("" + model.getPurchaseProductQuantity());
         E5.setText("" + model.getPurchaseProductPrice());
