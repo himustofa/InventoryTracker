@@ -81,11 +81,15 @@
             android:hint="Sales Date"
             android:ems="10"
             android:inputType="date"
-            android:clickable="true"
             android:layout_marginBottom="10dp"
             android:background="@drawable/shape_edit_text_border_red"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+
+            android:clickable="true"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
 
         <EditText
             android:id="@+id/sl_sales_discount"

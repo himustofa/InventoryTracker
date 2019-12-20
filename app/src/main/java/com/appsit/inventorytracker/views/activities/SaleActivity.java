@@ -40,9 +40,9 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
     private boolean isValue = true;
 
     private RecyclerView mRecyclerView;
-    private EditText E1, E2, E3, E4, E5, E6, E7, E8, E9;
-    private Spinner S1, S2;
-    private TextView T1, T2;
+    private EditText eQuantity, ePurchaseQuantity, eSaleDate, eSaleDiscount, eSaleVat, eSaleAmount, eSalePayment, eSaleBalance, eSaleDesc;
+    private Spinner sProductName, SCustomerName;
+    private TextView tProductId, tCustomerId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,32 +95,33 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
     public void addItem() {
         ObjectDialog obj = showObjectDialog("Add");
 
-        E3.setOnClickListener(new View.OnClickListener() {
+        eSaleDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utility.getDate(SaleActivity.this, E3);
+                Utility.getDate(SaleActivity.this, eSaleDate);
             }
         });
 
         ((Button) obj.getView().findViewById(R.id.sale_save_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!E1.getText().toString().trim().isEmpty() && !E4.getText().toString().trim().isEmpty()) {
+                tProductId.setText("123");
+                if(!tProductId.getText().toString().trim().isEmpty() && !eQuantity.getText().toString().trim().isEmpty() && !eSaleDate.getText().toString().trim().isEmpty() && !eSaleAmount.getText().toString().trim().isEmpty() && !eSalePayment.getText().toString().trim().isEmpty()) {
                     Sale model = new Sale(
                             UUID.randomUUID().toString(),
-                            T1.getText().toString(),
-                            S1.getSelectedItem().toString(),
-                            Integer.parseInt(E1.getText().toString()),
-                            Integer.parseInt(E2.getText().toString()),
-                            T2.getText().toString(),
-                            S2.getSelectedItem().toString(),
-                            E3.getText().toString(),
-                            Integer.parseInt(E4.getText().toString()),
-                            Double.parseDouble(E5.getText().toString()),
-                            Double.parseDouble(E6.getText().toString()),
-                            Double.parseDouble(E7.getText().toString()),
-                            Double.parseDouble(E8.getText().toString()),
-                            E9.getText().toString()
+                            sProductName.getSelectedItem().toString(),
+                            tProductId.getText().toString(),
+                            Integer.parseInt(eQuantity.getText().toString()),
+                            Integer.parseInt(ePurchaseQuantity.getText().toString()),
+                            SCustomerName.getSelectedItem().toString(),
+                            tCustomerId.getText().toString(),
+                            eSaleDate.getText().toString(),
+                            Double.parseDouble(eSaleDiscount.getText().toString()),
+                            Double.parseDouble(eSaleVat.getText().toString()),
+                            Double.parseDouble(eSaleAmount.getText().toString()),
+                            Double.parseDouble(eSalePayment.getText().toString()),
+                            Double.parseDouble(eSaleBalance.getText().toString()),
+                            eSaleDesc.getText().toString()
                     );
                     Log.d(TAG, new Gson().toJson(model));
                     long result = mViewModel.save(model);
@@ -140,42 +141,43 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
     public void updateItem(int position, Sale model) {
         ObjectDialog obj = showObjectDialog("Edit");
 
-        E1.setText("" + model.getProductQuantity());
-        E2.setText("" + model.getPurchaseProductQuantity());
-        E3.setText(model.getSalesDate());
-        E4.setText("" + model.getSalesDiscount());
-        E5.setText("" + model.getSalesVat());
-        E6.setText("" + model.getSalesAmount());
-        E7.setText("" + model.getSalesPayment());
-        E8.setText("" + model.getSalesBalance());
-        E9.setText(model.getSalesDescription());
+        eQuantity.setText("" + model.getProductQuantity());
+        ePurchaseQuantity.setText("" + model.getPurchaseProductQuantity());
+        eSaleDate.setText(model.getSalesDate());
+        eSaleDiscount.setText("" + model.getSalesDiscount());
+        eSaleVat.setText("" + model.getSalesVat());
+        eSaleAmount.setText("" + model.getSalesAmount());
+        eSalePayment.setText("" + model.getSalesPayment());
+        eSaleBalance.setText("" + model.getSalesBalance());
+        eSaleDesc.setText(model.getSalesDescription());
 
-        E3.setOnClickListener(new View.OnClickListener() {
+        eSaleDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utility.getDate(SaleActivity.this, E3);
+                Utility.getDate(SaleActivity.this, eSaleDate);
             }
         });
 
         ((Button) obj.getView().findViewById(R.id.sale_save_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!E1.getText().toString().trim().isEmpty() && !E4.getText().toString().trim().isEmpty()) {
+                tProductId.setText("123");
+                if(!tProductId.getText().toString().trim().isEmpty() && !eQuantity.getText().toString().trim().isEmpty() && !eSaleDate.getText().toString().trim().isEmpty() && !eSaleAmount.getText().toString().trim().isEmpty() && !eSalePayment.getText().toString().trim().isEmpty()) {
                     Sale sale = new Sale(
                             model.getSalesId(),
-                            T1.getText().toString(),
-                            S1.getSelectedItem().toString(),
-                            Integer.parseInt(E1.getText().toString()),
-                            Integer.parseInt(E2.getText().toString()),
-                            T2.getText().toString(),
-                            S2.getSelectedItem().toString(),
-                            E3.getText().toString(),
-                            Integer.parseInt(E4.getText().toString()),
-                            Double.parseDouble(E5.getText().toString()),
-                            Double.parseDouble(E6.getText().toString()),
-                            Double.parseDouble(E7.getText().toString()),
-                            Double.parseDouble(E8.getText().toString()),
-                            E9.getText().toString()
+                            sProductName.getSelectedItem().toString(),
+                            tProductId.getText().toString(),
+                            Integer.parseInt(eQuantity.getText().toString()),
+                            Integer.parseInt(ePurchaseQuantity.getText().toString()),
+                            SCustomerName.getSelectedItem().toString(),
+                            tCustomerId.getText().toString(),
+                            eSaleDate.getText().toString(),
+                            Double.parseDouble(eSaleDiscount.getText().toString()),
+                            Double.parseDouble(eSaleVat.getText().toString()),
+                            Double.parseDouble(eSaleAmount.getText().toString()),
+                            Double.parseDouble(eSalePayment.getText().toString()),
+                            Double.parseDouble(eSaleBalance.getText().toString()),
+                            eSaleDesc.getText().toString()
                     );
                     long result = mViewModel.update(sale);
                     if (result > 0) {
@@ -202,19 +204,19 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
         builder.setCancelable(true);
         builder.create();
         AlertDialog dialog = builder.show();
-        S1 = (Spinner) view.findViewById(R.id.sl_product_name);
-        T1 = (TextView) view.findViewById(R.id.s1_product_id);
-        E1 = (EditText) view.findViewById(R.id.sl_product_quantity);
-        E2 = (EditText) view.findViewById(R.id.sl_purchase_product_quantity);
-        S2 = (Spinner) view.findViewById(R.id.sl_customer_name);
-        T2 = (TextView) view.findViewById(R.id.sl_customer_id);
-        E3 = (EditText) view.findViewById(R.id.sl_sales_date);
-        E4 = (EditText) view.findViewById(R.id.sl_sales_discount);
-        E5 = (EditText) view.findViewById(R.id.sl_sales_vat);
-        E6 = (EditText) view.findViewById(R.id.sl_sales_amount);
-        E7 = (EditText) view.findViewById(R.id.sl_sales_payment);
-        E8 = (EditText) view.findViewById(R.id.sl_sales_balance);
-        E9 = (EditText) view.findViewById(R.id.sl_sales_description);
+        sProductName = (Spinner) view.findViewById(R.id.sl_product_name);
+        tProductId = (TextView) view.findViewById(R.id.s1_product_id);
+        eQuantity = (EditText) view.findViewById(R.id.sl_product_quantity);
+        ePurchaseQuantity = (EditText) view.findViewById(R.id.sl_purchase_product_quantity);
+        SCustomerName = (Spinner) view.findViewById(R.id.sl_customer_name);
+        tCustomerId = (TextView) view.findViewById(R.id.sl_customer_id);
+        eSaleDate = (EditText) view.findViewById(R.id.sl_sales_date);
+        eSaleDiscount = (EditText) view.findViewById(R.id.sl_sales_discount);
+        eSaleVat = (EditText) view.findViewById(R.id.sl_sales_vat);
+        eSaleAmount = (EditText) view.findViewById(R.id.sl_sales_amount);
+        eSalePayment = (EditText) view.findViewById(R.id.sl_sales_payment);
+        eSaleBalance = (EditText) view.findViewById(R.id.sl_sales_balance);
+        eSaleDesc = (EditText) view.findViewById(R.id.sl_sales_description);
         return new ObjectDialog(view, dialog);
     }
 }
