@@ -20,11 +20,19 @@
             android:id="@+id/sales_id"
             android:title="Sales" />
         <item
+            android:id="@+id/stocks_id"
+            android:title="Stocks" />
+        <item
+            android:id="@+id/adjustments_id"
+            android:title="Adjustments" />
+        <item
             android:id="@+id/settings_id"
             android:title="Settings" />
         <item
             android:id="@+id/about_id"
             android:title="@string/about_title" />
+        <item
+            android:title="" />
     </group>
 
     <!--

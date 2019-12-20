@@ -40,6 +40,11 @@ public class UserViewModel extends AndroidViewModel {
         return mDaoAccess.getUserByUserAndPass(userName, userPass);
     }
 
+    public LiveData<User> getUserByUserName(String userName) {
+        Log.d(TAG, userName);
+        return mDaoAccess.getUserByUserName(userName);
+    }
+
     public LiveData<List<User>> getAllUser() {
         return mDaoAccess.getAllUser();
     }

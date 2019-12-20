@@ -29,7 +29,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private String TAG = this.getClass().getSimpleName();
     private ActionBarDrawerToggle mToggle;
 
-    private User mUser = null;
+    private User mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,6 +164,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.sales_id:
                 startActivity(new Intent(HomeActivity.this, SaleActivity.class));
+                break;
+            case R.id.stocks_id:
+                startActivity(new Intent(HomeActivity.this, StockActivity.class));
+                break;
+            case R.id.adjustments_id:
+                startActivity(new Intent(HomeActivity.this, AdjustmentActivity.class));
                 break;
             case R.id.settings_id:
                 startActivity(new Intent(HomeActivity.this, SettingsActivity.class));

@@ -222,8 +222,13 @@ public class Utility {
     }
 
     //===============================================| Encryption and Decryption
-    public static String encode(String input) throws UnsupportedEncodingException {
-        byte[] data = input.getBytes("UTF-8");
+    public static String encode(String input) {
+        byte[] data = new byte[0];
+        try {
+            data = input.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             return Base64.getEncoder().encodeToString(data);
         } else {

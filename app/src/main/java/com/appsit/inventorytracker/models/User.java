@@ -5,7 +5,10 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.appsit.inventorytracker.utils.Utility;
+
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @Entity(tableName = "users")
 public class User {
@@ -30,6 +33,25 @@ public class User {
     //private Timestamp createdAt;
 
     public User() {
+    }
+
+    public User(@NonNull String userId, @NonNull String fullName, String designation, String email, String phoneNumber, @NonNull String username, @NonNull String password, String role, String photoName, String photoPath) {
+        this.userId = userId;
+        this.fullName = fullName;
+        this.designation = designation;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.photoName = photoName;
+        this.photoPath = photoPath;
+    }
+
+    public static User[] populateData() {
+        return new User[] {
+                new User(UUID.randomUUID().toString(), "Admin User", "Admin", "admin@gamil.com", "01914141707", "admin", Utility.encode("admin"), String.valueOf(Role.ADMIN_USER), "", "")
+        };
     }
 
     @NonNull

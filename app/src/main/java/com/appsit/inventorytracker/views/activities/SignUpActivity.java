@@ -101,15 +101,11 @@ public class SignUpActivity extends AppCompatActivity {
                 String pass = userPass.getText().toString();
                 String cPass = confirmPass.getText().toString();
                 if (pass.equals(cPass)) {
-                    try {
-                        mUser.setUsername(name);
-                        mUser.setPassword(Utility.encode(pass));
-                        if (layout2.getVisibility() == View.GONE) {
-                            layout2.setVisibility(View.VISIBLE);
-                            layout1.setVisibility(View.GONE);
-                        }
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
+                    mUser.setUsername(name);
+                    mUser.setPassword(Utility.encode(pass));
+                    if (layout2.getVisibility() == View.GONE) {
+                        layout2.setVisibility(View.VISIBLE);
+                        layout1.setVisibility(View.GONE);
                     }
                 } else {
                     Utility.alertDialog(SignUpActivity.this, "Check your confirm password.");
@@ -262,12 +258,20 @@ public class SignUpActivity extends AppCompatActivity {
     //====================================================| Save Button
     private void saveData(User user) {
         Log.d(TAG, new Gson().toJson(user));
-        long result = mUserViewModel.saveData(user);
-        if (result > 0) {
-            Toast.makeText(this, "Saved successfully", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
+        if (getUserByUserName(user.getUsername()) == null) {
+            long result = mUserViewModel.saveData(user);
+            if (result > 0) {
+                Toast.makeText(this, "Saved successfully", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
+            } else {
+                Snackbar.make(findViewById(android.R.id.content), "Error....", Snackbar.LENGTH_INDEFINITE).show();
+            }
         } else {
-            Snackbar.make(findViewById(android.R.id.content), "Error....", Snackbar.LENGTH_INDEFINITE).show();
+            Snackbar.make(findViewById(android.R.id.content), "This user already exists.", Snackbar.LENGTH_INDEFINITE).show();
         }
+    }
+
+    private User getUserByUserName(String username) {
+        return mUserViewModel.getUserByUserName(username).getValue();
     }
 }
