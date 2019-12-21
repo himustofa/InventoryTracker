@@ -152,6 +152,7 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
             @Override
             public void onPosition(int position) {
                 T1.setText(mProductList.get(position).getProductId());
+                E5.setText("" + mProductList.get(position).getProductPrice());
             }
         }, this, S1, pList);
         Utility.getSpinnerData(new Utility.AdapterPosition() {
