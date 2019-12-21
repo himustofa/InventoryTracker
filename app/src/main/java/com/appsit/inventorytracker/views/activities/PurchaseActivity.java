@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,6 +31,7 @@ import com.appsit.inventorytracker.viewmodels.SupplierViewModel;
 import com.appsit.inventorytracker.views.adapters.PurchaseAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,10 +103,10 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
         ((FloatingActionButton) findViewById(R.id.purchase_add_fab)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mProductList != null) {
+                if (mProductList.size() > 0) {
                     addItem();
                 } else {
-                    Snackbar.make(findViewById(android.R.id.content), "Products are not available", Snackbar.LENGTH_INDEFINITE).show();
+                    Snackbar.make(findViewById(android.R.id.content), "Products are not available.", Snackbar.LENGTH_INDEFINITE).show();
                 }
             }
         });
@@ -158,10 +160,10 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
         E5.addTextChangedListener(new MyTextWatcher(E6, E4, E5, false));
         E7.addTextChangedListener(new MyTextWatcher(E8, E6, E7, true));
 
-        ((Button) obj.getView().findViewById(R.id.purchase_save_button)).setOnClickListener(new View.OnClickListener() {
+        ((Button) obj.getView().findViewById(R.id.p_purchase_save_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!S1.getSelectedItem().toString().trim().isEmpty() && !S2.getSelectedItem().toString().trim().isEmpty() && !E3.getText().toString().trim().isEmpty() && !E4.getText().toString().trim().isEmpty() && !E5.getText().toString().trim().isEmpty() && !E7.getText().toString().trim().isEmpty()) {
+                if(!E3.getText().toString().trim().isEmpty() && !E4.getText().toString().trim().isEmpty() && !E5.getText().toString().trim().isEmpty() && !E7.getText().toString().trim().isEmpty()) {
                     Purchase model = new Purchase(
                             UUID.randomUUID().toString(),
                             S1.getSelectedItem().toString(),
@@ -183,7 +185,8 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
                         obj.getDialog().dismiss();
                     }
                 } else {
-                    Snackbar.make(findViewById(android.R.id.content), "Please insert the values in your mandatory fields.", Snackbar.LENGTH_INDEFINITE).show();
+                    Utility.alertDialog(PurchaseActivity.this, "Please insert the values in your mandatory fields.");
+                    //Snackbar.make(findViewById(android.R.id.content), "Please insert the values in your mandatory fields.", Snackbar.LENGTH_INDEFINITE).show();
                 }
             }
         });
@@ -223,7 +226,7 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
         E8.setText("" + model.getPurchaseBalance());
         E9.setText(model.getPurchaseDescription());
 
-        ((Button) obj.getView().findViewById(R.id.purchase_save_button)).setOnClickListener(new View.OnClickListener() {
+        ((Button) obj.getView().findViewById(R.id.p_purchase_save_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!S1.getSelectedItem().toString().trim().isEmpty() && !S2.getSelectedItem().toString().trim().isEmpty() && !E3.getText().toString().trim().isEmpty() && !E4.getText().toString().trim().isEmpty() && !E5.getText().toString().trim().isEmpty() && !E7.getText().toString().trim().isEmpty()) {
@@ -266,17 +269,17 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
         builder.setCancelable(true);
         builder.create();
         AlertDialog dialog = builder.show();
-        S1 = (Spinner) view.findViewById(R.id.product_name);
-        T1 = (TextView) view.findViewById(R.id.product_id);
-        S2 = (Spinner) view.findViewById(R.id.supplier_name);
-        T2 = (TextView) view.findViewById(R.id.supplier_id);
-        E3 = (EditText) view.findViewById(R.id.purchase_date);
-        E4 = (EditText) view.findViewById(R.id.purchase_product_quantity);
-        E5 = (EditText) view.findViewById(R.id.purchase_product_price);
-        E6 = (EditText) view.findViewById(R.id.purchase_amount);
-        E7 = (EditText) view.findViewById(R.id.purchase_payment);
-        E8 = (EditText) view.findViewById(R.id.purchase_balance);
-        E9 = (EditText) view.findViewById(R.id.purchase_description);
+        S1 = (Spinner) view.findViewById(R.id.p_product_name);
+        T1 = (TextView) view.findViewById(R.id.p_product_id);
+        S2 = (Spinner) view.findViewById(R.id.p_supplier_name);
+        T2 = (TextView) view.findViewById(R.id.p_supplier_id);
+        E3 = (EditText) view.findViewById(R.id.p_purchase_date);
+        E4 = (EditText) view.findViewById(R.id.p_purchase_product_quantity);
+        E5 = (EditText) view.findViewById(R.id.p_purchase_product_price);
+        E6 = (EditText) view.findViewById(R.id.p_purchase_amount);
+        E7 = (EditText) view.findViewById(R.id.p_purchase_payment);
+        E8 = (EditText) view.findViewById(R.id.p_purchase_balance);
+        E9 = (EditText) view.findViewById(R.id.p_purchase_description);
         return new ObjectDialog(view, dialog);
     }
 }

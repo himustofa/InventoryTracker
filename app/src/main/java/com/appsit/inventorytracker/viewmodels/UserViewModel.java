@@ -41,7 +41,6 @@ public class UserViewModel extends AndroidViewModel {
     }
 
     public LiveData<User> getUserByUserName(String userName) {
-        Log.d(TAG, userName);
         return mDaoAccess.getUserByUserName(userName);
     }
 

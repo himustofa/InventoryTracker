@@ -15,21 +15,21 @@
 
         <!--add product_id | android:entries="@array/product_name_array" -->
         <Spinner
-            android:id="@+id/product_name"
+            android:id="@+id/p_product_name"
             android:entries="@array/product_name_array"
             android:background="@drawable/shape_edit_text_border"
             android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="45dp"/>
         <TextView
-            android:id="@+id/product_id"
+            android:id="@+id/p_product_id"
             android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <!--add customer_id | android:entries="@array/supplier_name_array" -->
         <Spinner
-            android:id="@+id/supplier_name"
+            android:id="@+id/p_supplier_name"
             android:hint="Supplier Name"
             android:entries="@array/supplier_name_array"
             android:background="@drawable/shape_edit_text_border"
@@ -37,13 +37,13 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"/>
         <TextView
-            android:id="@+id/supplier_id"
+            android:id="@+id/p_supplier_id"
             android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/purchase_date"
+            android:id="@+id/p_purchase_date"
             android:hint="Purchase Date"
             android:inputType="datetime"
             android:layout_marginBottom="10dp"
@@ -57,7 +57,7 @@
             android:focusableInTouchMode="false" />
 
         <EditText
-            android:id="@+id/purchase_product_quantity"
+            android:id="@+id/p_purchase_product_quantity"
             android:hint="Purchase Product Quantity"
             android:inputType="number"
             android:layout_marginBottom="10dp"
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/purchase_product_price"
+            android:id="@+id/p_purchase_product_price"
             android:hint="Purchase Product Price"
             android:inputType="numberDecimal"
             android:layout_marginBottom="10dp"
@@ -75,7 +75,7 @@
             android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/purchase_amount"
+            android:id="@+id/p_purchase_amount"
             android:hint="Total Amount"
             android:inputType="numberDecimal"
             android:layout_marginBottom="10dp"
@@ -84,7 +84,7 @@
             android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/purchase_payment"
+            android:id="@+id/p_purchase_payment"
             android:hint="Total Payment"
             android:inputType="numberDecimal"
             android:layout_marginBottom="10dp"
@@ -93,7 +93,7 @@
             android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/purchase_balance"
+            android:id="@+id/p_purchase_balance"
             android:hint="Total Balance"
             android:inputType="numberDecimal"
             android:layout_marginBottom="10dp"
@@ -102,7 +102,7 @@
             android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/purchase_description"
+            android:id="@+id/p_purchase_description"
             android:gravity="top"
             android:hint="Description"
             android:layout_marginBottom="10dp"
@@ -112,7 +112,7 @@
             android:layout_height="100dp"/>
 
         <Button
-            android:id="@+id/purchase_save_button"
+            android:id="@+id/p_purchase_save_button"
             android:layout_marginBottom="10dp"
             android:paddingLeft="25dp"
             android:paddingRight="25dp"

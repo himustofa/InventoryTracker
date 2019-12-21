@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
@@ -101,12 +102,7 @@ public class SignUpActivity extends AppCompatActivity {
                 String pass = userPass.getText().toString();
                 String cPass = confirmPass.getText().toString();
                 if (pass.equals(cPass)) {
-                    mUser.setUsername(name);
-                    mUser.setPassword(Utility.encode(pass));
-                    if (layout2.getVisibility() == View.GONE) {
-                        layout2.setVisibility(View.VISIBLE);
-                        layout1.setVisibility(View.GONE);
-                    }
+                    checkUserName(name, pass);
                 } else {
                     Utility.alertDialog(SignUpActivity.this, "Check your confirm password.");
                 }
@@ -255,23 +251,33 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    //====================================================| Save Button
-    private void saveData(User user) {
-        Log.d(TAG, new Gson().toJson(user));
-        if (getUserByUserName(user.getUsername()) == null) {
-            long result = mUserViewModel.saveData(user);
-            if (result > 0) {
-                Toast.makeText(this, "Saved successfully", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
-            } else {
-                Snackbar.make(findViewById(android.R.id.content), "Error....", Snackbar.LENGTH_INDEFINITE).show();
+    //====================================================| Check username
+    private void checkUserName(String userName, String password) {
+        mUserViewModel.getUserByUserName(userName).observe(SignUpActivity.this, new Observer<User>() {
+            @Override
+            public void onChanged(User model) {
+                if (model == null) {
+                    mUser.setUsername(userName);
+                    mUser.setPassword(Utility.encode(password));
+                    if (layout2.getVisibility() == View.GONE) {
+                        layout2.setVisibility(View.VISIBLE);
+                        layout1.setVisibility(View.GONE);
+                    }
+                } else {
+                    Snackbar.make(findViewById(android.R.id.content), "This user already exists.", Snackbar.LENGTH_INDEFINITE).show();
+                }
             }
-        } else {
-            Snackbar.make(findViewById(android.R.id.content), "This user already exists.", Snackbar.LENGTH_INDEFINITE).show();
-        }
+        });
     }
 
-    private User getUserByUserName(String username) {
-        return mUserViewModel.getUserByUserName(username).getValue();
+    //====================================================| Save Button
+    private void saveData(User user) {
+        long result = mUserViewModel.saveData(user);
+        if (result > 0) {
+            Toast.makeText(this, "Saved successfully", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
+        } else {
+            Snackbar.make(findViewById(android.R.id.content), "Error....", Snackbar.LENGTH_INDEFINITE).show();
+        }
     }
 }
