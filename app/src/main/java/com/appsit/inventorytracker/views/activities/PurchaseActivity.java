@@ -70,7 +70,9 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
                 if (suppliers != null) {
                     mSupplierList = suppliers;
                     if (suppliers.size() > 0) {
-                        sList.add(suppliers.get(0).getSupplierName());
+                        for(Supplier s : suppliers) {
+                            sList.add(s.getSupplierName());
+                        }
                     }
                 }
             }
@@ -83,7 +85,9 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
                 if (products != null) {
                     mProductList = products;
                     if (products.size() > 0) {
-                        pList.add(products.get(0).getProductName());
+                        for(Product p : products) {
+                            pList.add(p.getProductName());
+                        }
                     }
                 }
             }
@@ -178,6 +182,7 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
                             Double.parseDouble(E8.getText().toString()),
                             E9.getText().toString()
                     );
+                    Log.d(TAG, new Gson().toJson(model));
                     long result = mViewModel.save(model);
                     if (result > 0) {
                         mArrayList.add(model);

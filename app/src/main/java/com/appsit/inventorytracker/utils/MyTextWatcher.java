@@ -38,9 +38,9 @@ public class MyTextWatcher implements TextWatcher {
     public void afterTextChanged(Editable s) {
         try {
             if (isPay) {
-                mEditText.setText(String.valueOf(Double.parseDouble(first.getText().toString()) * Double.parseDouble(second.getText().toString())));
-            } else {
                 mEditText.setText(String.valueOf(Double.parseDouble(first.getText().toString()) - Double.parseDouble(second.getText().toString())));
+            } else {
+                mEditText.setText(String.valueOf(Double.parseDouble(first.getText().toString()) * Double.parseDouble(second.getText().toString())));
             }
         } catch (Exception e) {
             e.printStackTrace();
