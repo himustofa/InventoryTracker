@@ -8,14 +8,15 @@ import android.widget.EditText;
 public class SaleTextWatcher implements TextWatcher {
 
     private String TAG = this.getClass().getSimpleName();
-    private EditText mEditText, first;
+    private EditText mEditText, productQty, discount, vat;
     private double perProductPrice;
 
-    public SaleTextWatcher(EditText editText, EditText first, double price) {
+    public SaleTextWatcher(EditText editText, EditText productQty, double price, EditText discount, EditText vat) {
         this.mEditText = editText;
-        this.first = first;
+        this.productQty = productQty;
         this.perProductPrice = price;
-        Log.d(TAG, "" + perProductPrice);
+        this.discount = discount;
+        this.vat = vat;
     }
 
     @Override
@@ -30,7 +31,7 @@ public class SaleTextWatcher implements TextWatcher {
     public void afterTextChanged(Editable s) {
         Log.d(TAG, "" + perProductPrice);
         try {
-            mEditText.setText( String.valueOf( Double.parseDouble(first.getText().toString()) * perProductPrice ));
+            mEditText.setText( String.valueOf( Double.parseDouble(productQty.getText().toString()) * perProductPrice ));
         } catch (Exception e) {
             e.printStackTrace();
         }

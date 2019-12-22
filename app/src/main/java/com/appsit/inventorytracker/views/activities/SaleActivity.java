@@ -149,7 +149,7 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
                 tProductId.setText(mPurchaseList.get(position).getProductId());
                 ePurchaseQuantity.setText("" + mPurchaseList.get(position).getPurchaseProductQuantity());
                 perProductPrice = mPurchaseList.get(position).getPurchaseProductPrice();
-                eQuantity.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice));
+                eQuantity.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
 
                 /*
                 total = (productQty * productPrice);
