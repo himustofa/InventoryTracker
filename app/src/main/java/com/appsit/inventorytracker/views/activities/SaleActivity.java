@@ -148,7 +148,14 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
             public void onPosition(int position) {
                 tProductId.setText(mPurchaseList.get(position).getProductId());
                 ePurchaseQuantity.setText("" + mPurchaseList.get(position).getPurchaseProductQuantity());
-                perProductPrice = mPurchaseList.get(position).getPurchaseProductQuantity();
+                perProductPrice = mPurchaseList.get(position).getPurchaseProductPrice();
+                eQuantity.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice));
+
+                /*
+                total = (productQty * productPrice);
+                vatAmount = (total * vat)/100;
+                totalAmount = total + vatAmount;
+                */
             }
         }, this, sProductName, pList);
 
@@ -159,7 +166,7 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
             }
         }, this, sCustomerName, cList);
 
-        eQuantity.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice));
+
 
         ((Button) obj.getView().findViewById(R.id.sale_save_button)).setOnClickListener(new View.OnClickListener() {
             @Override

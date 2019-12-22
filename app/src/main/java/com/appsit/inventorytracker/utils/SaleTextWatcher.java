@@ -11,10 +11,11 @@ public class SaleTextWatcher implements TextWatcher {
     private EditText mEditText, first;
     private double perProductPrice;
 
-    public SaleTextWatcher(EditText editText, EditText first, double perProductPrice) {
+    public SaleTextWatcher(EditText editText, EditText first, double price) {
         this.mEditText = editText;
         this.first = first;
-        this.perProductPrice = perProductPrice;
+        this.perProductPrice = price;
+        Log.d(TAG, "" + perProductPrice);
     }
 
     @Override
