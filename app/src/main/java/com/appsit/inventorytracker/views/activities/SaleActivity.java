@@ -19,8 +19,13 @@ import android.widget.TextView;
 import com.appsit.inventorytracker.R;
 import com.appsit.inventorytracker.models.Customer;
 import com.appsit.inventorytracker.models.ObjectDialog;
+import com.appsit.inventorytracker.models.Purchase;
 import com.appsit.inventorytracker.models.Sale;
+import com.appsit.inventorytracker.utils.SaleTextWatcher;
 import com.appsit.inventorytracker.utils.Utility;
+import com.appsit.inventorytracker.viewmodels.CustomerViewModel;
+import com.appsit.inventorytracker.viewmodels.ProductViewModel;
+import com.appsit.inventorytracker.viewmodels.PurchaseViewModel;
 import com.appsit.inventorytracker.viewmodels.SaleViewModel;
 import com.appsit.inventorytracker.views.adapters.SaleAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -38,11 +43,17 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
     private SaleAdapter mAdapter;
     private SaleViewModel mViewModel;
     private boolean isValue = true;
+    private List<Customer> mCustomerList;
+    private List<Purchase> mPurchaseList;
+    private double perProductPrice;
 
     private RecyclerView mRecyclerView;
     private EditText eQuantity, ePurchaseQuantity, eSaleDate, eSaleDiscount, eSaleVat, eSaleAmount, eSalePayment, eSaleBalance, eSaleDesc;
-    private Spinner sProductName, SCustomerName;
+    private Spinner sProductName, sCustomerName;
     private TextView tProductId, tCustomerId;
+
+    List<String> cList = new ArrayList<>();
+    List<String> pList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +68,36 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
                 if (isValue) {
                     mArrayList.addAll(list);
                     isValue = false;
+                }
+            }
+        });
+
+        PurchaseViewModel mPurchaseViewModel = ViewModelProviders.of(this).get(PurchaseViewModel.class);
+        mPurchaseViewModel.getAll().observe(this, new Observer<List<Purchase>>() {
+            @Override
+            public void onChanged(List<Purchase> purchases) {
+                if (purchases != null) {
+                    mPurchaseList = purchases;
+                    if (purchases.size() > 0) {
+                        for(Purchase s : purchases) {
+                            pList.add(s.getProductName());
+                        }
+                    }
+                }
+            }
+        });
+
+        CustomerViewModel mCustomerViewModel = ViewModelProviders.of(this).get(CustomerViewModel.class);
+        mCustomerViewModel.getAllData().observe(this, new Observer<List<Customer>>() {
+            @Override
+            public void onChanged(List<Customer> customers) {
+                if (customers != null) {
+                    mCustomerList = customers;
+                    if (customers.size() > 0) {
+                        for(Customer s : customers) {
+                            cList.add(s.getCustomerName());
+                        }
+                    }
                 }
             }
         });
@@ -102,10 +143,27 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
             }
         });
 
+        Utility.getSpinnerData(new Utility.AdapterPosition() {
+            @Override
+            public void onPosition(int position) {
+                tProductId.setText(mPurchaseList.get(position).getProductId());
+                ePurchaseQuantity.setText("" + mPurchaseList.get(position).getPurchaseProductQuantity());
+                perProductPrice = mPurchaseList.get(position).getPurchaseProductQuantity();
+            }
+        }, this, sProductName, pList);
+
+        Utility.getSpinnerData(new Utility.AdapterPosition() {
+            @Override
+            public void onPosition(int position) {
+                tCustomerId.setText(mCustomerList.get(position).getCustomerId());
+            }
+        }, this, sCustomerName, cList);
+
+        eQuantity.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice));
+
         ((Button) obj.getView().findViewById(R.id.sale_save_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tProductId.setText("123");
                 if(!tProductId.getText().toString().trim().isEmpty() && !eQuantity.getText().toString().trim().isEmpty() && !eSaleDate.getText().toString().trim().isEmpty() && !eSaleAmount.getText().toString().trim().isEmpty() && !eSalePayment.getText().toString().trim().isEmpty()) {
                     Sale model = new Sale(
                             UUID.randomUUID().toString(),
@@ -113,7 +171,7 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
                             tProductId.getText().toString(),
                             Integer.parseInt(eQuantity.getText().toString()),
                             Integer.parseInt(ePurchaseQuantity.getText().toString()),
-                            SCustomerName.getSelectedItem().toString(),
+                            sCustomerName.getSelectedItem().toString(),
                             tCustomerId.getText().toString(),
                             eSaleDate.getText().toString(),
                             Double.parseDouble(eSaleDiscount.getText().toString()),
@@ -161,7 +219,6 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
         ((Button) obj.getView().findViewById(R.id.sale_save_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tProductId.setText("123");
                 if(!tProductId.getText().toString().trim().isEmpty() && !eQuantity.getText().toString().trim().isEmpty() && !eSaleDate.getText().toString().trim().isEmpty() && !eSaleAmount.getText().toString().trim().isEmpty() && !eSalePayment.getText().toString().trim().isEmpty()) {
                     Sale sale = new Sale(
                             model.getSalesId(),
@@ -169,7 +226,7 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
                             tProductId.getText().toString(),
                             Integer.parseInt(eQuantity.getText().toString()),
                             Integer.parseInt(ePurchaseQuantity.getText().toString()),
-                            SCustomerName.getSelectedItem().toString(),
+                            sCustomerName.getSelectedItem().toString(),
                             tCustomerId.getText().toString(),
                             eSaleDate.getText().toString(),
                             Double.parseDouble(eSaleDiscount.getText().toString()),
@@ -208,7 +265,7 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
         tProductId = (TextView) view.findViewById(R.id.s1_product_id);
         eQuantity = (EditText) view.findViewById(R.id.sl_product_quantity);
         ePurchaseQuantity = (EditText) view.findViewById(R.id.sl_purchase_product_quantity);
-        SCustomerName = (Spinner) view.findViewById(R.id.sl_customer_name);
+        sCustomerName = (Spinner) view.findViewById(R.id.sl_customer_name);
         tCustomerId = (TextView) view.findViewById(R.id.sl_customer_id);
         eSaleDate = (EditText) view.findViewById(R.id.sl_sales_date);
         eSaleDiscount = (EditText) view.findViewById(R.id.sl_sales_discount);
