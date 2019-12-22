@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,7 +22,7 @@ import com.appsit.inventorytracker.models.ObjectDialog;
 import com.appsit.inventorytracker.models.Product;
 import com.appsit.inventorytracker.models.Purchase;
 import com.appsit.inventorytracker.models.Supplier;
-import com.appsit.inventorytracker.utils.MyTextWatcher;
+import com.appsit.inventorytracker.utils.PurchaseTextWatcher;
 import com.appsit.inventorytracker.utils.Utility;
 import com.appsit.inventorytracker.viewmodels.ProductViewModel;
 import com.appsit.inventorytracker.viewmodels.PurchaseViewModel;
@@ -161,9 +160,9 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
                 T2.setText(mSupplierList.get(position).getSupplierId());
             }
         }, this, S2, sList);
-        E4.addTextChangedListener(new MyTextWatcher(E6, E4, E5, false));
-        E5.addTextChangedListener(new MyTextWatcher(E6, E4, E5, false));
-        E7.addTextChangedListener(new MyTextWatcher(E8, E6, E7, true));
+        E4.addTextChangedListener(new PurchaseTextWatcher(E6, E4, E5, false));
+        E5.addTextChangedListener(new PurchaseTextWatcher(E6, E4, E5, false));
+        E7.addTextChangedListener(new PurchaseTextWatcher(E8, E6, E7, true));
 
         ((Button) obj.getView().findViewById(R.id.p_purchase_save_button)).setOnClickListener(new View.OnClickListener() {
             @Override

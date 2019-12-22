@@ -4,12 +4,12 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
-public class MyTextWatcher implements TextWatcher {
+public class PurchaseTextWatcher implements TextWatcher {
 
     private EditText mEditText, first, second;
     private boolean isPay;
 
-    public MyTextWatcher(EditText editText, EditText first, EditText second, boolean isPay) {
+    public PurchaseTextWatcher(EditText editText, EditText first, EditText second, boolean isPay) {
         this.mEditText = editText;
         this.first = first;
         this.second = second;
