@@ -154,7 +154,7 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
                 /*
                 total = (productQty * productPrice);
                 vatAmount = (total * vat)/100;
-                totalAmount = total + vatAmount;
+                totalAmount = (total + vatAmount) - discount;
                 */
             }
         }, this, sProductName, pList);
