@@ -7,10 +7,6 @@
         android:title="@string/action_settings"
         app:showAsAction="never" />-->
 
-    <item android:id="@+id/standard" android:title="Standard"></item>
-    <item android:id="@+id/silver" android:title="Silver"></item>
-    <item android:id="@+id/retro" android:title="Retro"></item>
-    <item android:id="@+id/dark" android:title="Dark"></item>
-    <item android:id="@+id/night" android:title="Night"></item>
-    <item android:id="@+id/aubergine" android:title="Aubergine"></item>
+    <item android:id="@+id/settings_id" android:title="Settings"></item>
+    <item android:id="@+id/about_id" android:title="About"></item>
 </menu>

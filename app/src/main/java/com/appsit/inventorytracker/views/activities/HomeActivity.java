@@ -40,6 +40,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         //==========================================| findViewById
         ((TextView) findViewById(R.id.log_out)).setOnLongClickListener(new ActionHandler());
+        ((TextView) findViewById(R.id.about_id)).setOnClickListener(new ActionHandler());
 
         //====================================================| To Display Navigation Bar Icon and Back
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -69,9 +70,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private class ActionHandler implements View.OnClickListener, View.OnLongClickListener {
         @Override
         public void onClick(View v) {
-            /*if (v.getId() == R.id.list_id) {
-                startActivity(new Intent(getApplicationContext(), PostsListActivity.class));
-            }*/
+            if (v.getId() == R.id.about_id) {
+                Utility.aboutMe(HomeActivity.this);
+                //startActivity(new Intent(getApplicationContext(), PostsListActivity.class));
+            }
         }
         @Override
         public boolean onLongClick(View view) {
@@ -125,23 +127,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             return true;
         }
         switch (item.getItemId()) {
-            case R.id.standard:
-                //
+            case R.id.settings_id:
+                startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
                 break;
-            case R.id.silver:
-                //
-                break;
-            case R.id.retro:
-                //
-                break;
-            case R.id.dark:
-                //
-                break;
-            case R.id.night:
-                //
-                break;
-            case R.id.aubergine:
-                //
+            case R.id.about_id:
+                Utility.aboutMe(HomeActivity.this);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -170,12 +160,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.adjustments_id:
                 startActivity(new Intent(HomeActivity.this, AdjustmentActivity.class));
-                break;
-            case R.id.settings_id:
-                startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
-                break;
-            case R.id.about_id:
-                Utility.aboutMe(HomeActivity.this);
                 break;
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
