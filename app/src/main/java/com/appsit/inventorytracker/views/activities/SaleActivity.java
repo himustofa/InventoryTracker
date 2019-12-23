@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -21,12 +20,14 @@ import com.appsit.inventorytracker.R;
 import com.appsit.inventorytracker.models.Customer;
 import com.appsit.inventorytracker.models.ObjectDialog;
 import com.appsit.inventorytracker.models.Purchase;
+import com.appsit.inventorytracker.models.Role;
 import com.appsit.inventorytracker.models.Sale;
+import com.appsit.inventorytracker.models.User;
+import com.appsit.inventorytracker.session.SharedPrefManager;
 import com.appsit.inventorytracker.utils.SalePayTextWatcher;
 import com.appsit.inventorytracker.utils.SaleTextWatcher;
 import com.appsit.inventorytracker.utils.Utility;
 import com.appsit.inventorytracker.viewmodels.CustomerViewModel;
-import com.appsit.inventorytracker.viewmodels.ProductViewModel;
 import com.appsit.inventorytracker.viewmodels.PurchaseViewModel;
 import com.appsit.inventorytracker.viewmodels.SaleViewModel;
 import com.appsit.inventorytracker.views.adapters.SaleAdapter;
@@ -57,10 +58,14 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
     List<String> cList = new ArrayList<>();
     List<String> pList = new ArrayList<>();
 
+    private User mUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sale);
+
+        mUser = SharedPrefManager.getInstance(this).getUser();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.sale_recycler_view);
         mViewModel = ViewModelProviders.of(this).get(SaleViewModel.class);
@@ -128,12 +133,14 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
     //https://stackoverflow.com/questions/31367599/how-to-update-recyclerview-adapter-data
     @Override
     public void removeItem(int position, Sale model) {
-        long result = mViewModel.delete(model);
-        if (result > 0) {
-            mArrayList.remove(position);
-            mRecyclerView.removeViewAt(position);
-            mAdapter.notifyItemRemoved(position);
-            mAdapter.notifyItemRangeChanged(position, mArrayList.size());
+        if (mUser.getRole().equals(String.valueOf(Role.ADMIN_USER))) {
+            long result = mViewModel.delete(model);
+            if (result > 0) {
+                mArrayList.remove(position);
+                mRecyclerView.removeViewAt(position);
+                mAdapter.notifyItemRemoved(position);
+                mAdapter.notifyItemRangeChanged(position, mArrayList.size());
+            }
         }
     }
 
@@ -211,59 +218,61 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
 
     @Override
     public void updateItem(int position, Sale model) {
-        ObjectDialog obj = showObjectDialog("Edit");
+        if (mUser.getRole().equals(String.valueOf(Role.ADMIN_USER))) {
+            ObjectDialog obj = showObjectDialog("Edit");
 
-        eQuantity.setText("" + model.getProductQuantity());
-        ePurchaseQuantity.setText("" + model.getPurchaseProductQuantity());
-        eSaleDate.setText(model.getSalesDate());
-        eSaleDiscount.setText("" + model.getSalesDiscount());
-        eSaleVat.setText("" + model.getSalesVat());
-        eSaleAmount.setText("" + model.getSalesAmount());
-        eSalePayment.setText("" + model.getSalesPayment());
-        eSaleBalance.setText("" + model.getSalesBalance());
-        eSaleDesc.setText(model.getSalesDescription());
+            eQuantity.setText("" + model.getProductQuantity());
+            ePurchaseQuantity.setText("" + model.getPurchaseProductQuantity());
+            eSaleDate.setText(model.getSalesDate());
+            eSaleDiscount.setText("" + model.getSalesDiscount());
+            eSaleVat.setText("" + model.getSalesVat());
+            eSaleAmount.setText("" + model.getSalesAmount());
+            eSalePayment.setText("" + model.getSalesPayment());
+            eSaleBalance.setText("" + model.getSalesBalance());
+            eSaleDesc.setText(model.getSalesDescription());
 
-        eSaleDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utility.getDate(SaleActivity.this, eSaleDate);
-            }
-        });
-
-        ((Button) obj.getView().findViewById(R.id.sale_save_button)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!tProductId.getText().toString().trim().isEmpty() && !eQuantity.getText().toString().trim().isEmpty() && !eSaleDate.getText().toString().trim().isEmpty() && !eSaleAmount.getText().toString().trim().isEmpty() && !eSalePayment.getText().toString().trim().isEmpty()) {
-                    Sale sale = new Sale(
-                            model.getSalesId(),
-                            sProductName.getSelectedItem().toString(),
-                            tProductId.getText().toString(),
-                            Integer.parseInt(eQuantity.getText().toString()),
-                            Integer.parseInt(ePurchaseQuantity.getText().toString()),
-                            sCustomerName.getSelectedItem().toString(),
-                            tCustomerId.getText().toString(),
-                            eSaleDate.getText().toString(),
-                            Double.parseDouble(eSaleDiscount.getText().toString()),
-                            Double.parseDouble(eSaleVat.getText().toString()),
-                            Double.parseDouble(eSaleAmount.getText().toString()),
-                            Double.parseDouble(eSalePayment.getText().toString()),
-                            Double.parseDouble(eSaleBalance.getText().toString()),
-                            eSaleDesc.getText().toString()
-                    );
-                    long result = mViewModel.update(sale);
-                    if (result > 0) {
-                        //mArrayList.clear();
-                        //mArrayList.addAll(viewModels);
-                        mArrayList.set(position, sale);
-                        mAdapter.notifyItemChanged(position, sale);
-                        //mAdapter.notifyDataSetChanged(); //recyclerView.invalidate();
-                        obj.getDialog().dismiss();
-                    }
-                } else {
-                    Snackbar.make(findViewById(android.R.id.content), "Please insert the values in your mandatory fields.", Snackbar.LENGTH_INDEFINITE).show();
+            eSaleDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Utility.getDate(SaleActivity.this, eSaleDate);
                 }
-            }
-        });
+            });
+
+            ((Button) obj.getView().findViewById(R.id.sale_save_button)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!tProductId.getText().toString().trim().isEmpty() && !eQuantity.getText().toString().trim().isEmpty() && !eSaleDate.getText().toString().trim().isEmpty() && !eSaleAmount.getText().toString().trim().isEmpty() && !eSalePayment.getText().toString().trim().isEmpty()) {
+                        Sale sale = new Sale(
+                                model.getSalesId(),
+                                sProductName.getSelectedItem().toString(),
+                                tProductId.getText().toString(),
+                                Integer.parseInt(eQuantity.getText().toString()),
+                                Integer.parseInt(ePurchaseQuantity.getText().toString()),
+                                sCustomerName.getSelectedItem().toString(),
+                                tCustomerId.getText().toString(),
+                                eSaleDate.getText().toString(),
+                                Double.parseDouble(eSaleDiscount.getText().toString()),
+                                Double.parseDouble(eSaleVat.getText().toString()),
+                                Double.parseDouble(eSaleAmount.getText().toString()),
+                                Double.parseDouble(eSalePayment.getText().toString()),
+                                Double.parseDouble(eSaleBalance.getText().toString()),
+                                eSaleDesc.getText().toString()
+                        );
+                        long result = mViewModel.update(sale);
+                        if (result > 0) {
+                            //mArrayList.clear();
+                            //mArrayList.addAll(viewModels);
+                            mArrayList.set(position, sale);
+                            mAdapter.notifyItemChanged(position, sale);
+                            //mAdapter.notifyDataSetChanged(); //recyclerView.invalidate();
+                            obj.getDialog().dismiss();
+                        }
+                    } else {
+                        Snackbar.make(findViewById(android.R.id.content), "Please insert the values in your mandatory fields.", Snackbar.LENGTH_INDEFINITE).show();
+                    }
+                }
+            });
+        }
     }
 
     private ObjectDialog showObjectDialog(String title) {

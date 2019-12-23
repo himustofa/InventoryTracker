@@ -36,7 +36,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        mUser = SharedPrefManager.getInstance(HomeActivity.this).getUser();
+        mUser = SharedPrefManager.getInstance(this).getUser();
 
         //==========================================| findViewById
         ((TextView) findViewById(R.id.log_out)).setOnLongClickListener(new ActionHandler());
