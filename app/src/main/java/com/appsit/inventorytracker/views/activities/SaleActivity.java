@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -98,6 +99,9 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
                         for(Customer s : customers) {
                             cList.add(s.getCustomerName());
                         }
+                    } else {
+                        mCustomerList.add(new Customer("none", "None", "none", "none", "none", 0.0, "none", "none"));
+                        cList.add("None");
                     }
                 }
             }
@@ -164,6 +168,10 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
                 tCustomerId.setText(mCustomerList.get(position).getCustomerId());
             }
         }, this, sCustomerName, cList);
+
+        if (mCustomerList.size() == 0) {
+            //sCustomerName.setAdapter( new ArrayAdapter<String>(SaleActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.customer_name_array)) );
+        }
 
 
 

@@ -50,7 +50,7 @@ public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.MyViewModel> {
     public void onBindViewHolder(@NonNull MyViewModel holder, int position) {
         Sale model = mArrayList.get(position);
 
-        holder.name.setText(model.getCustomerName());
+        holder.name.setText(model.getProductName());
         holder.quantity.setText("" + model.getProductQuantity());
         holder.date.setText(model.getSalesDate());
         holder.amount.setText("" + model.getSalesAmount());
