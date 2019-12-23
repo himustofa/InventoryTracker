@@ -29,11 +29,27 @@ public class SaleTextWatcher implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        Log.d(TAG, "" + perProductPrice);
-        try {
-            mEditText.setText( String.valueOf( Double.parseDouble(productQty.getText().toString()) * perProductPrice ));
-        } catch (Exception e) {
-            e.printStackTrace();
+        /*
+        total = (productQty * productPrice);
+        vatAmount = (total * vat)/100;
+        totalAmount = (total + vatAmount) - discount;
+        */
+
+        String qty = productQty.getText().toString();
+        String dis = discount.getText().toString();
+        String v = vat.getText().toString();
+        if (qty.isEmpty()) {
+            mEditText.setText("0.0");
+        } else if(dis.isEmpty()) {
+            discount.setText("0.0");
+        } else if(v.isEmpty()) {
+            vat.setText("0.0");
+        } else {
+            double total = (Double.parseDouble(qty) * perProductPrice);
+            double vatAmount = (total * Double.parseDouble(v)) / 100;
+            double d = (total * Double.parseDouble(dis)) / 100;
+            double totalAmount = (total + vatAmount) - d;
+            mEditText.setText("" + totalAmount);
         }
     }
 }

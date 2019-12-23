@@ -21,6 +21,7 @@ import com.appsit.inventorytracker.models.Customer;
 import com.appsit.inventorytracker.models.ObjectDialog;
 import com.appsit.inventorytracker.models.Purchase;
 import com.appsit.inventorytracker.models.Sale;
+import com.appsit.inventorytracker.utils.SalePayTextWatcher;
 import com.appsit.inventorytracker.utils.SaleTextWatcher;
 import com.appsit.inventorytracker.utils.Utility;
 import com.appsit.inventorytracker.viewmodels.CustomerViewModel;
@@ -149,13 +150,11 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
                 tProductId.setText(mPurchaseList.get(position).getProductId());
                 ePurchaseQuantity.setText("" + mPurchaseList.get(position).getPurchaseProductQuantity());
                 perProductPrice = mPurchaseList.get(position).getPurchaseProductPrice();
+                //Calculation
                 eQuantity.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
-
-                /*
-                total = (productQty * productPrice);
-                vatAmount = (total * vat)/100;
-                totalAmount = (total + vatAmount) - discount;
-                */
+                eSaleDiscount.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
+                eSaleVat.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
+                eSalePayment.addTextChangedListener(new SalePayTextWatcher(eSaleAmount, eSalePayment, eSaleBalance));
             }
         }, this, sProductName, pList);
 
@@ -268,6 +267,7 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
         builder.setCancelable(true);
         builder.create();
         AlertDialog dialog = builder.show();
+
         sProductName = (Spinner) view.findViewById(R.id.sl_product_name);
         tProductId = (TextView) view.findViewById(R.id.s1_product_id);
         eQuantity = (EditText) view.findViewById(R.id.sl_product_quantity);
