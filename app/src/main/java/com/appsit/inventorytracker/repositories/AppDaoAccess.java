@@ -11,6 +11,7 @@ import com.appsit.inventorytracker.models.Customer;
 import com.appsit.inventorytracker.models.Product;
 import com.appsit.inventorytracker.models.Purchase;
 import com.appsit.inventorytracker.models.Sale;
+import com.appsit.inventorytracker.models.StockSale;
 import com.appsit.inventorytracker.models.Supplier;
 import com.appsit.inventorytracker.models.User;
 
@@ -115,8 +116,9 @@ public interface AppDaoAccess {
     @Query("SELECT * FROM sales WHERE id=:id")
     LiveData<Sale> getSaleById(String id);
 
-    @Query("SELECT SUM(productQuantity), SUM(salesAmount) FROM sales WHERE productId=:productId")
-    LiveData<Sale> getSaleByProductId(String productId);
+    //https://stackoverflow.com/questions/50801617/return-sum-and-average-using-room
+    @Query("SELECT SUM(productQuantity) as quantity, SUM(salesAmount) as amount FROM sales WHERE productId=:productId")
+    LiveData<StockSale> getSaleByProductId(String productId);
 
     @Insert
     long insertSale(Sale model);
