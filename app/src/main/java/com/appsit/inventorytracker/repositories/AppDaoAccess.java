@@ -115,6 +115,9 @@ public interface AppDaoAccess {
     @Query("SELECT * FROM sales WHERE id=:id")
     LiveData<Sale> getSaleById(String id);
 
+    @Query("SELECT SUM(productQuantity), SUM(salesAmount) FROM sales WHERE productId=:productId")
+    LiveData<Sale> getSaleByProductId(String productId);
+
     @Insert
     long insertSale(Sale model);
 

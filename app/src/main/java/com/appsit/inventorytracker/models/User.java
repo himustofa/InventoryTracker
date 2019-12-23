@@ -3,6 +3,7 @@ package com.appsit.inventorytracker.models;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.appsit.inventorytracker.utils.Utility;
@@ -35,6 +36,7 @@ public class User {
     public User() {
     }
 
+    @Ignore
     public User(@NonNull String userId, @NonNull String fullName, String designation, String email, String phoneNumber, @NonNull String username, @NonNull String password, String role, String photoName, String photoPath) {
         this.userId = userId;
         this.fullName = fullName;

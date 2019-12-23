@@ -18,7 +18,7 @@ import com.appsit.inventorytracker.utils.ConstantKey;
 
 import java.util.concurrent.Executors;
 
-@Database(entities = {User.class, Supplier.class, Purchase.class, Product.class, Customer.class, Sale.class}, version = ConstantKey.DATABASE_VERSION)
+@Database(entities = {User.class, Supplier.class, Purchase.class, Product.class, Customer.class, Sale.class}, version = ConstantKey.DATABASE_VERSION, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract AppDaoAccess getDaoAccess();
