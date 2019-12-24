@@ -21,7 +21,10 @@ import com.appsit.inventorytracker.R;
 import com.appsit.inventorytracker.models.ObjectDialog;
 import com.appsit.inventorytracker.models.Product;
 import com.appsit.inventorytracker.models.Purchase;
+import com.appsit.inventorytracker.models.Role;
 import com.appsit.inventorytracker.models.Supplier;
+import com.appsit.inventorytracker.models.User;
+import com.appsit.inventorytracker.session.SharedPrefManager;
 import com.appsit.inventorytracker.utils.PurchaseTextWatcher;
 import com.appsit.inventorytracker.utils.Utility;
 import com.appsit.inventorytracker.viewmodels.ProductViewModel;
@@ -55,10 +58,14 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
     private TextView T1, T2;
     private EditText E3, E4, E5, E6, E7, E8, E9;
 
+    private User mUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_purchase);
+
+        this.mUser = SharedPrefManager.getInstance(this).getUser();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.purchase_recycler_view);
 
@@ -107,7 +114,9 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
             @Override
             public void onClick(View v) {
                 if (mProductList.size() > 0) {
-                    addItem();
+                    if (mUser.getRole().equals(String.valueOf(Role.ADMIN_USER))) {
+                        addItem();
+                    }
                 } else {
                     Snackbar.make(findViewById(android.R.id.content), "Products are not available.", Snackbar.LENGTH_INDEFINITE).show();
                 }

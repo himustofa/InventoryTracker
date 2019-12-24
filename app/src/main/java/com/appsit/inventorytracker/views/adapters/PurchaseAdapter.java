@@ -15,6 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.appsit.inventorytracker.R;
 import com.appsit.inventorytracker.models.Purchase;
+import com.appsit.inventorytracker.models.Role;
+import com.appsit.inventorytracker.models.User;
+import com.appsit.inventorytracker.session.SharedPrefManager;
 import com.appsit.inventorytracker.utils.Utility;
 
 import java.util.ArrayList;
@@ -26,6 +29,7 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.MyView
     private ArrayList<Purchase> mArrayList;
     private int lastPosition = -1;
     private RecyclerItemListener mListener;
+    private User mUser;
 
     public interface RecyclerItemListener {
         void removeItem(int position, Purchase model);
@@ -37,6 +41,7 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.MyView
         this.mContext = context;
         this.mArrayList = arrayList;
         this.mListener = (RecyclerItemListener) context;
+        this.mUser = SharedPrefManager.getInstance(context).getUser();
     }
 
     @NonNull
@@ -61,7 +66,9 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.MyView
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.updateItem(position, model);
+                if (mUser.getRole().equals(String.valueOf(Role.ADMIN_USER))) {
+                    mListener.updateItem(position, model);
+                }
             }
         });
 
@@ -71,7 +78,9 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.MyView
                 Utility.deleteDialog(mContext).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mListener.removeItem(position, model);
+                        if (mUser.getRole().equals(String.valueOf(Role.ADMIN_USER))) {
+                            mListener.removeItem(position, model);
+                        }
                     }
                 }).show();
                 return true;
