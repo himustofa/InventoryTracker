@@ -3,11 +3,11 @@ package com.appsit.inventorytracker.views.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
 import com.appsit.inventorytracker.R;
 import com.appsit.inventorytracker.models.Purchase;
@@ -16,7 +16,6 @@ import com.appsit.inventorytracker.models.StockSale;
 import com.appsit.inventorytracker.viewmodels.PurchaseViewModel;
 import com.appsit.inventorytracker.viewmodels.StockViewModel;
 import com.appsit.inventorytracker.views.adapters.StockAdapter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -29,10 +28,8 @@ public class StockActivity extends AppCompatActivity {
     private StockAdapter mAdapter;
     private PurchaseViewModel mPurchaseViewModel;
     private StockViewModel mViewModel;
-    private boolean isValue = true;
 
     private RecyclerView mRecyclerView;
-    private ArrayList<Stock> purchaseList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +49,9 @@ public class StockActivity extends AppCompatActivity {
                             @Override
                             public void onChanged(StockSale sale) {
                                 Log.d(TAG, new Gson().toJson(sale));
-                                purchaseList.add(new Stock( p.getProductId(), p.getProductName(), (p.getPurchaseProductQuantity()-sale.getQuantity()), (p.getPurchaseAmount()-sale.getAmount()) ));
-                                Log.d(TAG, new Gson().toJson(purchaseList));
+                                mArrayList.add(new Stock( p.getProductId(), p.getProductName(), (p.getPurchaseProductQuantity()-sale.getQuantity()), (p.getPurchaseAmount()-sale.getAmount()) ));
+                                Log.d(TAG, new Gson().toJson(mArrayList));
+                                initRecyclerView();
                             }
                         });
                     }
@@ -61,6 +59,14 @@ public class StockActivity extends AppCompatActivity {
             }
         });
 
-        //initRecyclerView();
     }
+
+    private void initRecyclerView() {
+        mAdapter = new StockAdapter(StockActivity.this, mArrayList);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(StockActivity.this));
+        //mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        mAdapter.notifyDataSetChanged();
+    }
+
 }
