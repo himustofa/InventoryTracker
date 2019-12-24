@@ -4,26 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/shape_dashboard_gradient"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".views.activities.HomeActivity"
     tools:showIn="@layout/app_bar_home">
 
     <RelativeLayout
-        android:padding="@dimen/space_15dp"
+        android:padding="@dimen/space_10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <View
-            android:background="@color/colorWhite"
-            android:layout_centerVertical="true"
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/space_1dp"/>
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/dashboard_one" />
+
+            <View
+                android:layout_marginTop="@dimen/space_15dp"
+                android:layout_marginBottom="@dimen/space_15dp"
+                android:background="@color/colorLightGrey"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_1dp"/>
+
+            <include layout="@layout/dashboard_two" />
+
+        </LinearLayout>
+
+
+
+
 
         <TextView
             android:id="@+id/counter"
             android:text="0"
             android:textSize="35sp"
-            android:textColor="@color/colorWhite"
             android:layout_centerInParent="true"
             android:layout_alignParentBottom="true"
             android:layout_width="wrap_content"
