@@ -7,6 +7,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.appsit.inventorytracker.models.Adjustment;
 import com.appsit.inventorytracker.models.Customer;
 import com.appsit.inventorytracker.models.Product;
 import com.appsit.inventorytracker.models.Purchase;
@@ -128,4 +129,20 @@ public interface AppDaoAccess {
 
     @Delete
     int deleteSale(Sale model);
+
+    //===============================================| Adjustment
+    @Query("SELECT * FROM adjustments")
+    LiveData<List<Adjustment>> getAllAdjustment();
+
+    @Query("SELECT * FROM adjustments WHERE id=:id")
+    LiveData<Adjustment> getAdjustmentById(String id);
+
+    @Insert
+    long insertAdjustment(Adjustment model);
+
+    @Update
+    int updateAdjustment(Adjustment model);
+
+    @Delete
+    int deleteAdjustment(Adjustment model);
 }

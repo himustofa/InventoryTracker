@@ -8,6 +8,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.appsit.inventorytracker.models.Adjustment;
 import com.appsit.inventorytracker.models.Customer;
 import com.appsit.inventorytracker.models.Product;
 import com.appsit.inventorytracker.models.Purchase;
@@ -18,7 +19,7 @@ import com.appsit.inventorytracker.utils.ConstantKey;
 
 import java.util.concurrent.Executors;
 
-@Database(entities = {User.class, Supplier.class, Purchase.class, Product.class, Customer.class, Sale.class}, version = ConstantKey.DATABASE_VERSION, exportSchema = false)
+@Database(entities = {User.class, Supplier.class, Purchase.class, Product.class, Customer.class, Sale.class, Adjustment.class}, version = ConstantKey.DATABASE_VERSION, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract AppDaoAccess getDaoAccess();
