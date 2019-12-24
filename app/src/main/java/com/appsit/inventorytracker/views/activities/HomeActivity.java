@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.animation.ValueAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -64,6 +65,18 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             ((TextView) hView.findViewById(R.id.user_full_name)).setText(mUser.getFullName());
             ((TextView) hView.findViewById(R.id.user_email)).setText(mUser.getEmail());
         }
+
+        //==========================================| ValueAnimator
+        int count = 100;
+        ValueAnimator animator = new ValueAnimator();
+        animator.setObjectValues(0, count);// here you set the range, from 0 to "count" value
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            public void onAnimationUpdate(ValueAnimator animation) {
+                ((TextView) findViewById(R.id.counter)).setText(String.valueOf(animation.getAnimatedValue()));
+            }
+        });
+        animator.setDuration(1000); // here you set the duration of the anim
+        animator.start();
     }
 
     //====================================================| Button events
