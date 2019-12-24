@@ -53,17 +53,11 @@ public class StockActivity extends AppCompatActivity {
                             public void onChanged(StockSale sale) {
                                 Log.d(TAG, new Gson().toJson(sale));
                                 purchaseList.add(new Stock( p.getProductId(), p.getProductName(), (p.getPurchaseProductQuantity()-sale.getQuantity()), (p.getPurchaseAmount()-sale.getAmount()) ));
+                                Log.d(TAG, new Gson().toJson(purchaseList));
                             }
                         });
                     }
                 }
-            }
-        });
-
-        ((FloatingActionButton) findViewById(R.id.stock_add_fab)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //addItem();
             }
         });
 
