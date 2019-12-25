@@ -11,6 +11,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.animation.ValueAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.appsit.inventorytracker.R;
+import com.appsit.inventorytracker.models.Role;
 import com.appsit.inventorytracker.models.User;
 import com.appsit.inventorytracker.session.SharedPrefManager;
 import com.appsit.inventorytracker.utils.Utility;
@@ -61,7 +63,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         View hView = navigationView.getHeaderView(0);
         if (mUser != null) {
-            ((CircleImageView) hView.findViewById(R.id.nav_header_photo)).setImageBitmap(Utility.loadFromInternalStorage(mUser.getPhotoPath(),mUser.getPhotoName()));;
+            if (mUser.getRole().equals(String.valueOf(Role.ADMIN_USER))) {
+                ((CircleImageView) hView.findViewById(R.id.nav_header_photo)).setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.ic_log_mk));
+            } else {
+                ((CircleImageView) hView.findViewById(R.id.nav_header_photo)).setImageBitmap(Utility.loadFromInternalStorage(mUser.getPhotoPath(), mUser.getPhotoName()));
+            }
             ((TextView) hView.findViewById(R.id.user_full_name)).setText(mUser.getFullName());
             ((TextView) hView.findViewById(R.id.user_email)).setText(mUser.getEmail());
         }
