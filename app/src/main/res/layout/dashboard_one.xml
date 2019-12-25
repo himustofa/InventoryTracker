@@ -19,7 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <TextView
-                    android:text="Items"
+                    android:text="Total"
                     android:textColor="@color/colorDarkGrey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
