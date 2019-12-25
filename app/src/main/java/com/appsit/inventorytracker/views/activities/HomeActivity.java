@@ -7,23 +7,35 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
-import android.animation.ValueAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.appsit.inventorytracker.R;
+import com.appsit.inventorytracker.models.Purchase;
 import com.appsit.inventorytracker.models.Role;
+import com.appsit.inventorytracker.models.Stock;
+import com.appsit.inventorytracker.models.StockSale;
 import com.appsit.inventorytracker.models.User;
 import com.appsit.inventorytracker.session.SharedPrefManager;
 import com.appsit.inventorytracker.utils.Utility;
+import com.appsit.inventorytracker.viewmodels.HomeViewModel;
+import com.appsit.inventorytracker.viewmodels.PurchaseViewModel;
+import com.appsit.inventorytracker.viewmodels.SaleViewModel;
+import com.appsit.inventorytracker.viewmodels.StockViewModel;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
+
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -74,16 +86,37 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
 
         //==========================================| ValueAnimator
-        int count = 100;
-        ValueAnimator animator = new ValueAnimator();
-        animator.setObjectValues(0, count);// here you set the range, from 0 to "count" value
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            public void onAnimationUpdate(ValueAnimator animation) {
-                ((TextView) findViewById(R.id.counter)).setText(String.valueOf(animation.getAnimatedValue()));
+        Utility.getAnimationCounter(((TextView) findViewById(R.id.counter)), 100);
+
+        //==========================================| ViewModel
+        HomeViewModel mHomeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+        mHomeViewModel.getPurchaseTotal().observe(this, new Observer<StockSale>() {
+            @Override
+            public void onChanged(StockSale myModel) {
+                Log.d(TAG, "Purchase " + new Gson().toJson(myModel));
             }
         });
-        animator.setDuration(1000); // here you set the duration of the anim
-        animator.start();
+
+        mHomeViewModel.getSaleTotal().observe(this, new Observer<StockSale>() {
+            @Override
+            public void onChanged(StockSale myModel) {
+                Log.d(TAG, "Sale " + new Gson().toJson(myModel));
+            }
+        });
+
+        mHomeViewModel.getAdjustmentTotal().observe(this, new Observer<StockSale>() {
+            @Override
+            public void onChanged(StockSale myModel) {
+                Log.d(TAG, "Wastage " + new Gson().toJson(myModel));
+            }
+        });
+
+        mHomeViewModel.getSaleByDate("25/12/2019").observe(this, new Observer<StockSale>() {
+            @Override
+            public void onChanged(StockSale myModel) {
+                Log.d(TAG, "Today " + new Gson().toJson(myModel));
+            }
+        });
     }
 
     //====================================================| Button events

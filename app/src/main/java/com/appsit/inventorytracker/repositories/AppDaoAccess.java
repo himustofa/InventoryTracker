@@ -15,6 +15,7 @@ import com.appsit.inventorytracker.models.Sale;
 import com.appsit.inventorytracker.models.StockSale;
 import com.appsit.inventorytracker.models.Supplier;
 import com.appsit.inventorytracker.models.User;
+import com.appsit.inventorytracker.viewmodels.HomeViewModel;
 
 import java.util.List;
 
@@ -154,4 +155,21 @@ public interface AppDaoAccess {
 
     @Delete
     int deleteAdjustment(Adjustment model);
+
+    //===============================================| Home
+    @Query("SELECT SUM(productQuantity) as quantity, SUM(salesAmount) as amount FROM sales")
+    LiveData<StockSale> getSaleTotal();
+
+    @Query("SELECT SUM(purchaseProductQuantity) as quantity, SUM(purchaseAmount) as amount FROM purchases")
+    LiveData<StockSale> getPurchaseTotal();
+
+    @Query("SELECT SUM(productQuantity) as quantity, SUM(productAmount) as amount FROM adjustments")
+    LiveData<StockSale> getAdjustmentTotal();
+
+    @Query("SELECT SUM(productQuantity) as quantity, SUM(salesAmount) as amount FROM sales WHERE salesDate=:date")
+    LiveData<StockSale> getSaleByDate(String date);
+
+
+
+
 }

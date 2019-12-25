@@ -1,5 +1,6 @@
 package com.appsit.inventorytracker.utils;
 
+import android.animation.ValueAnimator;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -17,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -285,4 +287,16 @@ public class Utility {
         return null;
     }
     */
+
+    public static void getAnimationCounter(TextView textView, int count) {
+        ValueAnimator animator = new ValueAnimator();
+        animator.setObjectValues(0, count);// here you set the range, from 0 to "count" value
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            public void onAnimationUpdate(ValueAnimator animation) {
+                textView.setText(String.valueOf(animation.getAnimatedValue()));
+            }
+        });
+        animator.setDuration(1000); // here you set the duration of the anim
+        animator.start();
+    }
 }
