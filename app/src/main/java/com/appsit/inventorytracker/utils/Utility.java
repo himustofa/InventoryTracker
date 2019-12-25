@@ -52,6 +52,14 @@ public class Utility {
         }, year, mon, day).show();
     }
 
+    public static String getCurrentDatPicker(Context context) {
+        DatePicker datePicker = new DatePicker(context);
+        int day = datePicker.getDayOfMonth();
+        int mon = datePicker.getMonth();
+        int year = datePicker.getYear();
+        return day +"/"+ (mon+1) +"/"+ year;
+    }
+
     //====================================================| Checkbox
     public static String getCheckboxValue(LinearLayout checkboxLayout) {
         StringBuilder value = new StringBuilder();

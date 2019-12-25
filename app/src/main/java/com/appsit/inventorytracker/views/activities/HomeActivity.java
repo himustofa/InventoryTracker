@@ -117,7 +117,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        mHomeViewModel.getSaleByDate("25/12/2019").observe(this, new Observer<StockSale>() {
+        mHomeViewModel.getSaleByDate(Utility.getCurrentDatPicker(HomeActivity.this)).observe(this, new Observer<StockSale>() {
             @Override
             public void onChanged(StockSale myModel) {
                 Log.d(TAG, "Today " + new Gson().toJson(myModel));
