@@ -179,6 +179,11 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
             @Override
             public void onPosition(int position) {
                 tCustomerId.setText(mCustomerList.get(position).getCustomerId());
+                if (mCustomerList.get(position).getCustomerDiscount() > 0.0) {
+                    eSaleDiscount.setText("" + mCustomerList.get(position).getCustomerDiscount());
+                } else {
+                    eSaleDiscount.setText("0.0");
+                }
             }
         }, this, sCustomerName, cList);
 
