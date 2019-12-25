@@ -36,7 +36,7 @@
                 android:id="@+id/log_out"
                 android:textSize="@dimen/size_16sp"
                 android:textColor="@color/colorWhite"
-                android:text="@string/legal"
+                android:text="@string/sign_out"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView

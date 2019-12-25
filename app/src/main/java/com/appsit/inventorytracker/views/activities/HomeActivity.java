@@ -42,7 +42,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         mUser = SharedPrefManager.getInstance(this).getUser();
 
         //==========================================| findViewById
-        ((TextView) findViewById(R.id.log_out)).setOnLongClickListener(new ActionHandler());
+        ((TextView) findViewById(R.id.log_out)).setOnClickListener(new ActionHandler());
+        //((TextView) findViewById(R.id.log_out)).setOnLongClickListener(new ActionHandler());
         ((TextView) findViewById(R.id.about_id)).setOnClickListener(new ActionHandler());
 
         //====================================================| To Display Navigation Bar Icon and Back
@@ -93,10 +94,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 Utility.aboutMe(HomeActivity.this);
                 //startActivity(new Intent(getApplicationContext(), PostsListActivity.class));
             }
+            if (v.getId() == R.id.log_out) {
+                signOut();
+            }
         }
         @Override
         public boolean onLongClick(View view) {
-            signOut();
             return false;
         }
     }
