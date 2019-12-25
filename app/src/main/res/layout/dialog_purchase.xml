@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/purchase_alert_dialog_id"
     android:fillViewport="true"
     android:layout_width="match_parent"
@@ -42,74 +43,134 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/p_purchase_date"
-            android:hint="Purchase Date"
-            android:inputType="datetime"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/shape_edit_text_border"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/layout_p_purchase_date"
+            app:boxCornerRadiusTopStart="0dp"
+            app:boxCornerRadiusTopEnd="0dp"
+            app:boxCornerRadiusBottomStart="0dp"
+            app:boxCornerRadiusBottomEnd="0dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/p_purchase_date"
+                android:hint="Purchase Date"
+                android:inputType="datetime"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
-            android:clickable="true"
-            android:cursorVisible="false"
-            android:focusable="false"
-            android:focusableInTouchMode="false" />
+                android:clickable="true"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/p_purchase_product_quantity"
-            android:hint="Purchase Product Quantity"
-            android:inputType="number"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/shape_edit_text_border"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/layout_p_purchase_product_quantity"
+            app:boxCornerRadiusTopStart="0dp"
+            app:boxCornerRadiusTopEnd="0dp"
+            app:boxCornerRadiusBottomStart="0dp"
+            app:boxCornerRadiusBottomEnd="0dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/p_purchase_product_quantity"
+                android:hint="Purchase Product Quantity"
+                android:inputType="number"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/p_purchase_product_price"
-            android:hint="Purchase Product Price"
-            android:inputType="numberDecimal"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/shape_edit_text_border"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/layout_p_purchase_product_price"
+            app:boxCornerRadiusTopStart="0dp"
+            app:boxCornerRadiusTopEnd="0dp"
+            app:boxCornerRadiusBottomStart="0dp"
+            app:boxCornerRadiusBottomEnd="0dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/p_purchase_product_price"
+                android:hint="Purchase Product Price"
+                android:inputType="numberDecimal"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/p_purchase_amount"
-            android:hint="Total Amount"
-            android:inputType="numberDecimal"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/shape_edit_text_border"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="0dp"
+            app:boxCornerRadiusTopEnd="0dp"
+            app:boxCornerRadiusBottomStart="0dp"
+            app:boxCornerRadiusBottomEnd="0dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/p_purchase_amount"
+                android:hint="Total Amount"
+                android:inputType="numberDecimal"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/p_purchase_payment"
-            android:hint="Total Payment"
-            android:inputType="numberDecimal"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/shape_edit_text_border"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/layout_p_purchase_payment"
+            app:boxCornerRadiusTopStart="0dp"
+            app:boxCornerRadiusTopEnd="0dp"
+            app:boxCornerRadiusBottomStart="0dp"
+            app:boxCornerRadiusBottomEnd="0dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/p_purchase_payment"
+                android:hint="Total Payment"
+                android:inputType="numberDecimal"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/p_purchase_balance"
-            android:hint="Total Balance"
-            android:inputType="numberDecimal"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/shape_edit_text_border"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="0dp"
+            app:boxCornerRadiusTopEnd="0dp"
+            app:boxCornerRadiusBottomStart="0dp"
+            app:boxCornerRadiusBottomEnd="0dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/p_purchase_balance"
+                android:hint="Total Balance"
+                android:inputType="numberDecimal"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/p_purchase_description"
-            android:gravity="top"
-            android:hint="Description"
-            android:layout_marginBottom="10dp"
-            android:inputType="text|textMultiLine"
-            android:background="@drawable/shape_edit_text_border"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="0dp"
+            app:boxCornerRadiusTopEnd="0dp"
+            app:boxCornerRadiusBottomStart="0dp"
+            app:boxCornerRadiusBottomEnd="0dp"
             android:layout_width="match_parent"
-            android:layout_height="100dp"/>
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/p_purchase_description"
+                android:gravity="top"
+                android:hint="Description"
+                android:layout_marginBottom="10dp"
+                android:inputType="text|textMultiLine"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/p_purchase_save_button"

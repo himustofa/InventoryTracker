@@ -18,14 +18,15 @@ import android.widget.TextView;
 
 import com.appsit.inventorytracker.R;
 import com.appsit.inventorytracker.models.Adjustment;
-import com.appsit.inventorytracker.models.ObjectDialog;
 import com.appsit.inventorytracker.models.Purchase;
+import com.appsit.inventorytracker.utils.AdjustmentTextWatcher;
 import com.appsit.inventorytracker.utils.Utility;
 import com.appsit.inventorytracker.viewmodels.AdjustmentViewModel;
 import com.appsit.inventorytracker.viewmodels.PurchaseViewModel;
 import com.appsit.inventorytracker.views.adapters.AdjustmentAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -132,6 +133,10 @@ public class AdjustmentActivity extends AppCompatActivity implements AdjustmentA
             @Override
             public void onPosition(int position) {
                 productId.setText(mPurchaseList.get(position).getProductId());
+                adjQuantity.setText("1");
+                adjAmount.setText("" + mPurchaseList.get(position).getPurchaseProductPrice());
+                //Calculate
+                adjQuantity.addTextChangedListener(new AdjustmentTextWatcher(adjAmount, adjQuantity, adjAmount));
             }
         }, this, productName, pList);
 
@@ -141,11 +146,11 @@ public class AdjustmentActivity extends AppCompatActivity implements AdjustmentA
                 if(!adjQuantity.getText().toString().trim().isEmpty() && !adjAmount.getText().toString().trim().isEmpty()) {
                     Adjustment model = new Adjustment(
                             UUID.randomUUID().toString(),
-                            productName.getSelectedItem().toString(),
-                            productId.getText().toString(),
-                            Integer.parseInt(adjQuantity.getText().toString()),
-                            Double.parseDouble(adjAmount.getText().toString()),
-                            adjDesc.getText().toString()
+                            productName.getSelectedItem().toString().trim(),
+                            productId.getText().toString().trim(),
+                            Integer.parseInt(adjQuantity.getText().toString().trim()),
+                            Double.parseDouble(adjAmount.getText().toString().trim()),
+                            adjDesc.getText().toString().trim()
                     );
                     long result = mViewModel.save(model);
                     if (result > 0) {
@@ -154,6 +159,8 @@ public class AdjustmentActivity extends AppCompatActivity implements AdjustmentA
                         dialog.dismiss();
                     }
                 } else {
+                    ((TextInputLayout) view.findViewById(R.id.layoutAdjProductQuantity)).setError("required!");
+                    ((TextInputLayout) view.findViewById(R.id.layoutAdjAmount)).setError("required!");
                     Snackbar.make(findViewById(android.R.id.content), "Please insert the values in your mandatory fields.", Snackbar.LENGTH_INDEFINITE).show();
                 }
             }

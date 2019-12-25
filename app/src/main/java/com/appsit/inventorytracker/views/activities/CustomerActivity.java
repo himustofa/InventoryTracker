@@ -21,6 +21,7 @@ import com.appsit.inventorytracker.viewmodels.CustomerViewModel;
 import com.appsit.inventorytracker.views.adapters.CustomerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -92,7 +93,7 @@ public class CustomerActivity extends AppCompatActivity implements CustomerAdapt
         ((Button) obj.getView().findViewById(R.id.customer_save_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!E1.getText().toString().trim().isEmpty() && !E4.getText().toString().trim().isEmpty()) {
+                if(!E1.getText().toString().trim().isEmpty() && !E2.getText().toString().trim().isEmpty()) {
                     Customer model = new Customer(
                             UUID.randomUUID().toString(),
                             E1.getText().toString(),
@@ -111,7 +112,9 @@ public class CustomerActivity extends AppCompatActivity implements CustomerAdapt
                         obj.getDialog().dismiss();
                     }
                 } else {
-                    Snackbar.make(findViewById(android.R.id.content), "Please insert the values in your mandatory fields.", Snackbar.LENGTH_INDEFINITE).show();
+                    ((TextInputLayout) obj.getView().findViewById(R.id.layout_customer_name)).setError("required!");
+                    ((TextInputLayout) obj.getView().findViewById(R.id.layout_customer_phone_number)).setError("required!");
+                    //Snackbar.make(findViewById(android.R.id.content), "Please insert the values in your mandatory fields.", Snackbar.LENGTH_INDEFINITE).show();
                 }
             }
         });

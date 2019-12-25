@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/supplier_alert_dialog_id"
     android:fillViewport="true"
     android:layout_width="match_parent"
@@ -12,73 +13,165 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/supplierName"
-            android:hint="Supplier Name"
-            android:inputType="textPersonName"
-            android:layout_marginBottom="@dimen/space_15dp"
-            android:background="@drawable/shape_edit_text_border"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/layout_supplierName"
+            app:boxCornerRadiusTopStart="0dp"
+            app:boxCornerRadiusTopEnd="0dp"
+            app:boxCornerRadiusBottomStart="0dp"
+            app:boxCornerRadiusBottomEnd="0dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/supplierCompanyName"
-            android:hint="Supplier's Company Name"
-            android:layout_marginBottom="@dimen/space_15dp"
-            android:background="@drawable/shape_edit_text_border"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/supplierName"
+                android:hint="Supplier Name"
+                android:inputType="textPersonName"
+                android:layout_marginBottom="@dimen/space_15dp"
+                android:background="@drawable/shape_edit_text_border"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="0dp"
+            app:boxCornerRadiusTopEnd="0dp"
+            app:boxCornerRadiusBottomStart="0dp"
+            app:boxCornerRadiusBottomEnd="0dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/supplierContactPerson"
-            android:hint="Supplier's Contact Person"
-            android:inputType="textPersonName"
-            android:layout_marginBottom="@dimen/space_15dp"
-            android:background="@drawable/shape_edit_text_border"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/supplierCompanyName"
+                android:hint="Supplier's Company Name"
+                android:layout_marginBottom="@dimen/space_15dp"
+                android:background="@drawable/shape_edit_text_border"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="0dp"
+            app:boxCornerRadiusTopEnd="0dp"
+            app:boxCornerRadiusBottomStart="0dp"
+            app:boxCornerRadiusBottomEnd="0dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/supplierPhoneNumber"
-            android:hint="Supplier's Phone Number"
-            android:layout_marginBottom="@dimen/space_15dp"
-            android:inputType="phone"
-            android:background="@drawable/shape_edit_text_border"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/supplierContactPerson"
+                android:hint="Supplier's Contact Person"
+                android:inputType="textPersonName"
+                android:layout_marginBottom="@dimen/space_15dp"
+                android:background="@drawable/shape_edit_text_border"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/layout_supplierPhoneNumber"
+            app:boxCornerRadiusTopStart="0dp"
+            app:boxCornerRadiusTopEnd="0dp"
+            app:boxCornerRadiusBottomStart="0dp"
+            app:boxCornerRadiusBottomEnd="0dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/supplierAddress"
-            android:hint="Supplier's Address"
-            android:layout_marginBottom="@dimen/space_15dp"
-            android:background="@drawable/shape_edit_text_border"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/supplierPhoneNumber"
+                android:hint="Supplier's Phone Number"
+                android:layout_marginBottom="@dimen/space_15dp"
+                android:inputType="phone"
+                android:background="@drawable/shape_edit_text_border"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="0dp"
+            app:boxCornerRadiusTopEnd="0dp"
+            app:boxCornerRadiusBottomStart="0dp"
+            app:boxCornerRadiusBottomEnd="0dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/supplierBankName"
-            android:hint="Supplier's Bank Name"
-            android:layout_marginBottom="@dimen/space_15dp"
-            android:background="@drawable/shape_edit_text_border"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/supplierAddress"
+                android:hint="Supplier's Address"
+                android:layout_marginBottom="@dimen/space_15dp"
+                android:background="@drawable/shape_edit_text_border"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="0dp"
+            app:boxCornerRadiusTopEnd="0dp"
+            app:boxCornerRadiusBottomStart="0dp"
+            app:boxCornerRadiusBottomEnd="0dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/supplierBankAccount"
-            android:hint="Supplier's Bank Account"
-            android:layout_marginBottom="@dimen/space_15dp"
-            android:background="@drawable/shape_edit_text_border"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/supplierBankName"
+                android:hint="Supplier's Bank Name"
+                android:layout_marginBottom="@dimen/space_15dp"
+                android:background="@drawable/shape_edit_text_border"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="0dp"
+            app:boxCornerRadiusTopEnd="0dp"
+            app:boxCornerRadiusBottomStart="0dp"
+            app:boxCornerRadiusBottomEnd="0dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/supplierEmail"
-            android:hint="Supplier's Email"
-            android:inputType="textEmailAddress"
-            android:layout_marginBottom="@dimen/space_15dp"
-            android:background="@drawable/shape_edit_text_border"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/supplierBankAccount"
+                android:hint="Supplier's Bank Account"
+                android:layout_marginBottom="@dimen/space_15dp"
+                android:background="@drawable/shape_edit_text_border"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="0dp"
+            app:boxCornerRadiusTopEnd="0dp"
+            app:boxCornerRadiusBottomStart="0dp"
+            app:boxCornerRadiusBottomEnd="0dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/supplierWebsite"
-            android:hint="Supplier's Website"
-            android:layout_marginBottom="@dimen/space_15dp"
-            android:background="@drawable/shape_edit_text_border"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/supplierEmail"
+                android:hint="Supplier's Email"
+                android:inputType="textEmailAddress"
+                android:layout_marginBottom="@dimen/space_15dp"
+                android:background="@drawable/shape_edit_text_border"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="0dp"
+            app:boxCornerRadiusTopEnd="0dp"
+            app:boxCornerRadiusBottomStart="0dp"
+            app:boxCornerRadiusBottomEnd="0dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/supplierWebsite"
+                android:hint="Supplier's Website"
+                android:layout_marginBottom="@dimen/space_15dp"
+                android:background="@drawable/shape_edit_text_border"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <Button
             android:id="@+id/supplier_save"
             android:layout_marginBottom="@dimen/space_15dp"

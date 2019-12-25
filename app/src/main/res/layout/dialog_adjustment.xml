@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/product_alert_dialog_id"
     android:fillViewport="true"
     android:layout_width="match_parent"
@@ -27,33 +28,61 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/adj_product_quantity"
-            android:hint="Quantity"
-            android:inputType="number"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/shape_edit_text_border"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutAdjProductQuantity"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="0dp"
+            app:boxCornerRadiusTopEnd="0dp"
+            app:boxCornerRadiusBottomStart="0dp"
+            app:boxCornerRadiusBottomEnd="0dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/adj_product_quantity"
+                android:hint="Quantity"
+                android:inputType="number"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/adj_amount"
-            android:hint="Amount"
-            android:inputType="numberDecimal"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/shape_edit_text_border"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/adj_description"
-            android:gravity="top"
-            android:hint="Description"
-            android:layout_marginBottom="10dp"
-            android:inputType="text|textMultiLine"
-            android:background="@drawable/shape_edit_text_border"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutAdjAmount"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="0dp"
+            app:boxCornerRadiusTopEnd="0dp"
+            app:boxCornerRadiusBottomStart="0dp"
+            app:boxCornerRadiusBottomEnd="0dp"
             android:layout_width="match_parent"
-            android:layout_height="100dp"/>
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/adj_amount"
+                android:hint="Amount"
+                android:inputType="numberDecimal"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutAdjDescription"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="0dp"
+            app:boxCornerRadiusTopEnd="0dp"
+            app:boxCornerRadiusBottomStart="0dp"
+            app:boxCornerRadiusBottomEnd="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/adj_description"
+                android:gravity="top"
+                android:hint="Description"
+                android:layout_marginBottom="10dp"
+                android:inputType="text|textMultiLine"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/adj_save_button"

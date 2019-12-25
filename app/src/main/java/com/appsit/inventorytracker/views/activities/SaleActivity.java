@@ -33,6 +33,7 @@ import com.appsit.inventorytracker.viewmodels.SaleViewModel;
 import com.appsit.inventorytracker.views.adapters.SaleAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -221,7 +222,12 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
                         obj.getDialog().dismiss();
                     }
                 } else {
-                    Snackbar.make(findViewById(android.R.id.content), "Please insert the values in your mandatory fields.", Snackbar.LENGTH_INDEFINITE).show();
+                    ((TextInputLayout) obj.getView().findViewById(R.id.layout_sl_product_quantity)).setError("required!");
+                    ((TextInputLayout) obj.getView().findViewById(R.id.layout_sl_sales_date)).setError("required!");
+                    ((TextInputLayout) obj.getView().findViewById(R.id.layout_sl_sales_amount)).setError("required!");
+                    ((TextInputLayout) obj.getView().findViewById(R.id.layout_sl_sales_payment)).setError("required!");
+
+                    //Snackbar.make(findViewById(android.R.id.content), "Please insert the values in your mandatory fields.", Snackbar.LENGTH_INDEFINITE).show();
                 }
             }
         });

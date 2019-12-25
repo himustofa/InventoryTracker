@@ -22,6 +22,7 @@ import com.appsit.inventorytracker.viewmodels.ProductViewModel;
 import com.appsit.inventorytracker.views.adapters.ProductAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,7 +136,11 @@ public class ProductActivity extends AppCompatActivity implements ProductAdapter
                         obj.getDialog().dismiss();
                     }
                 } else {
-                    Snackbar.make(findViewById(android.R.id.content), "Please insert the values in your mandatory fields.", Snackbar.LENGTH_INDEFINITE).show();
+                    ((TextInputLayout) obj.getView().findViewById(R.id.layout_product_name)).setError("required!");
+                    ((TextInputLayout) obj.getView().findViewById(R.id.layout_product_code)).setError("required!");
+                    ((TextInputLayout) obj.getView().findViewById(R.id.layout_product_quantity)).setError("required!");
+                    ((TextInputLayout) obj.getView().findViewById(R.id.layout_product_price)).setError("required!");
+                    //Snackbar.make(findViewById(android.R.id.content), "Please insert the values in your mandatory fields.", Snackbar.LENGTH_INDEFINITE).show();
                 }
             }
         });

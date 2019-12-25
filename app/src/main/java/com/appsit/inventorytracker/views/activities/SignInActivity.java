@@ -84,10 +84,7 @@ public class SignInActivity extends AppCompatActivity {
                     Toast.makeText(SignInActivity.this, "Login successfully, " + user.getFullName(), Toast.LENGTH_SHORT).show();
                     Utility.dismissProgressDialog(mProgress);
 
-                    Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //For login to clear this screen for that did not back this screen
-                    startActivity(intent);
-                    finish();
+                    goNextActivity();
                 } else {
                     Snackbar.make(findViewById(android.R.id.content), "Please enter your valid username and password", Snackbar.LENGTH_INDEFINITE).show();
                     Utility.dismissProgressDialog(mProgress);
@@ -100,10 +97,14 @@ public class SignInActivity extends AppCompatActivity {
     private void isLoggedIn() {
         boolean isLoggedIn = SharedPrefManager.getInstance(SignInActivity.this).getLogInStatus();
         if (isLoggedIn) {
-            Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //For login to clear this screen for that did not back this screen
-            startActivity(intent);
-            finish();
+            goNextActivity();
         }
+    }
+
+    private void goNextActivity() {
+        Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //For login to clear this screen for that did not back this screen
+        startActivity(intent);
+        finish();
     }
 }
