@@ -86,7 +86,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
 
         //==========================================| ValueAnimator
-        Utility.getAnimationCounter(((TextView) findViewById(R.id.counter)), 100);
+        //Utility.getAnimationCounter(((TextView) findViewById(R.id.counter)), 100);
 
         //==========================================| ViewModel
         HomeViewModel mHomeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
@@ -94,6 +94,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onChanged(StockSale myModel) {
                 Log.d(TAG, "Purchase " + new Gson().toJson(myModel));
+                Utility.getAnimationCounter(((TextView) findViewById(R.id.purchase_all_items)), myModel.getQuantity());
+                ((TextView) findViewById(R.id.purchase_all_items_amount)).setText(myModel.getAmount() + "");
             }
         });
 
@@ -101,6 +103,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onChanged(StockSale myModel) {
                 Log.d(TAG, "Sale " + new Gson().toJson(myModel));
+                Utility.getAnimationCounter(((TextView) findViewById(R.id.sale_all_items)), myModel.getQuantity());
+                ((TextView) findViewById(R.id.sale_all_items_amount)).setText(myModel.getAmount() + "");
             }
         });
 
@@ -108,6 +112,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onChanged(StockSale myModel) {
                 Log.d(TAG, "Wastage " + new Gson().toJson(myModel));
+                Utility.getAnimationCounter(((TextView) findViewById(R.id.wastage_all_items)), myModel.getQuantity());
+                ((TextView) findViewById(R.id.wastage_all_items_amount)).setText(myModel.getAmount() + "");
             }
         });
 
@@ -115,6 +121,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onChanged(StockSale myModel) {
                 Log.d(TAG, "Today " + new Gson().toJson(myModel));
+                //Utility.getAnimationCounter(((TextView) findViewById(R.id.remaining_all_items)), myModel.getQuantity());
+                //((TextView) findViewById(R.id.remaining_all_items_amount)).setText(myModel.getAmount() + " tk");
+                ((TextView) findViewById(R.id.today_total_sale_amount)).setText(myModel.getAmount() + "");
             }
         });
     }

@@ -24,6 +24,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
+                    android:id="@+id/purchase_all_items"
                     android:text="100"
                     android:textSize="35sp"
                     android:textColor="@color/colorDarkGrey"
@@ -48,6 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
+                    android:id="@+id/sale_all_items"
                     android:text="45"
                     android:textSize="35sp"
                     android:textColor="@color/colorDarkGrey"
@@ -72,6 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
+                    android:id="@+id/wastage_all_items"
                     android:text="5"
                     android:textSize="35sp"
                     android:textColor="@color/colorDarkGrey"
@@ -81,7 +84,7 @@
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 
-    <androidx.cardview.widget.CardView
+    <!--<androidx.cardview.widget.CardView
         android:layout_margin="@dimen/space_5dp"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_100dp">
@@ -96,12 +99,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
+                android:id="@+id/remaining_all_items"
                 android:text="50"
                 android:textSize="35sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>-->
 
 </LinearLayout>
