@@ -6,6 +6,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @Entity(tableName = "customers")
 public class Customer {
@@ -34,6 +35,13 @@ public class Customer {
         this.customerDiscount = customerDiscount;
         this.customerAddress = customerAddress;
         this.customerDescription = customerDescription;
+    }
+
+    public static Customer[] dummyData() {
+        return new Customer[] {
+                new Customer(UUID.randomUUID().toString(), "Mr. Hasan", "01914161808", "hasan@gmail.com", "", 2.5, "Dhaka, Bangladesh", "Nothing..."),
+                new Customer(UUID.randomUUID().toString(), "Rafiqul Islam", "01814161808", "rafiq@gmail.com", "", 0.0, "Dhaka, Bangladesh", "Nothing...")
+        };
     }
 
     @NonNull

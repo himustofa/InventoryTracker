@@ -56,6 +56,9 @@ public interface AppDaoAccess {
     @Insert
     long insertSupplier(Supplier supplier);
 
+    @Insert
+    long[] insertAllSupplier(Supplier... suppliers);
+
     @Update
     int updateSupplier(Supplier supplier);
 
@@ -88,6 +91,9 @@ public interface AppDaoAccess {
     @Insert
     long insertProduct(Product model);
 
+    @Insert
+    long[] insertAllProduct(Product... products);
+
     @Update
     int updateProduct(Product model);
 
@@ -103,6 +109,9 @@ public interface AppDaoAccess {
 
     @Insert
     long insertCustomer(Customer model);
+
+    @Insert
+    long[] insertAllCustomer(Customer... customers);
 
     @Update
     int updateCustomer(Customer model);

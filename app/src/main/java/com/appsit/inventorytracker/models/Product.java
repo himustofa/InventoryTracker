@@ -6,6 +6,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @Entity(tableName = "products")
 public class Product {
@@ -35,6 +36,13 @@ public class Product {
         this.productPrice = productPrice;
         this.productExpireDate = productExpireDate;
         this.productDescription = productDescription;
+    }
+
+    public static Product[] dummyData() {
+        return new Product[] {
+                new Product(UUID.randomUUID().toString(), "Shampoo", "SH101", 100, 250.0, "25/12/2019", "Nothing..."),
+                new Product(UUID.randomUUID().toString(), "Dove Soap", "DS101", 100, 150.0, "25/12/2019", "Nothing..."),
+        };
     }
 
     @NonNull

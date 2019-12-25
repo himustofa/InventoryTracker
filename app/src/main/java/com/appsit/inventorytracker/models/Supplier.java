@@ -6,6 +6,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @Entity(tableName = "suppliers")
 public class Supplier {
@@ -38,6 +39,13 @@ public class Supplier {
         this.supplierBankAccount = supplierBankAccount;
         this.supplierEmail = supplierEmail;
         this.supplierWebsite = supplierWebsite;
+    }
+
+    public static Supplier[] dummyData() {
+        return new Supplier[] {
+                new Supplier(UUID.randomUUID().toString(), "Abdul Haque", "Haque Enterprise Ltd.", "Mamun", "01714141707", "Dhaka, Bangladesh", "City Bank", "CB4886648", "abdulhaque@abh.com.bd", "www.haque.com.bd"),
+                new Supplier(UUID.randomUUID().toString(), "Munir Uddin", "Rahman Enterprise Ltd.", "Mamun", "01714141666", "Dhaka, Bangladesh", "DBBL Bank", "DBBL554584886648", "rahman@rh.com.bd", "www.rahman.com.bd")
+        };
     }
 
     @NonNull
