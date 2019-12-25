@@ -13,11 +13,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.appsit.inventorytracker.R;
 import com.appsit.inventorytracker.models.Adjustment;
 import com.appsit.inventorytracker.models.ObjectDialog;
+import com.appsit.inventorytracker.models.Purchase;
+import com.appsit.inventorytracker.utils.Utility;
 import com.appsit.inventorytracker.viewmodels.AdjustmentViewModel;
+import com.appsit.inventorytracker.viewmodels.PurchaseViewModel;
 import com.appsit.inventorytracker.views.adapters.AdjustmentAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -30,6 +35,8 @@ import java.util.UUID;
 public class AdjustmentActivity extends AppCompatActivity implements AdjustmentAdapter.RecyclerItemListener {
 
     private String TAG = this.getClass().getSimpleName();
+    private List<Purchase> mPurchaseList;
+    List<String> pList = new ArrayList<>();
     private ArrayList<Adjustment> mArrayList = new ArrayList<>();
     private AdjustmentAdapter mAdapter;
     private AdjustmentViewModel mViewModel;
@@ -42,7 +49,24 @@ public class AdjustmentActivity extends AppCompatActivity implements AdjustmentA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adjustment);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.customer_recycler_view);
+        mRecyclerView = (RecyclerView) findViewById(R.id.adjustment_recycler_view);
+
+        PurchaseViewModel mPurchaseViewModel = ViewModelProviders.of(this).get(PurchaseViewModel.class);
+        mPurchaseViewModel.getAll().observe(this, new Observer<List<Purchase>>() {
+            @Override
+            public void onChanged(List<Purchase> purchases) {
+                if (purchases != null) {
+                    mPurchaseList = purchases;
+                    Log.d(TAG, new Gson().toJson(purchases));
+                    if (purchases.size() > 0) {
+                        for(Purchase s : purchases) {
+                            pList.add(s.getProductName());
+                        }
+                    }
+                }
+            }
+        });
+
         mViewModel = ViewModelProviders.of(this).get(AdjustmentViewModel.class);
         mViewModel.getAllData().observe(this, new Observer<List<Adjustment>>() {
             @Override
@@ -54,10 +78,14 @@ public class AdjustmentActivity extends AppCompatActivity implements AdjustmentA
             }
         });
 
-        ((FloatingActionButton) findViewById(R.id.customer_add_fab)).setOnClickListener(new View.OnClickListener() {
+        ((FloatingActionButton) findViewById(R.id.adjustment_add_fab)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addItem();
+                if (mPurchaseList.size() > 0) {
+                    addItem();
+                } else {
+                    Snackbar.make(findViewById(android.R.id.content), "Products are not available.", Snackbar.LENGTH_INDEFINITE).show();
+                }
             }
         });
 
@@ -86,28 +114,44 @@ public class AdjustmentActivity extends AppCompatActivity implements AdjustmentA
 
     @Override
     public void addItem() {
-        ObjectDialog obj = showObjectDialog("Add Customer");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_adjustment, null, false);
+        builder.setView(view);
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setTitle("Add");
+        builder.setCancelable(true);
+        builder.create();
+        AlertDialog dialog = builder.show();
+        Spinner productName = (Spinner) view.findViewById(R.id.adj_product_name);
+        TextView productId = (TextView) view.findViewById(R.id.adj_product_id);
+        EditText adjQuantity = (EditText) view.findViewById(R.id.adj_product_quantity);
+        EditText adjAmount = (EditText) view.findViewById(R.id.adj_amount);
+        EditText adjDesc = (EditText) view.findViewById(R.id.adj_description);
 
-        ((Button) obj.getView().findViewById(R.id.customer_save_button)).setOnClickListener(new View.OnClickListener() {
+        Utility.getSpinnerData(new Utility.AdapterPosition() {
+            @Override
+            public void onPosition(int position) {
+                productId.setText(mPurchaseList.get(position).getProductId());
+            }
+        }, this, productName, pList);
+
+        ((Button) view.findViewById(R.id.adj_save_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!E1.getText().toString().trim().isEmpty() && !E4.getText().toString().trim().isEmpty()) {
+                if(!adjQuantity.getText().toString().trim().isEmpty() && !adjAmount.getText().toString().trim().isEmpty()) {
                     Adjustment model = new Adjustment(
                             UUID.randomUUID().toString(),
-                            E1.getText().toString(),
-                            E2.getText().toString(),
-                            E3.getText().toString(),
-                            E4.getText().toString(),
-                            Double.parseDouble(E5.getText().toString()),
-                            E6.getText().toString(),
-                            E7.getText().toString()
+                            productName.getSelectedItem().toString(),
+                            productId.getText().toString(),
+                            Integer.parseInt(adjQuantity.getText().toString()),
+                            Double.parseDouble(adjAmount.getText().toString()),
+                            adjDesc.getText().toString()
                     );
-                    Log.d(TAG, new Gson().toJson(model));
                     long result = mViewModel.save(model);
                     if (result > 0) {
                         mArrayList.add(model);
                         mAdapter.notifyItemInserted(mArrayList.size());
-                        obj.getDialog().dismiss();
+                        dialog.dismiss();
                     }
                 } else {
                     Snackbar.make(findViewById(android.R.id.content), "Please insert the values in your mandatory fields.", Snackbar.LENGTH_INDEFINITE).show();
@@ -116,64 +160,4 @@ public class AdjustmentActivity extends AppCompatActivity implements AdjustmentA
         });
     }
 
-    @Override
-    public void updateItem(int position, Adjustment model) {
-        ObjectDialog obj = showObjectDialog("Edit Customer");
-
-        E1.setText(model.getCustomerName());
-        E2.setText(model.getCustomerPhoneNumber());
-        E3.setText(model.getCustomerEmail());
-        E4.setText(model.getCustomerContactPerson());
-        E5.setText("" + model.getCustomerDiscount());
-        E6.setText(model.getCustomerAddress());
-        E7.setText(model.getCustomerDescription());
-
-        ((Button) obj.getView().findViewById(R.id.customer_save_button)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!E1.getText().toString().trim().isEmpty() && !E4.getText().toString().trim().isEmpty()) {
-                    Adjustment customer = new Adjustment(
-                            model.getCustomerId(),
-                            E1.getText().toString(),
-                            E2.getText().toString(),
-                            E3.getText().toString(),
-                            E4.getText().toString(),
-                            Double.parseDouble(E5.getText().toString()),
-                            E6.getText().toString(),
-                            E7.getText().toString()
-                    );
-                    long result = mViewModel.update(customer);
-                    if (result > 0) {
-                        //mArrayList.clear();
-                        //mArrayList.addAll(viewModels);
-                        mArrayList.set(position, customer);
-                        mAdapter.notifyItemChanged(position, customer);
-                        //mAdapter.notifyDataSetChanged(); //recyclerView.invalidate();
-                        obj.getDialog().dismiss();
-                    }
-                } else {
-                    Snackbar.make(findViewById(android.R.id.content), "Please insert the values in your mandatory fields.", Snackbar.LENGTH_INDEFINITE).show();
-                }
-            }
-        });
-    }
-
-    private ObjectDialog showObjectDialog(String title) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_customer, null, false);
-        builder.setView(view);
-        builder.setIcon(R.mipmap.ic_launcher);
-        builder.setTitle(title);
-        builder.setCancelable(true);
-        builder.create();
-        AlertDialog dialog = builder.show();
-        E1 = (EditText) view.findViewById(R.id.customer_name);
-        E2 = (EditText) view.findViewById(R.id.customer_phone_number);
-        E3 = (EditText) view.findViewById(R.id.customer_email);
-        E4 = (EditText) view.findViewById(R.id.customer_contact_person);
-        E5 = (EditText) view.findViewById(R.id.customer_discount);
-        E6 = (EditText) view.findViewById(R.id.customer_address);
-        E7 = (EditText) view.findViewById(R.id.customer_description);
-        return new ObjectDialog(view, dialog);
-    }
 }

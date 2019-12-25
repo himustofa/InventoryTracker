@@ -116,6 +116,8 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
                 if (mProductList.size() > 0) {
                     if (mUser.getRole().equals(String.valueOf(Role.ADMIN_USER))) {
                         addItem();
+                    } else {
+                        Snackbar.make(findViewById(android.R.id.content), "You must be an admin user.", Snackbar.LENGTH_INDEFINITE).show();
                     }
                 } else {
                     Snackbar.make(findViewById(android.R.id.content), "Products are not available.", Snackbar.LENGTH_INDEFINITE).show();

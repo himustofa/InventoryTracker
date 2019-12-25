@@ -115,7 +115,11 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
         ((FloatingActionButton) findViewById(R.id.sale_add_fab)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addItem();
+                if (mPurchaseList.size() > 0) {
+                    addItem();
+                } else {
+                    Snackbar.make(findViewById(android.R.id.content), "Products are not available.", Snackbar.LENGTH_INDEFINITE).show();
+                }
             }
         });
 
@@ -141,6 +145,8 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
                 mAdapter.notifyItemRemoved(position);
                 mAdapter.notifyItemRangeChanged(position, mArrayList.size());
             }
+        } else {
+            Snackbar.make(findViewById(android.R.id.content), "You must be an admin user.", Snackbar.LENGTH_INDEFINITE).show();
         }
     }
 
@@ -272,6 +278,8 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
                     }
                 }
             });
+        } else {
+            Snackbar.make(findViewById(android.R.id.content), "You must be an admin user.", Snackbar.LENGTH_INDEFINITE).show();
         }
     }
 

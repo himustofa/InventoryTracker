@@ -1,5 +1,6 @@
 package com.appsit.inventorytracker.views.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.appsit.inventorytracker.models.Role;
 import com.appsit.inventorytracker.models.User;
 import com.appsit.inventorytracker.session.SharedPrefManager;
 import com.appsit.inventorytracker.utils.Utility;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -68,6 +70,8 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.MyView
             public void onClick(View v) {
                 if (mUser.getRole().equals(String.valueOf(Role.ADMIN_USER))) {
                     mListener.updateItem(position, model);
+                } else {
+                    Snackbar.make(((Activity)mContext).findViewById(android.R.id.content), mContext.getString(R.string.msg_admin_user), Snackbar.LENGTH_INDEFINITE);
                 }
             }
         });
@@ -80,6 +84,8 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.MyView
                     public void onClick(DialogInterface dialog, int which) {
                         if (mUser.getRole().equals(String.valueOf(Role.ADMIN_USER))) {
                             mListener.removeItem(position, model);
+                        } else {
+                            Snackbar.make(((Activity)mContext).findViewById(android.R.id.content), mContext.getString(R.string.msg_admin_user), Snackbar.LENGTH_INDEFINITE);
                         }
                     }
                 }).show();

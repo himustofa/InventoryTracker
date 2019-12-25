@@ -29,6 +29,8 @@
     <string name="msg_sign_out">Do you want to sign out?</string>
     <string name="sign_out">Sign Out</string>
 
+    <string name="msg_admin_user">You must be an admin user.</string>
+
     <string name="about_title">About</string>
     <string name="developed_by">Developed by Inventory Tracker</string>
     <string name="apps_details">

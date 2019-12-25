@@ -30,7 +30,7 @@ public class AdjustmentAdapter extends RecyclerView.Adapter<AdjustmentAdapter.My
     public interface RecyclerItemListener {
         void removeItem(int position, Adjustment model);
         void addItem();
-        void updateItem(int position, Adjustment model);
+        //void updateItem(int position, Adjustment model);
     }
 
     public AdjustmentAdapter(Context context, ArrayList<Adjustment> arrayList) {
@@ -42,7 +42,7 @@ public class AdjustmentAdapter extends RecyclerView.Adapter<AdjustmentAdapter.My
     @NonNull
     @Override
     public MyViewModel onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item_customer, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item_adjustment, parent, false);
         return new MyViewModel(view);
     }
 
@@ -51,13 +51,9 @@ public class AdjustmentAdapter extends RecyclerView.Adapter<AdjustmentAdapter.My
         Adjustment model = mArrayList.get(position);
 
         holder.name.setText(model.getProductName());
-
-        holder.layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.updateItem(position, model);
-            }
-        });
+        holder.quantity.setText("" + model.getProductQuantity());
+        holder.amount.setText("" + model.getProductAmount());
+        holder.date.setText(model.getCreatedAt());
 
         holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -83,16 +79,16 @@ public class AdjustmentAdapter extends RecyclerView.Adapter<AdjustmentAdapter.My
     public class MyViewModel extends RecyclerView.ViewHolder {
 
         private LinearLayout layout;
-        private TextView name, phone, email, discount;
+        private TextView name, quantity, amount, date;
 
         public MyViewModel(@NonNull View itemView) {
             super(itemView);
 
-            layout = (LinearLayout) itemView.findViewById(R.id.customers_list_item_id);
-            name = (TextView) itemView.findViewById(R.id.customer_name_cust);
-            phone = (TextView) itemView.findViewById(R.id.customer_phone_number_cust);
-            email = (TextView) itemView.findViewById(R.id.customer_email_cust);
-            discount = (TextView) itemView.findViewById(R.id.customer_discount_cust);
+            layout = (LinearLayout) itemView.findViewById(R.id.adjustment_list_item_id);
+            name = (TextView) itemView.findViewById(R.id.adjustment_product_name);
+            quantity = (TextView) itemView.findViewById(R.id.adjustment_product_quantity);
+            amount = (TextView) itemView.findViewById(R.id.adjustment_amount);
+            date = (TextView) itemView.findViewById(R.id.adjustment_date);
         }
     }
 

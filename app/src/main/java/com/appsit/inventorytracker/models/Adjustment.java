@@ -21,14 +21,16 @@ public class Adjustment {
     private int productQuantity;
     @NonNull
     private double productAmount;
+    private String description;
     private String createdAt = String.valueOf(new Timestamp(System.currentTimeMillis()));
 
-    public Adjustment(@NonNull String adjustmentId, @NonNull String productName, String productId, int productQuantity, double productAmount) {
+    public Adjustment(@NonNull String adjustmentId, @NonNull String productName, String productId, int productQuantity, double productAmount, String description) {
         this.adjustmentId = adjustmentId;
         this.productName = productName;
         this.productId = productId;
         this.productQuantity = productQuantity;
         this.productAmount = productAmount;
+        this.description = description;
     }
 
     @NonNull
@@ -71,6 +73,14 @@ public class Adjustment {
 
     public void setProductAmount(double productAmount) {
         this.productAmount = productAmount;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getCreatedAt() {
