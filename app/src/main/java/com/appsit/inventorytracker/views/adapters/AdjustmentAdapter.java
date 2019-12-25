@@ -53,7 +53,7 @@ public class AdjustmentAdapter extends RecyclerView.Adapter<AdjustmentAdapter.My
         holder.name.setText(model.getProductName());
         holder.quantity.setText("" + model.getProductQuantity());
         holder.amount.setText("" + model.getProductAmount());
-        holder.date.setText(model.getCreatedAt());
+        holder.date.setText(Utility.getDateFromTimestamp(model.getCreatedAt()));
 
         holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

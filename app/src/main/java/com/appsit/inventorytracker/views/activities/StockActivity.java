@@ -13,6 +13,7 @@ import com.appsit.inventorytracker.R;
 import com.appsit.inventorytracker.models.Purchase;
 import com.appsit.inventorytracker.models.Stock;
 import com.appsit.inventorytracker.models.StockSale;
+import com.appsit.inventorytracker.viewmodels.AdjustmentViewModel;
 import com.appsit.inventorytracker.viewmodels.PurchaseViewModel;
 import com.appsit.inventorytracker.viewmodels.StockViewModel;
 import com.appsit.inventorytracker.views.adapters.StockAdapter;
@@ -28,6 +29,7 @@ public class StockActivity extends AppCompatActivity {
     private StockAdapter mAdapter;
     private PurchaseViewModel mPurchaseViewModel;
     private StockViewModel mViewModel;
+    private AdjustmentViewModel mAdjustmentViewModel;
 
     private RecyclerView mRecyclerView;
 
@@ -39,7 +41,9 @@ public class StockActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.stock_recycler_view);
 
         mViewModel = ViewModelProviders.of(this).get(StockViewModel.class);
+        mAdjustmentViewModel = ViewModelProviders.of(this).get(AdjustmentViewModel.class);
         mPurchaseViewModel = ViewModelProviders.of(this).get(PurchaseViewModel.class);
+
         mPurchaseViewModel.getAll().observe(this, new Observer<List<Purchase>>() {
             @Override
             public void onChanged(List<Purchase> list) {
