@@ -100,7 +100,10 @@ public class SignInActivity extends AppCompatActivity {
     private void isLoggedIn() {
         boolean isLoggedIn = SharedPrefManager.getInstance(SignInActivity.this).getLogInStatus();
         if (isLoggedIn) {
-            startActivity(new Intent(SignInActivity.this, HomeActivity.class));
+            Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //For login to clear this screen for that did not back this screen
+            startActivity(intent);
+            finish();
         }
     }
 }
