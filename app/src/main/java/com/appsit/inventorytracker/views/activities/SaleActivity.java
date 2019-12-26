@@ -76,6 +76,7 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
                 if (isValue) {
                     mArrayList.addAll(list);
                     isValue = false;
+                    initRecyclerView();
                 }
             }
         });
@@ -123,8 +124,6 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
                 }
             }
         });
-
-        initRecyclerView();
     }
 
     private void initRecyclerView() {

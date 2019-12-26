@@ -50,6 +50,7 @@ public class ProductActivity extends AppCompatActivity implements ProductAdapter
                 if (isValue) {
                     mArrayList.addAll(list);
                     isValue = false;
+                    initRecyclerView();
                 }
             }
         });
@@ -61,7 +62,6 @@ public class ProductActivity extends AppCompatActivity implements ProductAdapter
             }
         });
 
-        initRecyclerView();
 
         ((SearchView) findViewById(R.id.search_view)).setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

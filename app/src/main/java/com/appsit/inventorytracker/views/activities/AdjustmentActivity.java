@@ -75,6 +75,7 @@ public class AdjustmentActivity extends AppCompatActivity implements AdjustmentA
                 if (isValue) {
                     mArrayList.addAll(customers);
                     isValue = false;
+                    initRecyclerView();
                 }
             }
         });
@@ -90,7 +91,6 @@ public class AdjustmentActivity extends AppCompatActivity implements AdjustmentA
             }
         });
 
-        initRecyclerView();
     }
 
     private void initRecyclerView() {

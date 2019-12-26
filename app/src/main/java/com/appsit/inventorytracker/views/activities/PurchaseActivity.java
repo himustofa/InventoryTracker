@@ -107,6 +107,7 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
                 if (isValue) {
                     mArrayList.addAll(list);
                     isValue = false;
+                    initRecyclerView();
                 }
             }
         });
@@ -125,8 +126,6 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
                 }
             }
         });
-
-        initRecyclerView();
     }
 
     private void initRecyclerView() {

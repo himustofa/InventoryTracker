@@ -50,6 +50,7 @@ public class SupplierActivity extends AppCompatActivity implements SupplierAdapt
                 if (isValue) {
                     mArrayList.addAll(suppliers);
                     isValue = false;
+                    initRecyclerView();
                 }
             }
         });
@@ -60,8 +61,6 @@ public class SupplierActivity extends AppCompatActivity implements SupplierAdapt
                 addItem();
             }
         });
-
-        initRecyclerView();
     }
 
     private void initRecyclerView() {

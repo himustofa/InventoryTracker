@@ -3,18 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <LinearLayout
+        android:orientation="vertical"
         android:weightSum="3"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_100dp">
+        android:layout_height="match_parent">
         <androidx.cardview.widget.CardView
             android:layout_margin="@dimen/space_5dp"
             app:cardBackgroundColor="#FFEDAE"
             android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
             <LinearLayout
                 android:gravity="center"
                 android:orientation="vertical"
@@ -39,8 +40,8 @@
             android:layout_margin="@dimen/space_5dp"
             app:cardBackgroundColor="#fff2f9"
             android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
             <LinearLayout
                 android:gravity="center"
                 android:orientation="vertical"
@@ -65,8 +66,8 @@
             android:layout_margin="@dimen/space_5dp"
             app:cardBackgroundColor="#C9FFEC"
             android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
             <LinearLayout
                 android:gravity="center"
                 android:orientation="vertical"

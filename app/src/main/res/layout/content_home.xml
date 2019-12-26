@@ -33,12 +33,20 @@
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_centerInParent="true"
+            android:weightSum="2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="400dp">
 
-            <include layout="@layout/dashboard_one" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <include layout="@layout/dashboard_one" />
+            </LinearLayout>
+
 
             <!--<View
                 android:layout_marginTop="@dimen/space_15dp"
@@ -47,7 +55,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_1dp"/>-->
 
-            <include layout="@layout/dashboard_two" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <include layout="@layout/dashboard_two" />
+            </LinearLayout>
 
             <!--<View
                 android:layout_marginTop="@dimen/space_15dp"

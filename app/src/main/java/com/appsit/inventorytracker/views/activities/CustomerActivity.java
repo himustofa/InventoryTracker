@@ -52,6 +52,7 @@ public class CustomerActivity extends AppCompatActivity implements CustomerAdapt
                 if (isValue) {
                     mArrayList.addAll(customers);
                     isValue = false;
+                    initRecyclerView();
                 }
             }
         });
@@ -63,7 +64,6 @@ public class CustomerActivity extends AppCompatActivity implements CustomerAdapt
             }
         });
 
-        initRecyclerView();
     }
 
     private void initRecyclerView() {
