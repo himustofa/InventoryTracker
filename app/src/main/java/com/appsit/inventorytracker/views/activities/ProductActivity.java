@@ -43,8 +43,6 @@ public class ProductActivity extends AppCompatActivity implements ProductAdapter
     private List<Supplier> mSupplierList;
     private List<String> sList = new ArrayList<>();
 
-    private Spinner suppName;
-    private TextView suppId;
     private EditText proName, proCode, proQty, proPrice, proExpDate, proDesc;
 
     @Override
@@ -123,7 +121,7 @@ public class ProductActivity extends AppCompatActivity implements ProductAdapter
         ((Button) obj.getView().findViewById(R.id.product_save_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!suppId.getText().toString().isEmpty() && !proName.getText().toString().trim().isEmpty() && !proCode.getText().toString().trim().isEmpty() && !proQty.getText().toString().trim().isEmpty() && !proPrice.getText().toString().trim().isEmpty() && !proExpDate.getText().toString().trim().isEmpty()) {
+                if(!proName.getText().toString().trim().isEmpty() && !proCode.getText().toString().trim().isEmpty() && !proQty.getText().toString().trim().isEmpty() && !proPrice.getText().toString().trim().isEmpty() && !proExpDate.getText().toString().trim().isEmpty()) {
                     Product model = new Product(
                             UUID.randomUUID().toString(),
                             proName.getText().toString(),
@@ -170,7 +168,7 @@ public class ProductActivity extends AppCompatActivity implements ProductAdapter
         ((Button) obj.getView().findViewById(R.id.product_save_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!suppId.getText().toString().isEmpty() && !proName.getText().toString().trim().isEmpty() && !proCode.getText().toString().trim().isEmpty() && !proQty.getText().toString().trim().isEmpty() && !proPrice.getText().toString().trim().isEmpty() && !proExpDate.getText().toString().trim().isEmpty()) {
+                if(!proName.getText().toString().trim().isEmpty() && !proCode.getText().toString().trim().isEmpty() && !proQty.getText().toString().trim().isEmpty() && !proPrice.getText().toString().trim().isEmpty() && !proExpDate.getText().toString().trim().isEmpty()) {
                     Product mModel = new Product(
                             UUID.randomUUID().toString(),
                             proName.getText().toString(),
@@ -205,8 +203,6 @@ public class ProductActivity extends AppCompatActivity implements ProductAdapter
         builder.setCancelable(true);
         builder.create();
         AlertDialog dialog = builder.show();
-        suppName = (Spinner) view.findViewById(R.id.p_supplier_name);
-        suppId = (TextView) view.findViewById(R.id.p_supplier_id);
         proName = (EditText) view.findViewById(R.id.product_name);
         proCode = (EditText) view.findViewById(R.id.product_code);
         proQty = (EditText) view.findViewById(R.id.product_quantity);

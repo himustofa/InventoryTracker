@@ -50,4 +50,8 @@ public class StockViewModel extends AndroidViewModel {
     public LiveData<StockSale> getStockByProductId(Purchase p) {
         return mDaoAccess.getSaleByProductId(p.getProductId());
     }
+
+    public LiveData<StockSale> getSaleBySupplierId(String supplierId) {
+        return mDaoAccess.getSaleBySupplierId(supplierId);
+    }
 }

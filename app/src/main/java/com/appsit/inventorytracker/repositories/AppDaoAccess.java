@@ -127,10 +127,6 @@ public interface AppDaoAccess {
     @Query("SELECT * FROM sales WHERE id=:id")
     LiveData<Sale> getSaleById(String id);
 
-    //https://stackoverflow.com/questions/50801617/return-sum-and-average-using-room
-    @Query("SELECT SUM(productQuantity) as quantity, SUM(salesAmount) as amount FROM sales WHERE productId=:productId")
-    LiveData<StockSale> getSaleByProductId(String productId);
-
     @Insert
     long insertSale(Sale model);
 
@@ -156,6 +152,14 @@ public interface AppDaoAccess {
     @Delete
     int deleteAdjustment(Adjustment model);
 
+    //===============================================| StockSale
+    //https://stackoverflow.com/questions/50801617/return-sum-and-average-using-room
+    @Query("SELECT SUM(productQuantity) as quantity, SUM(salesAmount) as amount FROM sales WHERE productId=:productId")
+    LiveData<StockSale> getSaleByProductId(String productId);
+
+    @Query("SELECT SUM(productQuantity) as quantity, SUM(salesAmount) as amount FROM sales WHERE supplierId=:supplierId")
+    LiveData<StockSale> getSaleBySupplierId(String supplierId);
+
     //===============================================| Home
     @Query("SELECT SUM(productQuantity) as quantity, SUM(salesAmount) as amount FROM sales")
     LiveData<StockSale> getSaleTotal();
@@ -168,7 +172,6 @@ public interface AppDaoAccess {
 
     @Query("SELECT SUM(productQuantity) as quantity, SUM(salesAmount) as amount FROM sales WHERE salesDate=:date")
     LiveData<StockSale> getSaleByDate(String date);
-
 
 
 

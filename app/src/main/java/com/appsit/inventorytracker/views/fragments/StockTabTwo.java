@@ -40,10 +40,10 @@ public class StockTabTwo extends Fragment {
             public void onChanged(List<Purchase> list) {
                 if (list.size() > 0) {
                     for(Purchase p : list) {
-                        mViewModel.getStockByProductId(p).observe(getActivity(), new Observer<StockSale>() {
+                        mViewModel.getSaleBySupplierId(p.getSupplierId()).observe(getActivity(), new Observer<StockSale>() {
                             @Override
                             public void onChanged(StockSale sale) {
-                                mArrayList.add(new Stock( p.getProductId(), p.getProductName(), (p.getPurchaseProductQuantity()-sale.getQuantity()), (p.getPurchaseAmount()-sale.getAmount()) ));
+                                mArrayList.add(new Stock( p.getSupplierId(), p.getSupplierName(), (p.getPurchaseProductQuantity()-sale.getQuantity()), (p.getPurchaseAmount()-sale.getAmount()) ));
                                 initRecyclerView(mRecyclerView, mArrayList);
                             }
                         });
