@@ -13,10 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.appsit.inventorytracker.R;
 import com.appsit.inventorytracker.models.ObjectDialog;
 import com.appsit.inventorytracker.models.Product;
+import com.appsit.inventorytracker.models.Supplier;
 import com.appsit.inventorytracker.utils.Utility;
 import com.appsit.inventorytracker.viewmodels.ProductViewModel;
 import com.appsit.inventorytracker.views.adapters.ProductAdapter;
@@ -37,12 +40,20 @@ public class ProductActivity extends AppCompatActivity implements ProductAdapter
     private ProductViewModel mViewModel;
     private boolean isValue = true;
 
+    private List<Supplier> mSupplierList;
+    private List<String> sList = new ArrayList<>();
+
+    private Spinner suppName;
+    private TextView suppId;
+    private EditText proName, proCode, proQty, proPrice, proExpDate, proDesc;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.product_recycler_view);
+
         mViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
         mViewModel.getAll().observe(this, new Observer<List<Product>>() {
             @Override
@@ -102,32 +113,25 @@ public class ProductActivity extends AppCompatActivity implements ProductAdapter
     public void addItem() {
         ObjectDialog obj = showObjectDialog("Add");
 
-        EditText E1 = (EditText) obj.getView().findViewById(R.id.product_name);
-        EditText E2 = (EditText) obj.getView().findViewById(R.id.product_code);
-        EditText E3 = (EditText) obj.getView().findViewById(R.id.product_quantity);
-        EditText E4 = (EditText) obj.getView().findViewById(R.id.product_price);
-        EditText E5 = (EditText) obj.getView().findViewById(R.id.product_expire_date);
-        EditText E6 = (EditText) obj.getView().findViewById(R.id.product_description);
-
-        E5.setOnClickListener(new View.OnClickListener() {
+        proExpDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utility.getDate(ProductActivity.this, E5);
+                Utility.getDate(ProductActivity.this, proExpDate);
             }
         });
 
         ((Button) obj.getView().findViewById(R.id.product_save_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!E1.getText().toString().trim().isEmpty() && !E2.getText().toString().trim().isEmpty() && !E3.getText().toString().trim().isEmpty() && !E4.getText().toString().trim().isEmpty() && !E5.getText().toString().trim().isEmpty()) {
+                if(!suppId.getText().toString().isEmpty() && !proName.getText().toString().trim().isEmpty() && !proCode.getText().toString().trim().isEmpty() && !proQty.getText().toString().trim().isEmpty() && !proPrice.getText().toString().trim().isEmpty() && !proExpDate.getText().toString().trim().isEmpty()) {
                     Product model = new Product(
                             UUID.randomUUID().toString(),
-                            E1.getText().toString(),
-                            E2.getText().toString(),
-                            Integer.parseInt(E3.getText().toString()),
-                            Double.parseDouble(E4.getText().toString()),
-                            E5.getText().toString(),
-                            E6.getText().toString()
+                            proName.getText().toString(),
+                            proCode.getText().toString(),
+                            Integer.parseInt(proQty.getText().toString()),
+                            Double.parseDouble(proPrice.getText().toString()),
+                            proExpDate.getText().toString(),
+                            proDesc.getText().toString()
                     );
                     long result = mViewModel.save(model);
                     if (result > 0) {
@@ -149,39 +153,32 @@ public class ProductActivity extends AppCompatActivity implements ProductAdapter
     @Override
     public void updateItem(int position, Product model) {
         ObjectDialog obj = showObjectDialog("Edit");
+        proName.setText(model.getProductName());
+        proCode.setText(model.getProductCode());
+        proQty.setText("" + model.getProductQuantity());
+        proPrice.setText("" + model.getProductPrice());
+        proExpDate.setText("" + model.getProductExpireDate());
+        proDesc.setText(model.getProductDescription());
 
-        EditText E1 = (EditText) obj.getView().findViewById(R.id.product_name);
-        EditText E2 = (EditText) obj.getView().findViewById(R.id.product_code);
-        EditText E3 = (EditText) obj.getView().findViewById(R.id.product_quantity);
-        EditText E4 = (EditText) obj.getView().findViewById(R.id.product_price);
-        EditText E5 = (EditText) obj.getView().findViewById(R.id.product_expire_date);
-        EditText E6 = (EditText) obj.getView().findViewById(R.id.product_description);
-        E1.setText(model.getProductName());
-        E2.setText(model.getProductCode());
-        E3.setText("" + model.getProductQuantity());
-        E4.setText("" + model.getProductPrice());
-        E5.setText("" + model.getProductExpireDate());
-        E6.setText(model.getProductDescription());
-
-        E5.setOnClickListener(new View.OnClickListener() {
+        proExpDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utility.getDate(ProductActivity.this, E5);
+                Utility.getDate(ProductActivity.this, proExpDate);
             }
         });
 
         ((Button) obj.getView().findViewById(R.id.product_save_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!E1.getText().toString().trim().isEmpty() && !E2.getText().toString().trim().isEmpty() && !E3.getText().toString().trim().isEmpty() && !E4.getText().toString().trim().isEmpty() && !E5.getText().toString().trim().isEmpty()) {
+                if(!suppId.getText().toString().isEmpty() && !proName.getText().toString().trim().isEmpty() && !proCode.getText().toString().trim().isEmpty() && !proQty.getText().toString().trim().isEmpty() && !proPrice.getText().toString().trim().isEmpty() && !proExpDate.getText().toString().trim().isEmpty()) {
                     Product mModel = new Product(
-                            model.getProductId(),
-                            E1.getText().toString(),
-                            E2.getText().toString(),
-                            Integer.parseInt(E3.getText().toString()),
-                            Double.parseDouble(E4.getText().toString()),
-                            E5.getText().toString(),
-                            E6.getText().toString()
+                            UUID.randomUUID().toString(),
+                            proName.getText().toString(),
+                            proCode.getText().toString(),
+                            Integer.parseInt(proQty.getText().toString()),
+                            Double.parseDouble(proPrice.getText().toString()),
+                            proExpDate.getText().toString(),
+                            proDesc.getText().toString()
                     );
                     long result = mViewModel.update(mModel);
                     if (result > 0) {
@@ -208,6 +205,14 @@ public class ProductActivity extends AppCompatActivity implements ProductAdapter
         builder.setCancelable(true);
         builder.create();
         AlertDialog dialog = builder.show();
+        suppName = (Spinner) view.findViewById(R.id.p_supplier_name);
+        suppId = (TextView) view.findViewById(R.id.p_supplier_id);
+        proName = (EditText) view.findViewById(R.id.product_name);
+        proCode = (EditText) view.findViewById(R.id.product_code);
+        proQty = (EditText) view.findViewById(R.id.product_quantity);
+        proPrice = (EditText) view.findViewById(R.id.product_price);
+        proExpDate = (EditText) view.findViewById(R.id.product_expire_date);
+        proDesc = (EditText) view.findViewById(R.id.product_description);
         return new ObjectDialog(view, dialog);
     }
 }
