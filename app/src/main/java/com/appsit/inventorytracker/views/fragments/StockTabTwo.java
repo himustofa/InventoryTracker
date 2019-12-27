@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -18,6 +19,7 @@ import com.appsit.inventorytracker.models.StockSale;
 import com.appsit.inventorytracker.viewmodels.PurchaseViewModel;
 import com.appsit.inventorytracker.viewmodels.StockViewModel;
 import com.appsit.inventorytracker.views.adapters.StockAdapter;
+import com.appsit.inventorytracker.views.adapters.StockAdapterTwo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ public class StockTabTwo extends Fragment {
     private String TAG = this.getClass().getCanonicalName();
     private ArrayList<Stock> mArrayList = new ArrayList<>();
     private RecyclerView mRecyclerView;
+    private StockAdapterTwo mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,11 +54,26 @@ public class StockTabTwo extends Fragment {
                 }
             }
         });
+
+        ((SearchView) view.findViewById(R.id.stock_two_search_view)).setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return true;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (mAdapter != null){
+                    mAdapter.getFilter().filter(newText);
+                }
+                return true;
+            }
+        });
+
         return view;
     }
 
     private void initRecyclerView(RecyclerView mRecyclerView, ArrayList<Stock> mArrayList) {
-        StockAdapter mAdapter = new StockAdapter(getActivity(), mArrayList);
+        mAdapter = new StockAdapterTwo(getActivity(), mArrayList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         //mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));

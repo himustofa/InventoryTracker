@@ -20,7 +20,7 @@ import com.appsit.inventorytracker.models.Stock;
 
 import java.util.ArrayList;
 
-public class StockAdapter extends RecyclerView.Adapter<StockAdapter.MyViewModel> implements Filterable {
+public class StockAdapterTwo extends RecyclerView.Adapter<StockAdapterTwo.MyViewModel> implements Filterable {
 
     private String TAG = this.getClass().getSimpleName();
     private Context mContext;
@@ -28,7 +28,7 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.MyViewModel>
     private ArrayList<Stock> mArrayList1;
     private int lastPosition = -1;
 
-    public StockAdapter(Context context, ArrayList<Stock> arrayList) {
+    public StockAdapterTwo(Context context, ArrayList<Stock> arrayList) {
         this.mContext = context;
         this.mArrayList = arrayList;
         this.mArrayList1 = arrayList;
@@ -37,7 +37,7 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.MyViewModel>
     @NonNull
     @Override
     public MyViewModel onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item_stock, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item_stock_two, parent, false);
         return new MyViewModel(view);
     }
 
@@ -45,7 +45,7 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.MyViewModel>
     public void onBindViewHolder(@NonNull MyViewModel holder, int position) {
         Stock model = mArrayList.get(position);
 
-        holder.product.setText(model.getProductName());
+        holder.supplier.setText(model.getProductName());
         holder.quantity.setText(model.getStockQuantity() + " Pieces");
         holder.amount.setText(model.getStockAmount() + " BDT");
 
@@ -75,13 +75,13 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.MyViewModel>
     public class MyViewModel extends RecyclerView.ViewHolder {
 
         private LinearLayout layout;
-        private TextView product, quantity, amount;
+        private TextView supplier, quantity, amount;
 
         public MyViewModel(@NonNull View itemView) {
             super(itemView);
 
-            layout = (LinearLayout) itemView.findViewById(R.id.stock_list_item_id);
-            product = (TextView) itemView.findViewById(R.id.stock_product_name);
+            layout = (LinearLayout) itemView.findViewById(R.id.stock_two_list_item_id);
+            supplier = (TextView) itemView.findViewById(R.id.stock_supplier_name);
             quantity = (TextView) itemView.findViewById(R.id.stock_quantity);
             amount = (TextView) itemView.findViewById(R.id.stock_amount);
         }

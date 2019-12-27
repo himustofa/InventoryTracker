@@ -7,9 +7,13 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.appsit.inventorytracker.models.Purchase;
+import com.appsit.inventorytracker.models.Stock;
 import com.appsit.inventorytracker.models.StockSale;
 import com.appsit.inventorytracker.repositories.AppDaoAccess;
 import com.appsit.inventorytracker.repositories.AppDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class StockViewModel extends AndroidViewModel {
 
@@ -53,5 +57,9 @@ public class StockViewModel extends AndroidViewModel {
 
     public LiveData<StockSale> getSaleBySupplierId(String supplierId) {
         return mDaoAccess.getSaleBySupplierId(supplierId);
+    }
+
+    public LiveData<List<Stock>> getStockByProductId() {
+        return mDaoAccess.getStockByProductId();
     }
 }

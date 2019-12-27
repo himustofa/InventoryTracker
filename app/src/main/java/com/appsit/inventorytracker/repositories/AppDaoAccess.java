@@ -12,11 +12,13 @@ import com.appsit.inventorytracker.models.Customer;
 import com.appsit.inventorytracker.models.Product;
 import com.appsit.inventorytracker.models.Purchase;
 import com.appsit.inventorytracker.models.Sale;
+import com.appsit.inventorytracker.models.Stock;
 import com.appsit.inventorytracker.models.StockSale;
 import com.appsit.inventorytracker.models.Supplier;
 import com.appsit.inventorytracker.models.User;
 import com.appsit.inventorytracker.viewmodels.HomeViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao
@@ -156,6 +158,10 @@ public interface AppDaoAccess {
     //https://stackoverflow.com/questions/50801617/return-sum-and-average-using-room
     @Query("SELECT SUM(productQuantity) as quantity, SUM(salesAmount) as amount FROM sales WHERE productId=:productId")
     LiveData<StockSale> getSaleByProductId(String productId);
+
+    //@Query("SELECT SUM(productQuantity) as quantity, SUM(salesAmount) as amount FROM sales INNER JOIN purchases USING(productId)")
+    @Query("SELECT p.productId as productId, p.productName as productName, (SUM(p.purchaseProductQuantity) - SUM(s.productQuantity)) as stockQuantity, (SUM(p.purchaseAmount) - SUM(s.salesAmount)) as stockAmount FROM purchases p LEFT JOIN sales s ON s.productId = p.productId")
+    LiveData<List<Stock>> getStockByProductId();
 
     @Query("SELECT SUM(productQuantity) as quantity, SUM(salesAmount) as amount FROM sales WHERE supplierId=:supplierId")
     LiveData<StockSale> getSaleBySupplierId(String supplierId);

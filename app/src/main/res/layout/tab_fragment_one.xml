@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.SearchView
+        android:id="@+id/stock_one_search_view"
         app:queryHint="Search..."
         app:defaultQueryHint="Search..."
         android:layout_gravity="bottom"
