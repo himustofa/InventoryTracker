@@ -128,7 +128,7 @@
             android:layout_height="wrap_content">
             <EditText
                 android:id="@+id/sl_sales_discount"
-                android:hint="Sales Discount"
+                android:hint="Sales Discount (%)"
                 android:inputType="numberDecimal"
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
@@ -145,7 +145,7 @@
             android:layout_height="wrap_content">
             <EditText
                 android:id="@+id/sl_sales_vat"
-                android:hint="Sales Vat"
+                android:hint="Sales Vat (%)"
                 android:inputType="numberDecimal"
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
