@@ -1,6 +1,7 @@
 package com.appsit.inventorytracker.views.adapters;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewModel>{
         User user = mArrayList.get(position);
         if (user.getPhotoName() != null) {
             holder.imageView.setImageBitmap(Utility.loadFromInternalStorage(user.getPhotoPath(), user.getPhotoName()));
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                holder.imageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_log_mk, mContext.getApplicationContext().getTheme()));
+            } else {
+                holder.imageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_log_mk));
+            }
         }
         holder.userFullName.setText(user.getFullName());
         holder.userName.setText(user.getUsername());
