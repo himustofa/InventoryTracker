@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="@dimen/space_15dp"
@@ -7,18 +7,23 @@
     android:layout_height="match_parent"
     tools:context=".views.activities.StockActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/stock_recycler_view"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </androidx.recyclerview.widget.RecyclerView>
+        <androidx.appcompat.widget.SearchView
+            app:queryHint="Search..."
+            app:defaultQueryHint="Search..."
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/space_15dp"
+            android:background="@drawable/shape_corner_radius_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/stock_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
 
-    <EditText
-        android:id="@+id/stock_search"
-        android:layout_gravity="bottom"
-        android:background="@drawable/shape_white_corner_round_grey"
-        android:hint=" Search item..."
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>
