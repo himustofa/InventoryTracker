@@ -129,6 +129,9 @@ public interface AppDaoAccess {
     @Query("SELECT * FROM sales WHERE id=:id")
     LiveData<Sale> getSaleById(String id);
 
+    //@Query("SELECT id, productName, productId, supplierName, supplierId, SUM(productQuantity) as productQuantity, purchaseProductQuantity, customerName, customerId, salesDate, salesDiscount, salesVat, SUM(salesAmount) as salesAmount, salesPayment, salesBalance, salesDescription, createdAt FROM sales WHERE salesDate=:date")
+    //LiveData<Sale> getSaleForBoardByDate(String date);
+
     @Insert
     long insertSale(Sale model);
 

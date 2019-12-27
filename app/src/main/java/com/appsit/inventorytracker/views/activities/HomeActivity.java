@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.appsit.inventorytracker.R;
 import com.appsit.inventorytracker.models.Purchase;
 import com.appsit.inventorytracker.models.Role;
+import com.appsit.inventorytracker.models.Sale;
 import com.appsit.inventorytracker.models.Stock;
 import com.appsit.inventorytracker.models.StockSale;
 import com.appsit.inventorytracker.models.User;
@@ -55,6 +56,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private String TAG = this.getClass().getSimpleName();
     private ActionBarDrawerToggle mToggle;
 
+    private HomeViewModel mHomeViewModel;
     private User mUser;
     private BarChart barChart;
 
@@ -101,7 +103,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         //Utility.getAnimationCounter(((TextView) findViewById(R.id.counter)), 100);
 
         //==========================================| ViewModel
-        HomeViewModel mHomeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+        mHomeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         mHomeViewModel.getPurchaseTotal().observe(this, new Observer<StockSale>() {
             @Override
             public void onChanged(StockSale myModel) {
@@ -257,7 +259,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         barChart = (BarChart) findViewById(R.id.bar_chart); //Vertical chart
         barChart.setDrawBarShadow(false);
         barChart.setDrawValueAboveBar(true);
-        barChart.setMaxVisibleValueCount(50);
+        barChart.setMaxVisibleValueCount(150);
         barChart.setPinchZoom(false);
         barChart.setDrawGridBackground(true);
         //barChart.getXAxis().setTextSize(35f);
@@ -265,48 +267,45 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         barChart.getAxisLeft().setDrawGridLines(false);
         barChart.getXAxis().setDrawGridLines(false);
         //barChart.getXAxis().setEnabled(false);
-        //barChart.getAxisLeft().setDrawAxisLine(false);
+        barChart.getAxisLeft().setDrawAxisLine(false);
 
         ArrayList<BarEntry> barList = new ArrayList<>();
-        barList.add(new BarEntry(1, 40f));
-        barList.add(new BarEntry(2, 44f));
-        barList.add(new BarEntry(3, 30f));
-        barList.add(new BarEntry(4, 10f));
 
-        BarDataSet barDataSet = new BarDataSet(barList, "Sales");
-        barDataSet.setColors(Color.parseColor("#FFFFC107"));
+        String[] arr = new String[] {Utility.getDatePlus(this, -2), Utility.getDatePlus(this, -1), Utility.getCurrentDatPicker(this), Utility.getDatePlus(this, 1), Utility.getDatePlus(this, 2)};
+        for (int i=0; i<arr.length; i++) {
+            getData(arr[i], barList, i);
+        }
 
-        //------------------------------For single bar
-        BarData bData = new BarData(barDataSet);
-        bData.setBarWidth(0.5f);
-        barChart.setData(bData);
-        barChart.getBarData().setValueTextColor(Color.parseColor("#444444"));
-        barChart.getBarData().setValueTextSize(25f);
-        //---------------------------------------------
-
-        //Display X-axis name
-        String[] months = new String[] {"Jan", "Feb", "Mar", "Apr", "May", "Jun"};
-        XAxis ax = barChart.getXAxis();
-        //ax.setValueFormatter(new HomeActivity.MyXAxisValueFormatter(months));
-        ax.setValueFormatter(new IAxisValueFormatter() {
+        XAxis xAxis = barChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                return months[(int)value];
+                //return arr[(int)value];
+                return arr[(int)value].substring(0, arr[(int)value].length() - 5);
             }
         });
-        ax.setGranularity(1);
-        ax.setCenterAxisLabels(true);
     }
 
-    public class MyXAxisValueFormatter implements IAxisValueFormatter {
-        private String[] mValues;
+    private void getData(String date, ArrayList<BarEntry> barList, int i) {
+        mHomeViewModel.getSaleByDate(date).observe(this, new Observer<StockSale>() {
+            @Override
+            public void onChanged(StockSale myModel) {
+                Log.d(TAG, "getData " + new Gson().toJson(myModel));
+                barList.add(new BarEntry(i, (float) myModel.getAmount()));
+                BarDataSet barDataSet = new BarDataSet(barList, "Sales");
+                barDataSet.setColors(Color.parseColor("#FFFFC107"));
 
-        public MyXAxisValueFormatter(String[] values) {
-            this.mValues = values;
-        }
-        @Override
-        public String getFormattedValue(float value, AxisBase axis) {
-            return mValues[(int)value];
-        }
+                //------------------------------For single bar
+                BarData bData = new BarData(barDataSet);
+                bData.setBarWidth(0.5f);
+                barChart.setData(bData);
+                barChart.getBarData().setValueTextColor(Color.parseColor("#444444"));
+                barChart.getBarData().setValueTextSize(25f);
+                //---------------------------------------------
+
+            }
+        });
     }
 }
