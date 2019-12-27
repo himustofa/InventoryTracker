@@ -37,7 +37,6 @@ public class StockPagerAdapter extends FragmentStatePagerAdapter {
                 StockTabOne one = new StockTabOne();
                 bundle.putString("TAB_ONE", new Gson().toJson(mArrayList));
                 one.setArguments(bundle);
-                Log.d(TAG, new Gson().toJson(mArrayList));
                 return one;
             case 1:
                 return new StockTabTwo();

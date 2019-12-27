@@ -27,7 +27,7 @@ public class StockTabOne extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_fragment_one, container, false);
 
-        final RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.stock_recycler_view);
+        final RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.stock_product_recycler_view);
         if (getArguments() != null) {
             ArrayList<Stock> mArrayList = new Gson().fromJson(getArguments().getString("TAB_ONE", null), new TypeToken<ArrayList<Stock>>() {}.getType());
             Log.d(TAG, new Gson().toJson(mArrayList));
