@@ -1,6 +1,7 @@
 package com.appsit.inventorytracker.views.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,11 +9,23 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import com.appsit.inventorytracker.R;
+import com.appsit.inventorytracker.models.Stock;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-public class TabFragmentOne extends Fragment {
+import java.util.ArrayList;
+
+public class StockTabOne extends Fragment {
+
+    private String TAG = this.getClass().getCanonicalName();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.tab_fragment_one, container, false);
+        View view = inflater.inflate(R.layout.tab_fragment_one, container, false);
+        if (getArguments() != null) {
+            ArrayList<Stock> mArrayList = new Gson().fromJson(getArguments().getString("TAB_ONE", null), new TypeToken<ArrayList<Stock>>() {}.getType());
+            Log.d(TAG, new Gson().toJson(mArrayList));
+        }
+        return view;
     }
 }

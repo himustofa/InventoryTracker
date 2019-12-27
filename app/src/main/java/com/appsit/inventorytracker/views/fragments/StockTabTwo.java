@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import com.appsit.inventorytracker.R;
 
-public class TabFragmentTwo extends Fragment {
+public class StockTabTwo extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

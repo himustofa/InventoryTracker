@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +17,9 @@ import com.appsit.inventorytracker.models.StockSale;
 import com.appsit.inventorytracker.viewmodels.AdjustmentViewModel;
 import com.appsit.inventorytracker.viewmodels.PurchaseViewModel;
 import com.appsit.inventorytracker.viewmodels.StockViewModel;
+import com.appsit.inventorytracker.views.adapters.StockPagerAdapter;
 import com.appsit.inventorytracker.views.adapters.StockAdapter;
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -38,12 +41,13 @@ public class StockActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock);
 
+        //====================================================| ViewModel
         mRecyclerView = (RecyclerView) findViewById(R.id.stock_recycler_view);
-
         mViewModel = ViewModelProviders.of(this).get(StockViewModel.class);
         mAdjustmentViewModel = ViewModelProviders.of(this).get(AdjustmentViewModel.class);
         mPurchaseViewModel = ViewModelProviders.of(this).get(PurchaseViewModel.class);
 
+        //====================================================| ViewModel
         mPurchaseViewModel.getAll().observe(this, new Observer<List<Purchase>>() {
             @Override
             public void onChanged(List<Purchase> list) {
@@ -56,10 +60,36 @@ public class StockActivity extends AppCompatActivity {
                                 mArrayList.add(new Stock( p.getProductId(), p.getProductName(), (p.getPurchaseProductQuantity()-sale.getQuantity()), (p.getPurchaseAmount()-sale.getAmount()) ));
                                 Log.d(TAG, new Gson().toJson(mArrayList));
                                 initRecyclerView();
+                                //final StockPagerAdapter adapter = new StockPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), mArrayList);
+                                //mViewPager.setAdapter(adapter);
                             }
                         });
                     }
                 }
+            }
+        });
+
+        //====================================================| TabLayout
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText("Product"));
+        tabLayout.addTab(tabLayout.newTab().setText("Supplier"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        final ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
+        final StockPagerAdapter adapter = new StockPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), mArrayList);
+        mViewPager.setAdapter(adapter);
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mViewPager.setCurrentItem(tab.getPosition());
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
             }
         });
 
