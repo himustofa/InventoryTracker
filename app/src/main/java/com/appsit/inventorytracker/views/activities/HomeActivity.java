@@ -33,6 +33,7 @@ import com.appsit.inventorytracker.viewmodels.PurchaseViewModel;
 import com.appsit.inventorytracker.viewmodels.SaleViewModel;
 import com.appsit.inventorytracker.viewmodels.StockViewModel;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -193,6 +194,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.settings_id:
                 startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
+                break;
+            case R.id.users_id:
+                if (mUser.getRole().equals(String.valueOf(Role.ADMIN_USER))) {
+                    startActivity(new Intent(HomeActivity.this, UserActivity.class));
+                } else {
+                    Snackbar.make(findViewById(android.R.id.content), getResources().getString(R.string.msg_admin_user), Snackbar.LENGTH_INDEFINITE).show();
+                }
                 break;
             case R.id.about_id:
                 Utility.aboutMe(HomeActivity.this);
