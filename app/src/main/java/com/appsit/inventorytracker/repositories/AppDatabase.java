@@ -38,9 +38,9 @@ public abstract class AppDatabase extends RoomDatabase {
                                 @Override
                                 public void run() {
                                     getDatabase(context).getDaoAccess().insertAllUser(User.populateData()); //Initial data insert
-                                    //getDatabase(context).getDaoAccess().insertAllSupplier(Supplier.dummyData());
-                                    //getDatabase(context).getDaoAccess().insertAllProduct(Product.dummyData());
-                                    //getDatabase(context).getDaoAccess().insertAllCustomer(Customer.dummyData());
+                                    getDatabase(context).getDaoAccess().insertAllSupplier(Supplier.dummyData());
+                                    getDatabase(context).getDaoAccess().insertAllProduct(Product.dummyData());
+                                    getDatabase(context).getDaoAccess().insertAllCustomer(Customer.dummyData());
                                 }
                             });
                         }

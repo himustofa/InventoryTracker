@@ -40,8 +40,8 @@ public class Product {
 
     public static Product[] dummyData() {
         return new Product[] {
-                new Product(UUID.randomUUID().toString(), "Shampoo", "SH101", 100, 250.0, "25/12/2019", "Nothing..."),
-                new Product(UUID.randomUUID().toString(), "Dove Soap", "DS101", 100, 150.0, "25/12/2019", "Nothing..."),
+                new Product(UUID.randomUUID().toString(), "Shampoo", "SH101", 1, 250.0, "25/12/2019", "Nothing..."),
+                new Product(UUID.randomUUID().toString(), "Dove Soap", "DS101", 1, 150.0, "25/12/2019", "Nothing..."),
         };
     }
 
