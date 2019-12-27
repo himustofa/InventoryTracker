@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,11 +23,12 @@ import com.appsit.inventorytracker.utils.Utility;
 
 import java.util.ArrayList;
 
-public class SupplierAdapter extends RecyclerView.Adapter<SupplierAdapter.MyViewModel>{
+public class SupplierAdapter extends RecyclerView.Adapter<SupplierAdapter.MyViewModel> implements Filterable {
 
     private String TAG = this.getClass().getSimpleName();
     private Context mContext;
     private ArrayList<Supplier> mArrayList;
+    private ArrayList<Supplier> mArrayList1;
     private int lastPosition = -1;
     private RecyclerItemListener mListener;
 
@@ -38,6 +41,7 @@ public class SupplierAdapter extends RecyclerView.Adapter<SupplierAdapter.MyView
     public SupplierAdapter(Context context, ArrayList<Supplier> arrayList) {
         this.mContext = context;
         this.mArrayList = arrayList;
+        this.mArrayList1 = arrayList;
         this.mListener = (RecyclerItemListener) context;
     }
 
@@ -119,5 +123,36 @@ public class SupplierAdapter extends RecyclerView.Adapter<SupplierAdapter.MyView
             viewToAnimate.startAnimation(animation);
             lastPosition = position;
         }
+    }
+
+    //http://programmingroot.com/android-recyclerview-search-filter-tutorial-with-example/
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString();
+                if (charString.isEmpty()){
+                    mArrayList = mArrayList1;
+                } else {
+                    ArrayList<Supplier> filterList = new ArrayList<>();
+                    for (Supplier data : mArrayList1){
+                        if (data.getSupplierName().toLowerCase().contains(charString)){
+                            filterList.add(data);
+                        }
+                    }
+                    mArrayList = filterList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = mArrayList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                mArrayList = (ArrayList<Supplier>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 }

@@ -2,6 +2,7 @@ package com.appsit.inventorytracker.views.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -124,6 +125,20 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
                 } else {
                     Snackbar.make(findViewById(android.R.id.content), "Products are not available.", Snackbar.LENGTH_INDEFINITE).show();
                 }
+            }
+        });
+
+        ((SearchView) findViewById(R.id.purchase_search_view)).setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return true;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (mAdapter != null){
+                    mAdapter.getFilter().filter(newText);
+                }
+                return true;
             }
         });
     }

@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,11 +26,12 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
-public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.MyViewModel>{
+public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.MyViewModel> implements Filterable {
 
     private String TAG = this.getClass().getSimpleName();
     private Context mContext;
     private ArrayList<Purchase> mArrayList;
+    private ArrayList<Purchase> mArrayList1;
     private int lastPosition = -1;
     private RecyclerItemListener mListener;
     private User mUser;
@@ -42,6 +45,7 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.MyView
     public PurchaseAdapter(Context context, ArrayList<Purchase> arrayList) {
         this.mContext = context;
         this.mArrayList = arrayList;
+        this.mArrayList1 = arrayList;
         this.mListener = (RecyclerItemListener) context;
         this.mUser = SharedPrefManager.getInstance(context).getUser();
     }
@@ -130,5 +134,36 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.MyView
             viewToAnimate.startAnimation(animation);
             lastPosition = position;
         }
+    }
+
+    //http://programmingroot.com/android-recyclerview-search-filter-tutorial-with-example/
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString();
+                if (charString.isEmpty()){
+                    mArrayList = mArrayList1;
+                } else {
+                    ArrayList<Purchase> filterList = new ArrayList<>();
+                    for (Purchase data : mArrayList1){
+                        if (data.getProductName().toLowerCase().contains(charString)){
+                            filterList.add(data);
+                        }
+                    }
+                    mArrayList = filterList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = mArrayList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                mArrayList = (ArrayList<Purchase>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 }
