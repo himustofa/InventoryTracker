@@ -292,9 +292,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         mHomeViewModel.getSaleByDate(date).observe(this, new Observer<StockSale>() {
             @Override
             public void onChanged(StockSale myModel) {
-                Log.d(TAG, "getData " + new Gson().toJson(myModel));
                 barList.add(new BarEntry(i, (float) myModel.getAmount()));
-                BarDataSet barDataSet = new BarDataSet(barList, "Sales");
+                BarDataSet barDataSet = new BarDataSet(barList, "Five days sales amount in BDT");
                 barDataSet.setColors(Color.parseColor("#FFFFC107"));
 
                 //------------------------------For single bar
