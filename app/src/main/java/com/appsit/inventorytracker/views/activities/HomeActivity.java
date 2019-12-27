@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -32,10 +33,19 @@ import com.appsit.inventorytracker.viewmodels.HomeViewModel;
 import com.appsit.inventorytracker.viewmodels.PurchaseViewModel;
 import com.appsit.inventorytracker.viewmodels.SaleViewModel;
 import com.appsit.inventorytracker.viewmodels.StockViewModel;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -46,6 +56,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle mToggle;
 
     private User mUser;
+    private BarChart barChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +138,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 ((TextView) findViewById(R.id.today_total_sale_amount)).setText(myModel.getAmount() + "");
             }
         });
+
+        barChart();
     }
 
     //====================================================| Button events
@@ -237,5 +250,63 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    //=====================================================| Bar Chart
+    public void barChart() {
+        barChart = (BarChart) findViewById(R.id.bar_chart); //Vertical chart
+        barChart.setDrawBarShadow(false);
+        barChart.setDrawValueAboveBar(true);
+        barChart.setMaxVisibleValueCount(50);
+        barChart.setPinchZoom(false);
+        barChart.setDrawGridBackground(true);
+        //barChart.getXAxis().setTextSize(35f);
+        //barChart.getAxisLeft().setTextSize(35f);
+        barChart.getAxisLeft().setDrawGridLines(false);
+        barChart.getXAxis().setDrawGridLines(false);
+        //barChart.getXAxis().setEnabled(false);
+        //barChart.getAxisLeft().setDrawAxisLine(false);
+
+        ArrayList<BarEntry> barList = new ArrayList<>();
+        barList.add(new BarEntry(1, 40f));
+        barList.add(new BarEntry(2, 44f));
+        barList.add(new BarEntry(3, 30f));
+        barList.add(new BarEntry(4, 10f));
+
+        BarDataSet barDataSet = new BarDataSet(barList, "Sales");
+        barDataSet.setColors(Color.parseColor("#FFFFC107"));
+
+        //------------------------------For single bar
+        BarData bData = new BarData(barDataSet);
+        bData.setBarWidth(0.5f);
+        barChart.setData(bData);
+        barChart.getBarData().setValueTextColor(Color.parseColor("#444444"));
+        barChart.getBarData().setValueTextSize(25f);
+        //---------------------------------------------
+
+        //Display X-axis name
+        String[] months = new String[] {"Jan", "Feb", "Mar", "Apr", "May", "Jun"};
+        XAxis ax = barChart.getXAxis();
+        //ax.setValueFormatter(new HomeActivity.MyXAxisValueFormatter(months));
+        ax.setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return months[(int)value];
+            }
+        });
+        ax.setGranularity(1);
+        ax.setCenterAxisLabels(true);
+    }
+
+    public class MyXAxisValueFormatter implements IAxisValueFormatter {
+        private String[] mValues;
+
+        public MyXAxisValueFormatter(String[] values) {
+            this.mValues = values;
+        }
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            return mValues[(int)value];
+        }
     }
 }

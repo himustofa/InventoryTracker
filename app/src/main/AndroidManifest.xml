@@ -2,11 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.appsit.inventorytracker">
-
     <!-- Request the Camera feature -->
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
-    <!-- save to phone or sd card directory -->
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" /> <!-- save to phone or sd card directory -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -24,9 +25,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.activities.StockActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".views.activities.PieChartActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.activities.UserActivity"
@@ -68,13 +66,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Start: Android Image Cropper: optional (needed if default theme has no action bar) -->
+        </activity> <!-- Start: Android Image Cropper: optional (needed if default theme has no action bar) -->
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat" />
-        <!-- Start: To configure the FileProvider for Camera capture -->
+            android:theme="@style/Base.Theme.AppCompat" /> <!-- Start: To configure the FileProvider for Camera capture -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
