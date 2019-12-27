@@ -47,14 +47,14 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
     private SaleAdapter mAdapter;
     private SaleViewModel mViewModel;
     private boolean isValue = true;
-    private List<Customer> mCustomerList;
-    private List<Purchase> mPurchaseList;
+    private List<Customer> mCustomerList = new ArrayList<>();
+    private List<Purchase> mPurchaseList = new ArrayList<>();
     private double perProductPrice;
 
     private RecyclerView mRecyclerView;
     private EditText eQuantity, ePurchaseQuantity, eSaleDate, eSaleDiscount, eSaleVat, eSaleAmount, eSalePayment, eSaleBalance, eSaleDesc;
     private Spinner sProductName, sCustomerName;
-    private TextView tProductId, tCustomerId;
+    private TextView tProductId, tCustomerId, tSupplierName, tSupplierId;
 
     List<String> cList = new ArrayList<>();
     List<String> pList = new ArrayList<>();
@@ -86,7 +86,7 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
             @Override
             public void onChanged(List<Purchase> purchases) {
                 if (purchases != null) {
-                    mPurchaseList = purchases;
+                    mPurchaseList.addAll(purchases);
                     if (purchases.size() > 0) {
                         for(Purchase s : purchases) {
                             pList.add(s.getProductName());
@@ -101,14 +101,11 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
             @Override
             public void onChanged(List<Customer> customers) {
                 if (customers != null) {
-                    mCustomerList = customers;
+                    mCustomerList.addAll(customers);
                     if (customers.size() > 0) {
                         for(Customer s : customers) {
                             cList.add(s.getCustomerName());
                         }
-                    } else {
-                        mCustomerList.add(new Customer("none", "None", "none", "none", "none", 0.0, "none", "none"));
-                        cList.add("None");
                     }
                 }
             }
@@ -167,6 +164,8 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
                 tProductId.setText(mPurchaseList.get(position).getProductId());
                 ePurchaseQuantity.setText("" + mPurchaseList.get(position).getPurchaseProductQuantity());
                 perProductPrice = mPurchaseList.get(position).getPurchaseProductPrice();
+                tSupplierName.setText(mPurchaseList.get(position).getSupplierName());
+                tSupplierId.setText(mPurchaseList.get(position).getSupplierId());
                 //Calculation
                 eQuantity.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
                 eSaleDiscount.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
@@ -191,6 +190,8 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
             //sCustomerName.setAdapter( new ArrayAdapter<String>(SaleActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.customer_name_array)) );
         }
 
+        eSaleDate.setText(Utility.getCurrentDatPicker(this));
+
 
 
         ((Button) obj.getView().findViewById(R.id.sale_save_button)).setOnClickListener(new View.OnClickListener() {
@@ -201,6 +202,8 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
                             UUID.randomUUID().toString(),
                             sProductName.getSelectedItem().toString(),
                             tProductId.getText().toString(),
+                            tSupplierName.getText().toString(),
+                            tSupplierId.getText().toString(),
                             Integer.parseInt(eQuantity.getText().toString()),
                             Integer.parseInt(ePurchaseQuantity.getText().toString()),
                             sCustomerName.getSelectedItem().toString(),
@@ -247,6 +250,36 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
             eSaleBalance.setText("" + model.getSalesBalance());
             eSaleDesc.setText(model.getSalesDescription());
 
+            Utility.getSpinnerData(new Utility.AdapterPosition() {
+                @Override
+                public void onPosition(int position) {
+                    tProductId.setText(mPurchaseList.get(position).getProductId());
+                    ePurchaseQuantity.setText("" + mPurchaseList.get(position).getPurchaseProductQuantity());
+                    perProductPrice = mPurchaseList.get(position).getPurchaseProductPrice();
+                    tSupplierName.setText(mPurchaseList.get(position).getSupplierName());
+                    tSupplierId.setText(mPurchaseList.get(position).getSupplierId());
+                    //Calculation
+                    eQuantity.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
+                    eSaleDiscount.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
+                    eSaleVat.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
+                    eSalePayment.addTextChangedListener(new SalePayTextWatcher(eSaleAmount, eSalePayment, eSaleBalance));
+                }
+            }, this, sProductName, pList);
+            sProductName.setSelection(pList.indexOf(model.getProductName()));
+
+            Utility.getSpinnerData(new Utility.AdapterPosition() {
+                @Override
+                public void onPosition(int position) {
+                    tCustomerId.setText(mCustomerList.get(position).getCustomerId());
+                    if (mCustomerList.get(position).getCustomerDiscount() > 0.0) {
+                        eSaleDiscount.setText("" + mCustomerList.get(position).getCustomerDiscount());
+                    } else {
+                        eSaleDiscount.setText("0.0");
+                    }
+                }
+            }, this, sCustomerName, cList);
+            sCustomerName.setSelection(cList.indexOf(model.getCustomerName()));
+
             eSaleDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -262,6 +295,8 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
                                 model.getSalesId(),
                                 sProductName.getSelectedItem().toString(),
                                 tProductId.getText().toString(),
+                                "",
+                                "",
                                 Integer.parseInt(eQuantity.getText().toString()),
                                 Integer.parseInt(ePurchaseQuantity.getText().toString()),
                                 sCustomerName.getSelectedItem().toString(),
@@ -305,6 +340,8 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
 
         sProductName = (Spinner) view.findViewById(R.id.sl_product_name);
         tProductId = (TextView) view.findViewById(R.id.s1_product_id);
+        tSupplierName = (TextView) view.findViewById(R.id.s1_supplier_name);
+        tSupplierId = (TextView) view.findViewById(R.id.s1_supplier_id);
         eQuantity = (EditText) view.findViewById(R.id.sl_product_quantity);
         ePurchaseQuantity = (EditText) view.findViewById(R.id.sl_purchase_product_quantity);
         sCustomerName = (Spinner) view.findViewById(R.id.sl_customer_name);

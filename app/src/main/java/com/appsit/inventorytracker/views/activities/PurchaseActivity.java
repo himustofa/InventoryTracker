@@ -174,6 +174,7 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
         E4.addTextChangedListener(new PurchaseTextWatcher(E6, E4, E5, false));
         E5.addTextChangedListener(new PurchaseTextWatcher(E6, E4, E5, false));
         E7.addTextChangedListener(new PurchaseTextWatcher(E8, E6, E7, true));
+        E3.setText(Utility.getCurrentDatPicker(this));
 
         ((Button) obj.getView().findViewById(R.id.p_purchase_save_button)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,6 +222,7 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
                 Utility.getDate(PurchaseActivity.this, E3);
             }
         });
+
         ArrayAdapter<String> productAdapter = Utility.getSpinnerData(new Utility.AdapterPosition() {
             @Override
             public void onPosition(int position) {
@@ -228,12 +230,16 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
                 E5.setText("" + mProductList.get(position).getProductPrice());
             }
         }, this, S1, pList);
+        S1.setSelection(pList.indexOf(model.getProductName()));
+
         ArrayAdapter<String> supplierAdapter = Utility.getSpinnerData(new Utility.AdapterPosition() {
             @Override
             public void onPosition(int position) {
                 T2.setText(mSupplierList.get(position).getSupplierId());
             }
         }, this, S2, sList);
+        S2.setSelection(sList.indexOf(model.getSupplierName()));
+
         S1.setSelection(productAdapter.getPosition(model.getProductName()));
         S2.setSelection(supplierAdapter.getPosition(model.getSupplierName()));
         T1.setText(model.getProductId());

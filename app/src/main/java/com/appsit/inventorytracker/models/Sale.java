@@ -18,6 +18,9 @@ public class Sale {
     private String productName;
     private String productId;
     @NonNull
+    private String supplierName;
+    private String supplierId;
+    @NonNull
     private int productQuantity;
     @NonNull
     private int purchaseProductQuantity;
@@ -36,10 +39,12 @@ public class Sale {
     private String salesDescription;
     private String createdAt = String.valueOf(new Timestamp(System.currentTimeMillis()));
 
-    public Sale(@NonNull String salesId, @NonNull String productName, String productId, int productQuantity, int purchaseProductQuantity, String customerName, String customerId, @NonNull String salesDate, double salesDiscount, double salesVat, double salesAmount, double salesPayment, double salesBalance, String salesDescription) {
+    public Sale(@NonNull String salesId, @NonNull String productName, String productId, @NonNull String supplierName, String supplierId, int productQuantity, int purchaseProductQuantity, String customerName, String customerId, @NonNull String salesDate, double salesDiscount, double salesVat, double salesAmount, double salesPayment, double salesBalance, String salesDescription) {
         this.salesId = salesId;
         this.productName = productName;
         this.productId = productId;
+        this.supplierName = supplierName;
+        this.supplierId = supplierId;
         this.productQuantity = productQuantity;
         this.purchaseProductQuantity = purchaseProductQuantity;
         this.customerName = customerName;
@@ -77,6 +82,23 @@ public class Sale {
 
     public void setProductId(String productId) {
         this.productId = productId;
+    }
+
+    @NonNull
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(@NonNull String supplierName) {
+        this.supplierName = supplierName;
+    }
+
+    public String getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(String supplierId) {
+        this.supplierId = supplierId;
     }
 
     public int getProductQuantity() {

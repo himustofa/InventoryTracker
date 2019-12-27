@@ -39,6 +39,7 @@ public class Customer {
 
     public static Customer[] dummyData() {
         return new Customer[] {
+                new Customer("none", "None", "none", "none", "none", 0.0, "none", "none"),
                 new Customer(UUID.randomUUID().toString(), "Mr. Hasan", "01914161808", "hasan@gmail.com", "", 2.5, "Dhaka, Bangladesh", "Nothing..."),
                 new Customer(UUID.randomUUID().toString(), "Rafiqul Islam", "01814161808", "rafiq@gmail.com", "", 0.0, "Dhaka, Bangladesh", "Nothing...")
         };
