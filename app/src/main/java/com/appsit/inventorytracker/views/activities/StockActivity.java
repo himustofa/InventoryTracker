@@ -29,12 +29,9 @@ public class StockActivity extends AppCompatActivity {
 
     private String TAG = this.getClass().getSimpleName();
     private ArrayList<Stock> mArrayList = new ArrayList<>();
-    private StockAdapter mAdapter;
     private PurchaseViewModel mPurchaseViewModel;
     private StockViewModel mViewModel;
     private AdjustmentViewModel mAdjustmentViewModel;
-
-    private RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,32 +39,9 @@ public class StockActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stock);
 
         //====================================================| ViewModel
-        mRecyclerView = (RecyclerView) findViewById(R.id.stock_recycler_view);
         mViewModel = ViewModelProviders.of(this).get(StockViewModel.class);
         mAdjustmentViewModel = ViewModelProviders.of(this).get(AdjustmentViewModel.class);
         mPurchaseViewModel = ViewModelProviders.of(this).get(PurchaseViewModel.class);
-
-        //====================================================| ViewModel
-        mPurchaseViewModel.getAll().observe(this, new Observer<List<Purchase>>() {
-            @Override
-            public void onChanged(List<Purchase> list) {
-                if (list.size() > 0) {
-                    for(Purchase p : list) {
-                        mViewModel.getStockByProductId(p).observe(StockActivity.this, new Observer<StockSale>() {
-                            @Override
-                            public void onChanged(StockSale sale) {
-                                Log.d(TAG, new Gson().toJson(sale));
-                                mArrayList.add(new Stock( p.getProductId(), p.getProductName(), (p.getPurchaseProductQuantity()-sale.getQuantity()), (p.getPurchaseAmount()-sale.getAmount()) ));
-                                Log.d(TAG, new Gson().toJson(mArrayList));
-                                initRecyclerView();
-                                //final StockPagerAdapter adapter = new StockPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), mArrayList);
-                                //mViewPager.setAdapter(adapter);
-                            }
-                        });
-                    }
-                }
-            }
-        });
 
         //====================================================| TabLayout
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
@@ -76,8 +50,8 @@ public class StockActivity extends AppCompatActivity {
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
-        final StockPagerAdapter adapter = new StockPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), mArrayList);
-        mViewPager.setAdapter(adapter);
+        //final StockPagerAdapter adapter = new StockPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), mArrayList);
+        //mViewPager.setAdapter(adapter);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -93,14 +67,25 @@ public class StockActivity extends AppCompatActivity {
             }
         });
 
-    }
+        //====================================================| ViewModel
+        mPurchaseViewModel.getAll().observe(this, new Observer<List<Purchase>>() {
+            @Override
+            public void onChanged(List<Purchase> list) {
+                if (list.size() > 0) {
+                    for(Purchase p : list) {
+                        mViewModel.getStockByProductId(p).observe(StockActivity.this, new Observer<StockSale>() {
+                            @Override
+                            public void onChanged(StockSale sale) {
+                                mArrayList.add(new Stock( p.getProductId(), p.getProductName(), (p.getPurchaseProductQuantity()-sale.getQuantity()), (p.getPurchaseAmount()-sale.getAmount()) ));
+                                final StockPagerAdapter adapter = new StockPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), mArrayList);
+                                mViewPager.setAdapter(adapter);
+                            }
+                        });
+                    }
+                }
+            }
+        });
 
-    private void initRecyclerView() {
-        mAdapter = new StockAdapter(StockActivity.this, mArrayList);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(StockActivity.this));
-        //mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        mAdapter.notifyDataSetChanged();
     }
 
 }
