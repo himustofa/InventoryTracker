@@ -40,7 +40,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewModel>{
     @Override
     public void onBindViewHolder(@NonNull MyViewModel holder, int position) {
         User user = mArrayList.get(position);
-        holder.imageView.setImageBitmap(Utility.loadFromInternalStorage(user.getPhotoPath(),user.getPhotoName()));
+        if (user.getPhotoName() != null) {
+            holder.imageView.setImageBitmap(Utility.loadFromInternalStorage(user.getPhotoPath(), user.getPhotoName()));
+        }
         holder.userFullName.setText(user.getFullName());
         holder.userName.setText(user.getUsername());
         holder.designation.setText(user.getDesignation());

@@ -88,7 +88,7 @@ public class CustomerActivity extends AppCompatActivity implements CustomerAdapt
 
     @Override
     public void addItem() {
-        ObjectDialog obj = showObjectDialog("Add Customer");
+        ObjectDialog obj = showObjectDialog("Add");
 
         ((Button) obj.getView().findViewById(R.id.customer_save_button)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,7 +122,7 @@ public class CustomerActivity extends AppCompatActivity implements CustomerAdapt
 
     @Override
     public void updateItem(int position, Customer model) {
-        ObjectDialog obj = showObjectDialog("Edit Customer");
+        ObjectDialog obj = showObjectDialog("Edit");
 
         E1.setText(model.getCustomerName());
         E2.setText(model.getCustomerPhoneNumber());

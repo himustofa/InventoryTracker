@@ -85,7 +85,7 @@ public class SupplierActivity extends AppCompatActivity implements SupplierAdapt
 
     @Override
     public void addItem() {
-        ObjectDialog obj = showObjectDialog("Add Supplier");
+        ObjectDialog obj = showObjectDialog("Add");
 
         EditText E1 = (EditText) obj.getView().findViewById(R.id.supplierName);
         EditText E2 = (EditText) obj.getView().findViewById(R.id.supplierCompanyName);
@@ -129,7 +129,7 @@ public class SupplierActivity extends AppCompatActivity implements SupplierAdapt
 
     @Override
     public void updateItem(int position, Supplier model) {
-        ObjectDialog obj = showObjectDialog("Edit Supplier");
+        ObjectDialog obj = showObjectDialog("Edit");
 
         EditText E1 = (EditText) obj.getView().findViewById(R.id.supplierName);
         EditText E2 = (EditText) obj.getView().findViewById(R.id.supplierCompanyName);

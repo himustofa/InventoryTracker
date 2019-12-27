@@ -100,7 +100,7 @@ public class ProductActivity extends AppCompatActivity implements ProductAdapter
 
     @Override
     public void addItem() {
-        ObjectDialog obj = showObjectDialog("Add Supplier");
+        ObjectDialog obj = showObjectDialog("Add");
 
         EditText E1 = (EditText) obj.getView().findViewById(R.id.product_name);
         EditText E2 = (EditText) obj.getView().findViewById(R.id.product_code);
@@ -148,7 +148,7 @@ public class ProductActivity extends AppCompatActivity implements ProductAdapter
 
     @Override
     public void updateItem(int position, Product model) {
-        ObjectDialog obj = showObjectDialog("Edit Supplier");
+        ObjectDialog obj = showObjectDialog("Edit");
 
         EditText E1 = (EditText) obj.getView().findViewById(R.id.product_name);
         EditText E2 = (EditText) obj.getView().findViewById(R.id.product_code);
