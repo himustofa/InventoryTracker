@@ -34,6 +34,7 @@ public class UserActivity extends AppCompatActivity implements UserAdapter.Recyc
     private ArrayList<User> mArrayList = new ArrayList<>();
     private UserAdapter mAdapter;
     private RecyclerView mRecyclerView;
+    private boolean isValue = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +47,14 @@ public class UserActivity extends AppCompatActivity implements UserAdapter.Recyc
         mViewModel.getAllUser().observe(this, new Observer<List<User>>() {
             @Override
             public void onChanged(List<User> users) {
-                mArrayList.addAll(users);
-                mAdapter = new UserAdapter(UserActivity.this, mArrayList);
-                mRecyclerView.setLayoutManager(new LinearLayoutManager(UserActivity.this));
-                mRecyclerView.setAdapter(mAdapter);
-                mAdapter.notifyDataSetChanged();
+                if (isValue) {
+                    mArrayList.addAll(users);
+                    isValue = false;
+                    mAdapter = new UserAdapter(UserActivity.this, mArrayList);
+                    mRecyclerView.setLayoutManager(new LinearLayoutManager(UserActivity.this));
+                    mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
+                }
             }
         });
     }
