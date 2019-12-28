@@ -169,6 +169,9 @@ public interface AppDaoAccess {
     @Query("SELECT SUM(productQuantity) as quantity, SUM(salesAmount) as amount FROM sales WHERE supplierId=:supplierId")
     LiveData<StockSale> getSaleBySupplierId(String supplierId);
 
+    @Query("SELECT productId as productId, productName as productName, ((SUM(purchaseProductQuantity)-(SELECT SUM(productQuantity) FROM sales))-(SELECT SUM(productQuantity) FROM adjustments)) as stockQuantity, ((SUM(purchaseAmount)-(SELECT SUM(salesAmount) FROM sales))-(SELECT SUM(productAmount) FROM adjustments)) as stockAmount FROM purchases")
+    LiveData<Stock> getTotalStock();
+
     //===============================================| Home
     @Query("SELECT SUM(productQuantity) as quantity, SUM(salesAmount) as amount FROM sales")
     LiveData<StockSale> getSaleTotal();

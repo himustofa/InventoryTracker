@@ -18,4 +18,6 @@
     <color name="colorLightGreen">#dff0d8</color>
     <color name="colorBlue">#31708f</color>
     <color name="colorLightBlue">#d9edf7</color>
+    <color name="colorDeepYellow">#FF9800</color>
+    <color name="colorDeepGreen">#009688</color>
 </resources>

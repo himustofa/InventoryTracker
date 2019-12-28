@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:weightSum="3"
+        android:weightSum="4"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <androidx.cardview.widget.CardView
@@ -23,14 +23,14 @@
                 android:layout_height="match_parent">
                 <TextView
                     android:text="BDT"
-                    android:textColor="@color/colorDarkGrey"
+                    android:textColor="@color/colorDeepYellow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/purchase_all_items_amount"
                     android:text="100 tk"
                     android:textSize="35sp"
-                    android:textColor="@color/colorDarkGrey"
+                    android:textColor="@color/colorDeepYellow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -49,14 +49,14 @@
                 android:layout_height="match_parent">
                 <TextView
                     android:text="BDT"
-                    android:textColor="@color/colorDarkGrey"
+                    android:textColor="@color/colorRed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/sale_all_items_amount"
                     android:text="45 tk"
                     android:textSize="35sp"
-                    android:textColor="@color/colorDarkGrey"
+                    android:textColor="@color/colorRed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -75,14 +75,40 @@
                 android:layout_height="match_parent">
                 <TextView
                     android:text="BDT"
-                    android:textColor="@color/colorDarkGrey"
+                    android:textColor="@color/colorDeepGreen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/wastage_all_items_amount"
                     android:text="5 tk"
                     android:textSize="35sp"
-                    android:textColor="@color/colorDarkGrey"
+                    android:textColor="@color/colorDeepGreen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_margin="@dimen/space_5dp"
+            app:cardBackgroundColor="#dff0d8"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:text="BDT"
+                    android:textColor="@color/colorGreen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/stock_all_items_amount"
+                    android:text="5 tk"
+                    android:textSize="35sp"
+                    android:textColor="@color/colorGreen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>

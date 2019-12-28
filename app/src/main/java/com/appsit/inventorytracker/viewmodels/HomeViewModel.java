@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.appsit.inventorytracker.models.Sale;
+import com.appsit.inventorytracker.models.Stock;
 import com.appsit.inventorytracker.models.StockSale;
 import com.appsit.inventorytracker.repositories.AppDaoAccess;
 import com.appsit.inventorytracker.repositories.AppDatabase;
@@ -35,5 +36,9 @@ public class HomeViewModel extends AndroidViewModel {
 
     public LiveData<StockSale> getSaleByDate(String date) {
         return mDaoAccess.getSaleByDate(date);
+    }
+
+    public LiveData<Stock> getTotalStock() {
+        return mDaoAccess.getTotalStock();
     }
 }

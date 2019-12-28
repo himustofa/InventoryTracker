@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.appsit.inventorytracker.R;
 import com.appsit.inventorytracker.models.Role;
+import com.appsit.inventorytracker.models.Stock;
 import com.appsit.inventorytracker.models.StockSale;
 import com.appsit.inventorytracker.models.User;
 import com.appsit.inventorytracker.session.SharedPrefManager;
@@ -130,6 +131,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 //Utility.getAnimationCounter(((TextView) findViewById(R.id.remaining_all_items)), myModel.getQuantity());
                 //((TextView) findViewById(R.id.remaining_all_items_amount)).setText(myModel.getAmount() + " tk");
                 ((TextView) findViewById(R.id.today_total_sale_amount)).setText(myModel.getAmount() + "");
+            }
+        });
+
+        mHomeViewModel.getTotalStock().observe(this, new Observer<Stock>() {
+            @Override
+            public void onChanged(Stock myModel) {
+                Log.d(TAG, "Stock " + new Gson().toJson(myModel));
+                Utility.getAnimationCounter(((TextView) findViewById(R.id.stock_all_items)), myModel.getStockQuantity());
+                ((TextView) findViewById(R.id.stock_all_items_amount)).setText(myModel.getStockAmount() + "");
             }
         });
 
