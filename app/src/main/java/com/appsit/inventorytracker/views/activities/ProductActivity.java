@@ -28,6 +28,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -59,6 +61,7 @@ public class ProductActivity extends AppCompatActivity implements ProductAdapter
                 if (isValue) {
                     mArrayList.addAll(list);
                     isValue = false;
+                    sorting(mArrayList);
                     initRecyclerView();
                 }
             }
@@ -83,6 +86,15 @@ public class ProductActivity extends AppCompatActivity implements ProductAdapter
                     mAdapter.getFilter().filter(newText);
                 }
                 return true;
+            }
+        });
+    }
+
+    private void sorting(ArrayList<Product> list) {
+        //https://stackoverflow.com/questions/9109890/android-java-how-to-sort-a-list-of-objects-by-a-certain-value-within-the-object
+        Collections.sort(list, new Comparator<Product>(){
+            public int compare(Product obj1, Product obj2) {
+                return obj1.getProductName().compareToIgnoreCase(obj2.getProductName());
             }
         });
     }

@@ -18,10 +18,11 @@ import com.appsit.inventorytracker.models.Stock;
 import com.appsit.inventorytracker.models.StockSale;
 import com.appsit.inventorytracker.viewmodels.PurchaseViewModel;
 import com.appsit.inventorytracker.viewmodels.StockViewModel;
-import com.appsit.inventorytracker.views.adapters.StockAdapter;
 import com.appsit.inventorytracker.views.adapters.StockAdapterTwo;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class StockTabTwo extends Fragment {
@@ -47,6 +48,7 @@ public class StockTabTwo extends Fragment {
                             @Override
                             public void onChanged(StockSale sale) {
                                 mArrayList.add(new Stock( p.getSupplierId(), p.getSupplierName(), (p.getPurchaseProductQuantity()-sale.getQuantity()), (p.getPurchaseAmount()-sale.getAmount()) ));
+                                sorting(mArrayList);
                                 initRecyclerView(mRecyclerView, mArrayList);
                             }
                         });
@@ -70,6 +72,15 @@ public class StockTabTwo extends Fragment {
         });
 
         return view;
+    }
+
+    private void sorting(ArrayList<Stock> list) {
+        //https://stackoverflow.com/questions/9109890/android-java-how-to-sort-a-list-of-objects-by-a-certain-value-within-the-object
+        Collections.sort(list, new Comparator<Stock>(){
+            public int compare(Stock obj1, Stock obj2) {
+                return obj1.getProductName().compareToIgnoreCase(obj2.getProductName());
+            }
+        });
     }
 
     private void initRecyclerView(RecyclerView mRecyclerView, ArrayList<Stock> mArrayList) {

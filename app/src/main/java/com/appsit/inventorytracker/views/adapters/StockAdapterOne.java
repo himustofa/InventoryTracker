@@ -20,7 +20,7 @@ import com.appsit.inventorytracker.models.Stock;
 
 import java.util.ArrayList;
 
-public class StockAdapter extends RecyclerView.Adapter<StockAdapter.MyViewModel> implements Filterable {
+public class StockAdapterOne extends RecyclerView.Adapter<StockAdapterOne.MyViewModel> implements Filterable {
 
     private String TAG = this.getClass().getSimpleName();
     private Context mContext;
@@ -28,7 +28,7 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.MyViewModel>
     private ArrayList<Stock> mArrayList1;
     private int lastPosition = -1;
 
-    public StockAdapter(Context context, ArrayList<Stock> arrayList) {
+    public StockAdapterOne(Context context, ArrayList<Stock> arrayList) {
         this.mContext = context;
         this.mArrayList = arrayList;
         this.mArrayList1 = arrayList;

@@ -19,9 +19,11 @@ import com.appsit.inventorytracker.models.StockSale;
 import com.appsit.inventorytracker.viewmodels.AdjustmentViewModel;
 import com.appsit.inventorytracker.viewmodels.PurchaseViewModel;
 import com.appsit.inventorytracker.viewmodels.StockViewModel;
-import com.appsit.inventorytracker.views.adapters.StockAdapter;
+import com.appsit.inventorytracker.views.adapters.StockAdapterOne;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class StockTabOne extends Fragment {
@@ -29,7 +31,7 @@ public class StockTabOne extends Fragment {
     private String TAG = this.getClass().getCanonicalName();
     private ArrayList<Stock> mArrayList = new ArrayList<>();
     private RecyclerView mRecyclerView;
-    private StockAdapter mAdapter;
+    private StockAdapterOne mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class StockTabOne extends Fragment {
                             @Override
                             public void onChanged(StockSale sale) {
                                 mArrayList.add(new Stock( p.getProductId(), p.getProductName(), (p.getPurchaseProductQuantity()-sale.getQuantity()), (p.getPurchaseAmount()-sale.getAmount()) ));
+                                sorting(mArrayList);
                                 initRecyclerView(mRecyclerView, mArrayList);
                             }
                         });
@@ -89,8 +92,17 @@ public class StockTabOne extends Fragment {
         return view;
     }
 
+    private void sorting(ArrayList<Stock> list) {
+        //https://stackoverflow.com/questions/9109890/android-java-how-to-sort-a-list-of-objects-by-a-certain-value-within-the-object
+        Collections.sort(list, new Comparator<Stock>(){
+            public int compare(Stock obj1, Stock obj2) {
+                return obj1.getProductName().compareToIgnoreCase(obj2.getProductName());
+            }
+        });
+    }
+
     private void initRecyclerView(RecyclerView mRecyclerView, ArrayList<Stock> mArrayList) {
-        mAdapter = new StockAdapter(getActivity(), mArrayList);
+        mAdapter = new StockAdapterOne(getActivity(), mArrayList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         //mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
