@@ -263,7 +263,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         ArrayList<BarEntry> barList = new ArrayList<>();
 
-        String[] arr = new String[] {Utility.getDatePlus(this, -2), Utility.getDatePlus(this, -1), Utility.getCurrentDatPicker(this), Utility.getDatePlus(this, 1), Utility.getDatePlus(this, 2)};
+        String[] arr = new String[] {Utility.getDatePlus(this, -4), Utility.getDatePlus(this, -3), Utility.getDatePlus(this, -2), Utility.getDatePlus(this, -1), Utility.getCurrentDatPicker(this)};
         for (int i=0; i<arr.length; i++) {
             getData(arr[i], barList, i);
         }
