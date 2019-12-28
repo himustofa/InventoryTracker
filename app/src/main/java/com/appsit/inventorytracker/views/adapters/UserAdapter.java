@@ -1,6 +1,7 @@
 package com.appsit.inventorytracker.views.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,9 +27,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewModel>{
     private Context mContext;
     private ArrayList<User> mArrayList;
 
+    private RecyclerItemListener mListener;
+
+    public interface RecyclerItemListener {
+        void removeItem(int position, User model);
+        void updateItem(int position, User model);
+    }
+
     public UserAdapter(Context context, ArrayList<User> arrayList) {
         this.mContext = context;
         this.mArrayList = arrayList;
+        this.mListener = (RecyclerItemListener) context;
     }
 
     @NonNull
@@ -41,6 +50,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewModel>{
     @Override
     public void onBindViewHolder(@NonNull MyViewModel holder, int position) {
         User user = mArrayList.get(position);
+
         if (user.getPhotoName() != null) {
             holder.imageView.setImageBitmap(Utility.loadFromInternalStorage(user.getPhotoPath(), user.getPhotoName()));
         } else {
@@ -53,10 +63,24 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewModel>{
         holder.userFullName.setText(user.getFullName());
         holder.userName.setText(user.getUsername());
         holder.designation.setText(user.getDesignation());
+
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, user.getPhotoPath()+user.getPhotoName());
+                mListener.updateItem(position, user);
+            }
+        });
+
+        holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Utility.deleteDialog(mContext).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mListener.removeItem(position, user);
+                    }
+                }).show();
+                return true;
             }
         });
     }

@@ -51,4 +51,26 @@ public class UserViewModel extends AndroidViewModel {
     public LiveData<User> getUser(String id) {
         return mDaoAccess.getUser(id);
     }
+
+    @SuppressLint("StaticFieldLeak")
+    public long delete(User model) {
+        new AsyncTask<Void, Void, Integer>() {
+            @Override
+            protected Integer doInBackground(Void... voids) {
+                return mDaoAccess.deleteUser(model);
+            }
+        }.execute();
+        return 1;
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    public int update(User model) {
+        new AsyncTask<Void, Void, Integer>() {
+            @Override
+            protected Integer doInBackground(Void... voids) {
+                return mDaoAccess.updateUser(model);
+            }
+        }.execute();
+        return 1;
+    }
 }

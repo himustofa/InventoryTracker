@@ -41,8 +41,8 @@
     </string>
 
     <array name="roles">
-        <item>ADMIN</item>
-        <item>USER</item>
+        <item>NORMAL_USER</item>
+        <item>ADMIN_USER</item>
     </array>
 
     <!-- Settings -->

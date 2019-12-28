@@ -24,7 +24,7 @@
         <EditText
             android:id="@+id/user_name"
             android:hint="Username"
-            android:inputType="textWebEmailAddress"
+            android:inputType="text"
             android:layout_marginBottom="15dp"
             android:background="@drawable/shape_edit_text_border"
             android:layout_width="match_parent"

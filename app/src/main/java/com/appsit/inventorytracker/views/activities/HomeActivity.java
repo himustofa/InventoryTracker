@@ -22,18 +22,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.appsit.inventorytracker.R;
-import com.appsit.inventorytracker.models.Purchase;
 import com.appsit.inventorytracker.models.Role;
-import com.appsit.inventorytracker.models.Sale;
-import com.appsit.inventorytracker.models.Stock;
 import com.appsit.inventorytracker.models.StockSale;
 import com.appsit.inventorytracker.models.User;
 import com.appsit.inventorytracker.session.SharedPrefManager;
 import com.appsit.inventorytracker.utils.Utility;
 import com.appsit.inventorytracker.viewmodels.HomeViewModel;
-import com.appsit.inventorytracker.viewmodels.PurchaseViewModel;
-import com.appsit.inventorytracker.viewmodels.SaleViewModel;
-import com.appsit.inventorytracker.viewmodels.StockViewModel;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
@@ -41,13 +35,11 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -214,7 +206,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 if (mUser.getRole().equals(String.valueOf(Role.ADMIN_USER))) {
                     startActivity(new Intent(HomeActivity.this, UserActivity.class));
                 } else {
-                    Snackbar.make(findViewById(android.R.id.content), getResources().getString(R.string.msg_admin_user), Snackbar.LENGTH_INDEFINITE).show();
+                    Snackbar.make(findViewById(android.R.id.content), getResources().getString(R.string.msg_admin_user), Snackbar.LENGTH_LONG).show();
                 }
                 break;
             case R.id.about_id:
