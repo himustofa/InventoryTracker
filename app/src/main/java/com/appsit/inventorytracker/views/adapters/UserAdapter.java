@@ -14,7 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appsit.inventorytracker.R;
+import com.appsit.inventorytracker.models.Role;
 import com.appsit.inventorytracker.models.User;
+import com.appsit.inventorytracker.session.SharedPrefManager;
 import com.appsit.inventorytracker.utils.Utility;
 
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewModel>{
     private String TAG = this.getClass().getSimpleName();
     private Context mContext;
     private ArrayList<User> mArrayList;
+    private User mUser;
 
     private RecyclerItemListener mListener;
 
@@ -38,6 +41,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewModel>{
         this.mContext = context;
         this.mArrayList = arrayList;
         this.mListener = (RecyclerItemListener) context;
+        this.mUser = SharedPrefManager.getInstance(context).getUser();
     }
 
     @NonNull
@@ -67,7 +71,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewModel>{
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.updateItem(position, user);
+                if (mUser.getRole().equals(String.valueOf(Role.ADMIN_USER))) {
+                    mListener.updateItem(position, user);
+                }
             }
         });
 
@@ -77,7 +83,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewModel>{
                 Utility.deleteDialog(mContext).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mListener.removeItem(position, user);
+                        if (mUser.getRole().equals(String.valueOf(Role.ADMIN_USER))) {
+                            mListener.removeItem(position, user);
+                        }
                     }
                 }).show();
                 return true;

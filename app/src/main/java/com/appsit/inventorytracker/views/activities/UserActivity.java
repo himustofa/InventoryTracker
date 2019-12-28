@@ -18,6 +18,7 @@ import android.widget.Spinner;
 
 import com.appsit.inventorytracker.R;
 import com.appsit.inventorytracker.models.User;
+import com.appsit.inventorytracker.session.SharedPrefManager;
 import com.appsit.inventorytracker.utils.Utility;
 import com.appsit.inventorytracker.viewmodels.UserViewModel;
 import com.appsit.inventorytracker.views.adapters.UserAdapter;
@@ -35,6 +36,7 @@ public class UserActivity extends AppCompatActivity implements UserAdapter.Recyc
     private UserAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private boolean isValue = true;
+    private User mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class UserActivity extends AppCompatActivity implements UserAdapter.Recyc
         setContentView(R.layout.activity_user);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.user_recycler_view);
+        mUser = SharedPrefManager.getInstance(this).getUser();
 
         mViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         mViewModel.getAllUser().observe(this, new Observer<List<User>>() {
@@ -126,6 +129,9 @@ public class UserActivity extends AppCompatActivity implements UserAdapter.Recyc
                     user.setPhotoName(model.getPhotoName());
                     user.setPhotoPath(model.getPhotoPath());
 
+                    if (mUser.getUserId().equals(user.getUserId())) {
+                        SharedPrefManager.getInstance(UserActivity.this).saveUser(user);
+                    }
                     long result = mViewModel.update(user);
                     if (result > 0) {
                         //mArrayList.clear();
