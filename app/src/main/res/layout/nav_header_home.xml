@@ -21,7 +21,7 @@
             android:contentDescription="@string/nav_header_desc"
             android:layout_width="@dimen/space_70dp"
             android:layout_height="@dimen/space_70dp"
-            android:src="@drawable/app_logo"
+            android:src="@drawable/ic_app_logo"
             app:civ_border_width="@dimen/space_5dp"
             app:civ_border_color="@color/colorWhite"/>
         <LinearLayout

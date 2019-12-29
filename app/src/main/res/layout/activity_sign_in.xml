@@ -10,7 +10,7 @@
     tools:context=".views.activities.SignInActivity">
 
     <ImageView
-        android:background="@drawable/app_logo"
+        android:background="@drawable/ic_app_logo"
         android:layout_gravity="center"
         android:layout_marginBottom="35dp"
         android:layout_width="110dp"
