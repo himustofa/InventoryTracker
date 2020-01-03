@@ -61,7 +61,15 @@ public class PurchaseViewModel extends AndroidViewModel {
         return mDaoAccess.getPurchaseById(id);
     }
 
+    public LiveData<Purchase> getPurchaseByProductId(String productId) {
+        return mDaoAccess.getPurchaseByProductId(productId);
+    }
+
     public LiveData<List<Purchase>> getAll() {
         return mDaoAccess.getAllPurchase();
+    }
+
+    public LiveData<Integer> getTotalPurchaseQty(String productId) {
+        return mDaoAccess.getTotalPurchaseQty(productId);
     }
 }

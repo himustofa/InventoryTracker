@@ -69,11 +69,17 @@ public interface AppDaoAccess {
     int deleteSupplier(Supplier supplier);
 
     //===============================================| Purchase
-    @Query("SELECT * FROM purchases")
+    @Query("SELECT * FROM purchases ORDER BY createdAt DESC")
     LiveData<List<Purchase>> getAllPurchase();
 
     @Query("SELECT * FROM purchases WHERE id=:id")
     LiveData<Purchase> getPurchaseById(String id);
+
+    @Query("SELECT * FROM purchases WHERE productId=:productId")
+    LiveData<Purchase> getPurchaseByProductId(String productId);
+
+    @Query("SELECT SUM(purchaseProductQuantity) FROM purchases WHERE productId=:productId")
+    LiveData<Integer> getTotalPurchaseQty(String productId);
 
     @Insert
     long insertPurchase(Purchase model);
@@ -123,11 +129,14 @@ public interface AppDaoAccess {
     int deleteCustomer(Customer model);
 
     //===============================================| Sale
-    @Query("SELECT * FROM sales")
+    @Query("SELECT * FROM sales ORDER BY createdAt DESC")
     LiveData<List<Sale>> getAllSale();
 
     @Query("SELECT * FROM sales WHERE id=:id")
     LiveData<Sale> getSaleById(String id);
+
+    @Query("SELECT SUM(productQuantity) FROM sales WHERE productId=:productId")
+    LiveData<Integer> getSaleTotalQtyByProductId(String productId);
 
     //@Query("SELECT id, productName, productId, supplierName, supplierId, SUM(productQuantity) as productQuantity, purchaseProductQuantity, customerName, customerId, salesDate, salesDiscount, salesVat, SUM(salesAmount) as salesAmount, salesPayment, salesBalance, salesDescription, createdAt FROM sales WHERE salesDate=:date")
     //LiveData<Sale> getSaleForBoardByDate(String date);
@@ -142,7 +151,7 @@ public interface AppDaoAccess {
     int deleteSale(Sale model);
 
     //===============================================| Adjustment
-    @Query("SELECT * FROM adjustments")
+    @Query("SELECT * FROM adjustments ORDER BY createdAt DESC")
     LiveData<List<Adjustment>> getAllAdjustment();
 
     @Query("SELECT * FROM adjustments WHERE id=:id")
@@ -160,11 +169,20 @@ public interface AppDaoAccess {
     //===============================================| StockSale
     //https://stackoverflow.com/questions/50801617/return-sum-and-average-using-room
     @Query("SELECT SUM(productQuantity) as quantity, SUM(salesAmount) as amount FROM sales WHERE productId=:productId")
-    LiveData<StockSale> getSaleByProductId(String productId);
+    LiveData<StockSale> getSaleByProductIdForStock(String productId);
+
+    @Query("SELECT SUM(purchaseProductQuantity) as quantity, SUM(purchaseAmount) as amount FROM purchases WHERE productId=:productId")
+    LiveData<StockSale> getPurchaseByProductIdForStock(String productId);
+
+    @Query("SELECT SUM(productQuantity) as quantity, SUM(productAmount) as amount FROM adjustments WHERE productId=:productId")
+    LiveData<StockSale> getAdjustmentByProductIdForStock(String productId);
 
     //@Query("SELECT SUM(productQuantity) as quantity, SUM(salesAmount) as amount FROM sales INNER JOIN purchases USING(productId)")
-    @Query("SELECT p.productId as productId, p.productName as productName, (SUM(p.purchaseProductQuantity) - SUM(s.productQuantity)) as stockQuantity, (SUM(p.purchaseAmount) - SUM(s.salesAmount)) as stockAmount FROM purchases p LEFT JOIN sales s ON s.productId = p.productId")
-    LiveData<List<Stock>> getStockByProductId();
+    //@Query("SELECT p.productId as productId, p.productName as productName, (SUM(p.purchaseProductQuantity) - SUM(s.productQuantity)) as stockQuantity, (SUM(p.purchaseAmount) - SUM(s.salesAmount)) as stockAmount FROM purchases p LEFT JOIN sales s ON s.productId = p.productId")
+    //LiveData<List<Stock>> getStockByProductId();
+
+    //@Query("SELECT productId as productId, productName as productName, ( SUM(purchaseProductQuantity) - ((SELECT SUM(productQuantity) FROM sales) + (SELECT SUM(productQuantity) FROM adjustments)) ) as stockQuantity, ( SUM(purchaseAmount) - ((SELECT SUM(productAmount) FROM adjustments) + (SELECT SUM(salesAmount) FROM sales)) ) as stockAmount FROM purchases WHERE productId=:productId")
+    //LiveData<Stock> getStockByProductId(String productId);
 
     @Query("SELECT SUM(productQuantity) as quantity, SUM(salesAmount) as amount FROM sales WHERE supplierId=:supplierId")
     LiveData<StockSale> getSaleBySupplierId(String supplierId);

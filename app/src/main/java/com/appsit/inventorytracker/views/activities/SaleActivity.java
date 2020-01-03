@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.appsit.inventorytracker.R;
 import com.appsit.inventorytracker.models.Customer;
 import com.appsit.inventorytracker.models.ObjectDialog;
+import com.appsit.inventorytracker.models.Product;
 import com.appsit.inventorytracker.models.Purchase;
 import com.appsit.inventorytracker.models.Role;
 import com.appsit.inventorytracker.models.Sale;
@@ -29,6 +30,7 @@ import com.appsit.inventorytracker.utils.SalePayTextWatcher;
 import com.appsit.inventorytracker.utils.SaleTextWatcher;
 import com.appsit.inventorytracker.utils.Utility;
 import com.appsit.inventorytracker.viewmodels.CustomerViewModel;
+import com.appsit.inventorytracker.viewmodels.ProductViewModel;
 import com.appsit.inventorytracker.viewmodels.PurchaseViewModel;
 import com.appsit.inventorytracker.viewmodels.SaleViewModel;
 import com.appsit.inventorytracker.views.adapters.SaleAdapter;
@@ -49,9 +51,11 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
     private ArrayList<Sale> mArrayList = new ArrayList<>();
     private SaleAdapter mAdapter;
     private SaleViewModel mViewModel;
+    private PurchaseViewModel mPurchaseViewModel;
     private boolean isValue = true;
     private List<Customer> mCustomerList = new ArrayList<>();
     private List<Purchase> mPurchaseList = new ArrayList<>();
+    private List<Product> mProductList = new ArrayList<>();
     private double perProductPrice;
 
     private RecyclerView mRecyclerView;
@@ -63,6 +67,7 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
     List<String> pList = new ArrayList<>();
 
     private User mUser;
+    private int totalQty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,22 +84,35 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
                 if (isValue) {
                     mArrayList.addAll(list);
                     isValue = false;
-                    sorting(mArrayList);
+                    //sorting(mArrayList);
                     initRecyclerView();
                 }
             }
         });
 
-        PurchaseViewModel mPurchaseViewModel = ViewModelProviders.of(this).get(PurchaseViewModel.class);
+        mPurchaseViewModel = ViewModelProviders.of(this).get(PurchaseViewModel.class);
         mPurchaseViewModel.getAll().observe(this, new Observer<List<Purchase>>() {
             @Override
             public void onChanged(List<Purchase> purchases) {
                 if (purchases != null) {
                     mPurchaseList.addAll(purchases);
-                    if (purchases.size() > 0) {
+                    /*if (purchases.size() > 0) {
                         for(Purchase s : purchases) {
                             pList.add(s.getProductName());
                         }
+                    }*/
+                }
+            }
+        });
+
+        ProductViewModel mProductViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
+        mProductViewModel.getAll().observe(this, new Observer<List<Product>>() {
+            @Override
+            public void onChanged(List<Product> products) {
+                if (products.size() > 0) {
+                    mProductList.addAll(products);
+                    for(Product p : products) {
+                        pList.add(p.getProductName());
                     }
                 }
             }
@@ -188,16 +206,27 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
         Utility.getSpinnerData(new Utility.AdapterPosition() {
             @Override
             public void onPosition(int position) {
-                tProductId.setText(mPurchaseList.get(position).getProductId());
-                ePurchaseQuantity.setText("" + mPurchaseList.get(position).getPurchaseProductQuantity());
-                perProductPrice = mPurchaseList.get(position).getPurchaseProductPrice();
-                tSupplierName.setText(mPurchaseList.get(position).getSupplierName());
-                tSupplierId.setText(mPurchaseList.get(position).getSupplierId());
-                //Calculation
-                eQuantity.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
-                eSaleDiscount.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
-                eSaleVat.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
-                eSalePayment.addTextChangedListener(new SalePayTextWatcher(eSaleAmount, eSalePayment, eSaleBalance));
+                String pId = mProductList.get(position).getProductId();
+
+                mPurchaseViewModel.getPurchaseByProductId(pId).observe(SaleActivity.this, new Observer<Purchase>() {
+                    @Override
+                    public void onChanged(Purchase purchase) {
+                        tProductId.setText(pId);
+                        //ePurchaseQuantity.setText("" + mPurchaseList.get(position).getPurchaseProductQuantity());
+                        perProductPrice =purchase.getPurchaseProductPrice();
+                        tSupplierName.setText(purchase.getSupplierName());
+                        tSupplierId.setText(purchase.getSupplierId());
+
+                        getTotalPurchaseQty(pId, ePurchaseQuantity);
+                        getTotalSaleQty(pId);
+
+                        //Calculation
+                        eQuantity.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
+                        eSaleDiscount.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
+                        eSaleVat.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
+                        eSalePayment.addTextChangedListener(new SalePayTextWatcher(eSaleAmount, eSalePayment, eSaleBalance));
+                    }
+                });
             }
         }, this, sProductName, pList);
 
@@ -225,6 +254,8 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
             @Override
             public void onClick(View v) {
                 if(!tProductId.getText().toString().trim().isEmpty() && !eQuantity.getText().toString().trim().isEmpty() && !eSaleDate.getText().toString().trim().isEmpty() && !eSaleAmount.getText().toString().trim().isEmpty() && !eSalePayment.getText().toString().trim().isEmpty()) {
+                    int qty = Integer.parseInt(eQuantity.getText().toString());
+
                     Sale model = new Sale(
                             UUID.randomUUID().toString(),
                             sProductName.getSelectedItem().toString(),
@@ -244,11 +275,15 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
                             eSaleDesc.getText().toString()
                     );
                     Log.d(TAG, new Gson().toJson(model));
-                    long result = mViewModel.save(model);
-                    if (result > 0) {
-                        mArrayList.add(model);
-                        mAdapter.notifyItemInserted(mArrayList.size());
-                        obj.getDialog().dismiss();
+                    if (qty <= totalQty) {
+                        long result = mViewModel.save(model);
+                        if (result > 0) {
+                            mArrayList.add(model);
+                            mAdapter.notifyItemInserted(mArrayList.size());
+                            obj.getDialog().dismiss();
+                        }
+                    } else {
+                        ((TextInputLayout) obj.getView().findViewById(R.id.layout_sl_product_quantity)).setError("The sale product exceeds the stock product!");
                     }
                 } else {
                     ((TextInputLayout) obj.getView().findViewById(R.id.layout_sl_product_quantity)).setError("required!");
@@ -318,6 +353,8 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
                 @Override
                 public void onClick(View v) {
                     if (!tProductId.getText().toString().trim().isEmpty() && !eQuantity.getText().toString().trim().isEmpty() && !eSaleDate.getText().toString().trim().isEmpty() && !eSaleAmount.getText().toString().trim().isEmpty() && !eSalePayment.getText().toString().trim().isEmpty()) {
+                        int qty = Integer.parseInt(eQuantity.getText().toString());
+
                         Sale sale = new Sale(
                                 model.getSalesId(),
                                 sProductName.getSelectedItem().toString(),
@@ -336,14 +373,18 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
                                 Double.parseDouble(eSaleBalance.getText().toString()),
                                 eSaleDesc.getText().toString()
                         );
-                        long result = mViewModel.update(sale);
-                        if (result > 0) {
-                            //mArrayList.clear();
-                            //mArrayList.addAll(viewModels);
-                            mArrayList.set(position, sale);
-                            mAdapter.notifyItemChanged(position, sale);
-                            //mAdapter.notifyDataSetChanged(); //recyclerView.invalidate();
-                            obj.getDialog().dismiss();
+                        if (qty <= totalQty) {
+                            long result = mViewModel.update(sale);
+                            if (result > 0) {
+                                //mArrayList.clear();
+                                //mArrayList.addAll(viewModels);
+                                mArrayList.set(position, sale);
+                                mAdapter.notifyItemChanged(position, sale);
+                                //mAdapter.notifyDataSetChanged(); //recyclerView.invalidate();
+                                obj.getDialog().dismiss();
+                            }
+                        } else {
+                            ((TextInputLayout) obj.getView().findViewById(R.id.layout_sl_product_quantity)).setError("The sale product exceeds the stock product!");
                         }
                     } else {
                         Snackbar.make(findViewById(android.R.id.content), "Please insert the values in your mandatory fields.", Snackbar.LENGTH_INDEFINITE).show();
@@ -381,5 +422,27 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
         eSaleBalance = (EditText) view.findViewById(R.id.sl_sales_balance);
         eSaleDesc = (EditText) view.findViewById(R.id.sl_sales_description);
         return new ObjectDialog(view, dialog);
+    }
+
+    private void getTotalSaleQty(String productId) {
+        mViewModel.getSaleTotalQtyByProductId(productId).observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if (integer != null) {
+                    totalQty = integer;
+                }
+            }
+        });
+    }
+
+    private void getTotalPurchaseQty(String productId, EditText pQuantity) {
+        mPurchaseViewModel.getTotalPurchaseQty(productId).observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if (integer != null) {
+                    pQuantity.setText("" + integer);
+                }
+            }
+        });
     }
 }

@@ -110,7 +110,7 @@ public class PurchaseActivity extends AppCompatActivity implements PurchaseAdapt
                 if (isValue) {
                     mArrayList.addAll(list);
                     isValue = false;
-                    sorting(mArrayList);
+                    //sorting(mArrayList);
                     initRecyclerView();
                 }
             }

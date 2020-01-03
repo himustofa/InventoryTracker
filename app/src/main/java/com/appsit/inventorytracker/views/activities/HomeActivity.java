@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.appsit.inventorytracker.R;
+import com.appsit.inventorytracker.asynctask.ExportDatabaseCSVTask;
 import com.appsit.inventorytracker.models.Role;
 import com.appsit.inventorytracker.models.Stock;
 import com.appsit.inventorytracker.models.StockSale;
@@ -142,6 +143,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 ((TextView) findViewById(R.id.stock_all_items_amount)).setText(myModel.getStockAmount() + "");
             }
         });
+
+        new ExportDatabaseCSVTask().execute();
 
         barChart();
     }

@@ -26,6 +26,6 @@
     <dimen name="size_25sp">25sp</dimen>
     <dimen name="size_30sp">30sp</dimen>
 
-    <dimen name="nav_header_height">250dp</dimen>
+    <dimen name="nav_header_height">200dp</dimen>
     <dimen name="space_150dp">150dp</dimen>
 </resources>

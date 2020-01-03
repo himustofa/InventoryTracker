@@ -32,6 +32,10 @@ public class SaleViewModel extends AndroidViewModel {
         return mDaoAccess.getAllSale();
     }
 
+    public LiveData<Integer> getSaleTotalQtyByProductId(String productId) {
+        return mDaoAccess.getSaleTotalQtyByProductId(productId);
+    }
+
     @SuppressLint("StaticFieldLeak")
     public long save(Sale model) {
         new AsyncTask<Void, Void, Long>() {

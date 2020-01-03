@@ -51,15 +51,19 @@ public class StockViewModel extends AndroidViewModel {
         return data;
     }*/
 
-    public LiveData<StockSale> getStockByProductId(Purchase p) {
-        return mDaoAccess.getSaleByProductId(p.getProductId());
+    public LiveData<StockSale> getStockByProductId(String productId) {
+        return mDaoAccess.getSaleByProductIdForStock(productId);
+    }
+
+    public LiveData<StockSale> getPurchaseByProductId(String productId) {
+        return mDaoAccess.getPurchaseByProductIdForStock(productId);
+    }
+
+    public LiveData<StockSale> getAdjustmentByProductId(String productId) {
+        return mDaoAccess.getAdjustmentByProductIdForStock(productId);
     }
 
     public LiveData<StockSale> getSaleBySupplierId(String supplierId) {
         return mDaoAccess.getSaleBySupplierId(supplierId);
-    }
-
-    public LiveData<List<Stock>> getStockByProductId() {
-        return mDaoAccess.getStockByProductId();
     }
 }

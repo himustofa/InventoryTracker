@@ -77,7 +77,7 @@
             <EditText
                 android:id="@+id/adj_description"
                 android:gravity="top"
-                android:hint="Description"
+                android:hint="Reason"
                 android:layout_marginBottom="10dp"
                 android:inputType="text|textMultiLine"
                 android:layout_width="match_parent"

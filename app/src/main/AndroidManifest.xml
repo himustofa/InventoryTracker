@@ -5,7 +5,9 @@
 
     <!-- Request the Camera feature -->
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <!-- save to phone or sd card directory -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -20,6 +22,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+
+        <activity
+            android:name=".views.activities.Stock2Activity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".views.activities.AdjustmentActivity"
             android:screenOrientation="portrait" />
