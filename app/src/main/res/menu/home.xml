@@ -9,5 +9,6 @@
 
     <item android:id="@+id/settings_id" android:title="Settings"></item>
     <item android:id="@+id/users_id" android:title="All User"></item>
+    <item android:id="@+id/export_id" android:title="Export Sale"></item>
     <item android:id="@+id/about_id" android:title="About"></item>
 </menu>

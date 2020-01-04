@@ -20,9 +20,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.appsit.inventorytracker.R;
-import com.appsit.inventorytracker.asynctask.ExportDatabaseCSVTask;
+import com.appsit.inventorytracker.models.Sale;
+import com.appsit.inventorytracker.utils.async.ExportToExcelTask;
 import com.appsit.inventorytracker.models.Role;
 import com.appsit.inventorytracker.models.Stock;
 import com.appsit.inventorytracker.models.StockSale;
@@ -30,6 +32,7 @@ import com.appsit.inventorytracker.models.User;
 import com.appsit.inventorytracker.session.SharedPrefManager;
 import com.appsit.inventorytracker.utils.Utility;
 import com.appsit.inventorytracker.viewmodels.HomeViewModel;
+import com.appsit.inventorytracker.viewmodels.SaleViewModel;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
@@ -42,6 +45,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -53,6 +57,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private HomeViewModel mHomeViewModel;
     private User mUser;
     private BarChart barChart;
+
+    private List<Sale> saleList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,7 +150,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        new ExportDatabaseCSVTask().execute();
+        SaleViewModel mSaleViewModel = ViewModelProviders.of(this).get(SaleViewModel.class);
+        mSaleViewModel.getAll().observe(this, new Observer<List<Sale>>() {
+            @Override
+            public void onChanged(List<Sale> sales) {
+                if (sales != null) {
+                    saleList.addAll(sales);
+                }
+            }
+        });
 
         barChart();
     }
@@ -220,6 +234,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     startActivity(new Intent(HomeActivity.this, UserActivity.class));
                 } else {
                     Snackbar.make(findViewById(android.R.id.content), getResources().getString(R.string.msg_admin_user), Snackbar.LENGTH_LONG).show();
+                }
+                break;
+            case R.id.export_id:
+                if (saleList != null) {
+                    writeToExcel(saleList);
                 }
                 break;
             case R.id.about_id:
@@ -311,5 +330,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             }
         });
+    }
+
+    private void writeToExcel(List<Sale> saleList) {
+        new ExportToExcelTask(HomeActivity.this, new ExportToExcelTask.AsyncResponse() {
+            @Override
+            public void processFinish(boolean result) {
+                if (result) {
+                    Toast.makeText(HomeActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).execute(saleList);
     }
 }

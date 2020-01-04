@@ -67,7 +67,8 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
     List<String> pList = new ArrayList<>();
 
     private User mUser;
-    private int totalQty;
+    private int totalPurchaseQty;
+    private int totalSaleQty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,20 +212,24 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
                 mPurchaseViewModel.getPurchaseByProductId(pId).observe(SaleActivity.this, new Observer<Purchase>() {
                     @Override
                     public void onChanged(Purchase purchase) {
-                        tProductId.setText(pId);
-                        //ePurchaseQuantity.setText("" + mPurchaseList.get(position).getPurchaseProductQuantity());
-                        perProductPrice =purchase.getPurchaseProductPrice();
-                        tSupplierName.setText(purchase.getSupplierName());
-                        tSupplierId.setText(purchase.getSupplierId());
+                        if (purchase != null) {
+                            getTotalPurchaseQty(pId, ePurchaseQuantity);
+                            getTotalSaleQty(pId);
 
-                        getTotalPurchaseQty(pId, ePurchaseQuantity);
-                        getTotalSaleQty(pId);
+                            tProductId.setText(pId);
+                            //ePurchaseQuantity.setText("" + mPurchaseList.get(position).getPurchaseProductQuantity());
+                            perProductPrice = purchase.getPurchaseProductPrice();
+                            tSupplierName.setText(purchase.getSupplierName());
+                            tSupplierId.setText(purchase.getSupplierId());
 
-                        //Calculation
-                        eQuantity.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
-                        eSaleDiscount.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
-                        eSaleVat.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
-                        eSalePayment.addTextChangedListener(new SalePayTextWatcher(eSaleAmount, eSalePayment, eSaleBalance));
+                            //Calculation
+                            eQuantity.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
+                            eSaleDiscount.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
+                            eSaleVat.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
+                            eSalePayment.addTextChangedListener(new SalePayTextWatcher(eSaleAmount, eSalePayment, eSaleBalance));
+                        } else {
+                            Utility.alertDialog(SaleActivity.this, "This product was not purchased");
+                        }
                     }
                 });
             }
@@ -275,7 +280,7 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
                             eSaleDesc.getText().toString()
                     );
                     Log.d(TAG, new Gson().toJson(model));
-                    if (qty <= totalQty) {
+                    if (qty <= (totalPurchaseQty-totalSaleQty)) {
                         long result = mViewModel.save(model);
                         if (result > 0) {
                             mArrayList.add(model);
@@ -312,19 +317,41 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
             eSaleBalance.setText("" + model.getSalesBalance());
             eSaleDesc.setText(model.getSalesDescription());
 
+            eSaleDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Utility.getDate(SaleActivity.this, eSaleDate);
+                }
+            });
+
             Utility.getSpinnerData(new Utility.AdapterPosition() {
                 @Override
                 public void onPosition(int position) {
-                    tProductId.setText(mPurchaseList.get(position).getProductId());
-                    ePurchaseQuantity.setText("" + mPurchaseList.get(position).getPurchaseProductQuantity());
-                    perProductPrice = mPurchaseList.get(position).getPurchaseProductPrice();
-                    tSupplierName.setText(mPurchaseList.get(position).getSupplierName());
-                    tSupplierId.setText(mPurchaseList.get(position).getSupplierId());
-                    //Calculation
-                    eQuantity.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
-                    eSaleDiscount.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
-                    eSaleVat.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
-                    eSalePayment.addTextChangedListener(new SalePayTextWatcher(eSaleAmount, eSalePayment, eSaleBalance));
+                    String pId = mProductList.get(position).getProductId();
+
+                    mPurchaseViewModel.getPurchaseByProductId(pId).observe(SaleActivity.this, new Observer<Purchase>() {
+                        @Override
+                        public void onChanged(Purchase purchase) {
+                            if (purchase != null) {
+                                getTotalPurchaseQty(pId, ePurchaseQuantity);
+                                getTotalSaleQty(pId);
+
+                                tProductId.setText(pId);
+                                //ePurchaseQuantity.setText("" + mPurchaseList.get(position).getPurchaseProductQuantity());
+                                perProductPrice = purchase.getPurchaseProductPrice();
+                                tSupplierName.setText(purchase.getSupplierName());
+                                tSupplierId.setText(purchase.getSupplierId());
+
+                                //Calculation
+                                eQuantity.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
+                                eSaleDiscount.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
+                                eSaleVat.addTextChangedListener(new SaleTextWatcher(eSaleAmount, eQuantity, perProductPrice, eSaleDiscount, eSaleVat));
+                                eSalePayment.addTextChangedListener(new SalePayTextWatcher(eSaleAmount, eSalePayment, eSaleBalance));
+                            } else {
+                                Utility.alertDialog(SaleActivity.this, "This product was not purchased");
+                            }
+                        }
+                    });
                 }
             }, this, sProductName, pList);
             sProductName.setSelection(pList.indexOf(model.getProductName()));
@@ -341,13 +368,6 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
                 }
             }, this, sCustomerName, cList);
             sCustomerName.setSelection(cList.indexOf(model.getCustomerName()));
-
-            eSaleDate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Utility.getDate(SaleActivity.this, eSaleDate);
-                }
-            });
 
             ((Button) obj.getView().findViewById(R.id.sale_save_button)).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -373,7 +393,7 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
                                 Double.parseDouble(eSaleBalance.getText().toString()),
                                 eSaleDesc.getText().toString()
                         );
-                        if (qty <= totalQty) {
+                        if (qty <= (totalPurchaseQty-totalSaleQty)) {
                             long result = mViewModel.update(sale);
                             if (result > 0) {
                                 //mArrayList.clear();
@@ -429,7 +449,10 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
             @Override
             public void onChanged(Integer integer) {
                 if (integer != null) {
-                    totalQty = integer;
+                    totalSaleQty = integer;
+                    Log.d(TAG, "" + integer);
+                } else {
+                    totalSaleQty = 0;
                 }
             }
         });
@@ -441,6 +464,7 @@ public class SaleActivity extends AppCompatActivity implements SaleAdapter.Recyc
             public void onChanged(Integer integer) {
                 if (integer != null) {
                     pQuantity.setText("" + integer);
+                    totalPurchaseQty = integer;
                 }
             }
         });
