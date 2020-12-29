@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,18 +67,17 @@ public class CustomerActivity extends AppCompatActivity implements CustomerAdapt
             }
         });
 
-        ((SearchView) findViewById(R.id.customer_search_view)).setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        ((EditText) findViewById(R.id.search_item)).addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                return true;
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
-            public boolean onQueryTextChange(String newText) {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (mAdapter != null){
-                    mAdapter.getFilter().filter(newText);
+                    mAdapter.getFilter().filter(s);
                 }
-                return true;
             }
+            @Override
+            public void afterTextChanged(Editable s) {}
         });
     }
 

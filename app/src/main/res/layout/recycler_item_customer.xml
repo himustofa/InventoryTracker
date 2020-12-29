@@ -21,6 +21,7 @@
                 android:text="Name : "
                 android:textColor="@color/colorDarkGrey"
                 android:textStyle="bold"
+                android:textSize="@dimen/size_12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
@@ -28,6 +29,7 @@
                 android:text="Customer Name"
                 android:textColor="@color/colorDarkGrey"
                 android:textStyle="bold"
+                android:textSize="@dimen/size_12sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -38,12 +40,14 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="Phone : "
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/customer_phone_number_cust"
                 android:text="Customer's Phone Number"
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -55,12 +59,14 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="E-mail : "
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/customer_email_cust"
                 android:text="Customer's E-mail"
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -72,12 +78,14 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="Discount : "
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/customer_discount_cust"
                 android:text="Customer Discount"
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

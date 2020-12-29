@@ -10,15 +10,23 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <androidx.appcompat.widget.SearchView
-            app:queryHint="Search..."
-            app:defaultQueryHint="Search..."
-            android:layout_gravity="bottom"
-            android:layout_marginTop="@dimen/space_5dp"
-            android:layout_marginBottom="@dimen/space_5dp"
-            android:background="@drawable/shape_corner_radius_search"
+        <EditText
+            android:id="@+id/search_item"
+            android:inputType="text"
+            android:singleLine="true"
+            android:hint="Search Item"
+            android:textSize="15sp"
+            android:drawableTint="@color/colorDeepGrey"
+            android:drawableEnd="@drawable/ic_search_black_24dp"
+            android:background="@drawable/shape_radius_100_pad_10_solid_white"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/adjustment_recycler_view"
             android:layout_width="match_parent"

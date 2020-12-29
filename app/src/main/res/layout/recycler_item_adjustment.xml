@@ -22,6 +22,7 @@
                 android:text="Product : "
                 android:textColor="@color/colorDarkGrey"
                 android:textStyle="bold"
+                android:textSize="@dimen/size_12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
@@ -29,6 +30,7 @@
                 android:text="Product Name"
                 android:textColor="@color/colorDarkGrey"
                 android:textStyle="bold"
+                android:textSize="@dimen/size_12sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -39,12 +41,14 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="Quantity : "
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/adjustment_product_quantity"
                 android:text="Quantity"
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -56,12 +60,14 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="Price : "
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/adjustment_amount"
                 android:text="Price"
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -73,12 +79,14 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="Date : "
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/adjustment_date"
                 android:text="Date"
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
