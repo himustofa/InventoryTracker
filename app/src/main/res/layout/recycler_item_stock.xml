@@ -19,6 +19,7 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="Product Name : "
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -26,6 +27,7 @@
             <TextView
                 android:id="@+id/stock_product_name"
                 android:text="Shampoo"
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:textStyle="bold"
                 android:layout_width="match_parent"
@@ -38,12 +40,14 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="Stock Quantity : "
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/stock_quantity"
                 android:text="50"
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -55,12 +59,14 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="Stock Amount : "
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/stock_amount"
                 android:text="5000 tk"
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

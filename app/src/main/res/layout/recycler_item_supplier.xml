@@ -19,6 +19,7 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="Supplier's Name : "
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -27,6 +28,7 @@
                 android:id="@+id/supplier_item_name"
                 android:textColor="@color/colorDarkGrey"
                 android:textStyle="bold"
+                android:textSize="@dimen/size_12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -37,12 +39,14 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="Company : "
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/supplier_item_company"
                 android:text="Company"
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -54,12 +58,14 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="Phone Number : "
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/supplier_item_phone"
                 android:text="Phone"
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -71,12 +77,14 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="Email : "
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/supplier_item_email"
                 android:text="E-mail"
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -88,12 +96,14 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="Address : "
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/supplier_item_address"
                 android:text="Address"
+                android:textSize="@dimen/size_12sp"
                 android:textColor="@color/colorDarkGrey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
